@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PetShop - Cửa hàng thú cưng trực tuyến</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container-full">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-top">
+                <div class="header-container">
+                    <div class="logo">
+                        <i class="fas fa-paw"></i>
+                        <h1>PetShop</h1>
+                    </div>
+                    <div class="search-bar">
+                        <input type="text" id="searchInput" placeholder="Tìm kiếm sản phẩm...">
+                        <button id="searchBtn" class="btn-search">
+                            <i class="fas fa-search"></i>
+                        </button>
+                        <button id="voiceSearchBtn" class="btn-voice" title="Tìm kiếm bằng giọng nói">
+                            <i class="fas fa-microphone"></i>
+                        </button>
+                        <button id="imageSearchBtn" class="btn-image" title="Tìm kiếm bằng hình ảnh">
+                            <i class="fas fa-image"></i>
+                        </button>
+                    </div>
+                    <div class="header-actions">
+                        <button class="btn-chat" id="chatbotToggle">
+                            <i class="fas fa-comments"></i>
+                            <span>Trợ lý</span>
+                        </button>
+                        <button class="btn-cart">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span id="cartCount">0</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation -->
+            <nav class="navbar">
+                <div class="nav-container">
+                    <button class="nav-item" data-category="all">Tất cả</button>
+                    <button class="nav-item" data-category="cat">
+                        <i class="fas fa-cat"></i> Mèo
+                    </button>
+                    <button class="nav-item" data-category="dog">
+                        <i class="fas fa-dog"></i> Chó
+                    </button>
+                    <button class="nav-item" data-category="general">
+                        <i class="fas fa-cube"></i> Phụ kiện
+                    </button>
+                </div>
+            </nav>
+        </header>
+
+        <div class="main-content">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <div class="filter-group">
+                    <h3>Khoảng giá</h3>
+                    <div class="price-range">
+                        <input type="range" id="minPrice" min="0" max="1000000" step="50000">
+                        <input type="range" id="maxPrice" min="0" max="1000000" step="50000" value="1000000">
+                    </div>
+                    <div class="price-display">
+                        <span id="minPriceDisplay">0</span> - <span id="maxPriceDisplay">1,000,000</span> VND
+                    </div>
+                </div>
+
+                <div class="filter-group">
+                    <h3>Danh mục</h3>
+                    <div class="category-list">
+                        <label><input type="checkbox" name="category" value="cat"> Sản phẩm mèo</label>
+                        <label><input type="checkbox" name="category" value="dog"> Sản phẩm chó</label>
+                        <label><input type="checkbox" name="category" value="general"> Phụ kiện chung</label>
+                    </div>
+                </div>
+
+                <div class="filter-group">
+                    <h3>Tính năng</h3>
+                    <div class="tag-list">
+                        <button class="tag-btn" data-tag="vệ sinh">Vệ sinh</button>
+                        <button class="tag-btn" data-tag="thức ăn">Thức ăn</button>
+                        <button class="tag-btn" data-tag="đồ chơi">Đồ chơi</button>
+                        <button class="tag-btn" data-tag="chăm sóc">Chăm sóc</button>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="product-list">
+                <div class="products-grid" id="productsGrid">
+                    <!-- Products will be loaded here -->
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Shopping Cart Modal -->
+    <div id="cartModal" class="modal">
+        <div class="modal-content cart-modal">
+            <span class="close-btn">&times;</span>
+            <div class="cart-container">
+                <h2>🛒 Giỏ hàng của bạn</h2>
+                <div class="cart-items" id="cartItems">
+                    <!-- Cart items will be loaded here -->
+                </div>
+                <div class="cart-summary">
+                    <div class="summary-item">
+                        <span>Tổng số sản phẩm:</span>
+                        <span id="cartTotalItems">0</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Tổng tiền:</span>
+                        <span id="cartTotalPrice" style="color: var(--primary-color); font-weight: bold; font-size: 18px;">0 VND</span>
+                    </div>
+                </div>
+                <button class="btn-primary" style="width: 100%; margin-top: 15px;">
+                    <i class="fas fa-checkout"></i> Thanh toán
+                </button>
+            </div>
+
+            <!-- Recommendations section -->
+            <div class="cart-recommendations">
+                <h3><i class="fas fa-sparkles"></i> Gợi ý sản phẩm kết hợp</h3>
+                <p style="font-size: 13px; color: #666; margin-bottom: 15px;">Những sản phẩm này thường được mua kèm với các sản phẩm trong giỏ của bạn</p>
+                <div id="cartRecommendations" class="recommendations-grid-cart">
+                    <!-- Recommendations will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Detail Modal -->
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <div class="product-detail">
+                <div class="product-image">
+                    <img id="modalImage" src="" alt="Product">
+                </div>
+                <div class="product-info">
+                    <h2 id="modalName"></h2>
+                    <p id="modalDescription"></p>
+                    <div class="price-section">
+                        <h3 id="modalPrice"></h3>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn-primary" id="addToCartBtn">
+                            <i class="fas fa-plus"></i> Thêm vào giỏ
+                        </button>
+                    </div>
+                    <div id="recommendationsSection"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chatbot Widget -->
+    <div id="chatbotWidget" class="chatbot-widget">
+        <div class="chatbot-header">
+            <h3>Trợ lý thú cưng</h3>
+            <button id="chatbotClose" class="close-btn">×</button>
+        </div>
+        <div class="chatbot-messages" id="chatbotMessages"></div>
+        <div class="chatbot-input">
+            <input type="text" id="chatbotInput" placeholder="Nhập tin nhắn...">
+            <button id="chatbotSendBtn">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Voice Search Modal -->
+    <div id="voiceModal" class="modal">
+        <div class="modal-content voice-modal">
+            <span class="close-btn">&times;</span>
+            <div class="voice-content">
+                <i class="fas fa-microphone"></i>
+                <h2>Tìm kiếm bằng giọng nói</h2>
+                <p id="voiceStatus">Nhấn nút để bắt đầu nói...</p>
+                <button id="voiceRecordBtn" class="btn-primary">
+                    <i class="fas fa-microphone"></i> Bắt đầu ghi âm
+                </button>
+                <div id="voiceResults"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Image Search Modal -->
+    <div id="imageModal" class="modal">
+        <div class="modal-content image-modal">
+            <span class="close-btn">&times;</span>
+            <div class="image-content">
+                <h2>Tìm kiếm bằng hình ảnh</h2>
+                <div class="image-upload">
+                    <input type="file" id="imageInput" accept="image/*">
+                    <label for="imageInput">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <p>Chọn hoặc kéo thả hình ảnh ở đây</p>
+                    </label>
+                </div>
+                <div id="imageResults"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="assets/js/api.js"></script>
+    <script src="assets/js/ui.js"></script>
+    <script src="assets/js/chatbot.js"></script>
+    <script src="assets/js/search.js"></script>
+    <script src="assets/js/cart.js"></script>
+    <script src="assets/js/main.js"></script>
+</body>
+</html>
