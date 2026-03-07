@@ -5,6 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PetShop - Cửa hàng thú cưng trực tuyến</title>
     <link rel="stylesheet" href="assets/css/style.css">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-XXXXXXXXXX', {
+            'anonymize_ip': true,
+            'allow_google_signals': false
+        });
+    </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
@@ -58,6 +69,53 @@
                 </div>
             </nav>
         </header>
+
+        <!-- Introduction Banner -->
+        <section class="intro-banner" style="background: url('https://images.unsplash.com/photo-1587300411107-a3677e2b5d59?w=1200&h=400&fit=crop') center/cover no-repeat;">
+            <div class="intro-overlay"></div>
+            <div class="intro-content">
+                <div class="intro-text">
+                    <h2>🐾 PetShop - Cửa hàng chó mèo</h2>
+                    <p>Đầy đủ - Chất lượng - Giá tốt</p>
+                    <div class="intro-features">
+                        <span><i class="fas fa-truck"></i> Giao 24h</span>
+                        <span><i class="fas fa-star"></i> ★★★★★</span>
+                        <span><i class="fas fa-headset"></i> HDT 24/7</span>
+                        <span><i class="fas fa-lock"></i> An toàn</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Promotion Banner -->
+        <section class="promo-section" style="background: url('https://images.unsplash.com/photo-1557821552-17105176677c?w=1200&h=300&fit=crop') center/cover no-repeat;">
+            <div class="promo-overlay"></div>
+            <div class="promo-banner">
+                <div class="promo-content">
+                    <h3>🎉 KHUYẾN MÃI HOT</h3>
+                    <h2>-30% TẤT CẢ SẢN PHẨM</h2>
+                    <p>🎁 + Quà Tặng | 📅 Tựa hạn: 31/03</p>
+                    <button class="btn-promo" onclick="document.querySelector('[data-category=\"all\"]').click()">
+                        <i class="fas fa-shopping-bag"></i> MUA NGAY
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- TikTok Section -->
+        <section class="tiktok-section" style="background: url('https://images.unsplash.com/photo-1516549655201-750a172e7de9?w=1200&h=300&fit=crop') center/cover no-repeat;">
+            <div class="tiktok-overlay"></div>
+            <div class="tiktok-container">
+                <h3> Theo Dõi Chúng Tôi</h3>
+                <p>Video, Mẹo, Khuyến mãi hấp dẫn</p>
+                <div class="tiktok-links">
+                    <a href="https://www.tiktok.com/@petshopdnh" target="_blank" class="tiktok-btn">
+                        <i class="fab fa-tiktok"></i> PetShop
+                    </a>
+                    
+                </div>
+            </div>
+        </section>
 
         <div class="main-content">
             <!-- Sidebar -->
@@ -121,7 +179,7 @@
                         <span id="cartTotalPrice" style="color: var(--primary-color); font-weight: bold; font-size: 18px;">0 VND</span>
                     </div>
                 </div>
-                <button class="btn-primary" style="width: 100%; margin-top: 15px;">
+                <button id="checkoutBtn" class="btn-primary" style="width: 100%; margin-top: 15px;">
                     <i class="fas fa-checkout"></i> Thanh toán
                 </button>
             </div>
@@ -211,12 +269,170 @@
         </div>
     </div>
 
+    <!-- Checkout Modal -->
+    <div id="checkoutModal" class="modal">
+        <div class="modal-content checkout-modal">
+            <span class="close-btn" id="checkoutClose">&times;</span>
+            <div class="checkout-container">
+                <div class="checkout-header">
+                    <h2>Thông tin thanh toán</h2>
+                    <p>Vui lòng điền thông tin giao hàng</p>
+                </div>
+
+                <div class="checkout-content">
+                    <!-- Order Summary -->
+                    <div class="order-summary">
+                        <h3>Thông tin đơn hàng</h3>
+                        <div id="checkoutOrderItems" class="checkout-items">
+                            <!-- Items will be displayed here -->
+                        </div>
+                        <div class="checkout-total">
+                            <span>Tổng tiền:</span>
+                            <span id="checkoutTotal" style="color: var(--primary-color); font-weight: bold;">0 VND</span>
+                        </div>
+                    </div>
+
+                    <!-- Checkout Form -->
+                    <form id="checkoutForm" class="checkout-form">
+                        <h3>Thông tin giao hàng</h3>
+
+                        <div class="form-group">
+                            <label for="customerName">Họ và tên <span style="color: red;">*</span></label>
+                            <input type="text" id="customerName" name="customerName" placeholder="Nhập họ và tên" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="customerPhone">Số điện thoại <span style="color: red;">*</span></label>
+                            <input type="tel" id="customerPhone" name="customerPhone" placeholder="Nhập số điện thoại" pattern="[0-9\s\-\+\(\)]{10,}" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="customerAddress">Địa chỉ giao hàng <span style="color: red;">*</span></label>
+                            <textarea id="customerAddress" name="customerAddress" placeholder="Nhập địa chỉ giao hàng (phố, quận, thành phố)" rows="3" required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="customerEmail">Email <span style="color: #999;">(Tùy chọn)</span></label>
+                            <input type="email" id="customerEmail" name="customerEmail" placeholder="Nhập email (để nhận thông tin đơn hàng)">
+                        </div>
+
+                        <h3 style="margin-top: 25px;">Hình thức thanh toán</h3>
+
+                        <div class="payment-options">
+                            <div class="payment-option">
+                                <input type="radio" id="paymentCOD" name="paymentMethod" value="cod" checked>
+                                <label for="paymentCOD" class="payment-label">
+                                    <i class="fas fa-hand-holding-usd"></i>
+                                    <div>
+                                        <span>Nhận khi nhận hàng (COD)</span>
+                                        <small>Thanh toán tiền mặt khi nhận hàng</small>
+                                    </div>
+                                </label>
+                            </div>
+
+                            <div class="payment-option">
+                                <input type="radio" id="paymentBank" name="paymentMethod" value="bank">
+                                <label for="paymentBank" class="payment-label">
+                                    <i class="fas fa-university"></i>
+                                    <div>
+                                        <span>Chuyển khoản ngân hàng</span>
+                                        <small>Thanh toán qua tài khoản ngân hàng</small>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div id="bankInfo" class="bank-info" style="display: none;">
+                            <h4>Thông tin chuyển khoản</h4>
+                            <p><strong>Ngân hàng:</strong> Ngân hàng Ngoại thương Việt Nam (Vietcombank)</p>
+                            <p><strong>Số tài khoản:</strong> 1234567890</p>
+                            <p><strong>Chủ tài khoản:</strong> PetShop Store</p>
+                            <p><strong>Nội dung:</strong> Thanh toán đơn hàng</p>
+                            <p style="color: #666; font-size: 12px; margin-top: 10px;">Vui lòng nhập nội dung chuyển khoản để chúng tôi xác nhận đơn hàng</p>
+                        </div>
+
+                        <div class="checkout-actions">
+                            <button type="button" class="btn-cancel" id="checkoutCancelBtn">Hủy bỏ</button>
+                            <button type="submit" class="btn-primary">Đặt hàng</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pet Survey Modal -->
+    <div id="surveyModal" class="modal">
+        <div class="modal-content survey-modal">
+            <span class="close-btn" id="surveyClose">&times;</span>
+            <div class="survey-container">
+                <div class="survey-header">
+                    <i class="fas fa-clipboard-list"></i>
+                    <h2>Khảo sát thông tin thú cưng</h2>
+                    <p>Giúp chúng tôi hiểu rõ hơn về thú cưng của bạn để cung cấp dịch vụ tốt hơn</p>
+                </div>
+                <form id="surveyForm" class="survey-form">
+                    <div class="form-group">
+                        <label for="petType">Loài thú cưng <span class="optional">(Tùy chọn)</span></label>
+                        <select id="petType" name="petType">
+                            <option value="">-- Chọn loài --</option>
+                            <option value="cat">Mèo</option>
+                            <option value="dog">Chó</option>
+                            <option value="bird">Chim</option>
+                            <option value="fish">Cá</option>
+                            <option value="hamster">Hamster/Chuột</option>
+                            <option value="rabbit">Thỏ</option>
+                            <option value="other">Khác</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="petAge">Tuổi <span class="optional">(Tùy chọn)</span></label>
+                        <input type="number" id="petAge" name="petAge" placeholder="Nhập tuổi (tháng/năm)" min="0">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="petWeight">Cân nặng (kg) <span class="optional">(Tùy chọn)</span></label>
+                        <input type="number" id="petWeight" name="petWeight" placeholder="Nhập cân nặng" step="0.1" min="0">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="petBreed">Giống loài <span class="optional">(Tùy chọn)</span></label>
+                        <input type="text" id="petBreed" name="petBreed" placeholder="Nhập giống loài">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="petName">Tên thú cưng <span class="optional">(Tùy chọn)</span></label>
+                        <input type="text" id="petName" name="petName" placeholder="Nhập tên thú cưng">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="petHealth">Tình trạng sức khỏe <span class="optional">(Tùy chọn)</span></label>
+                        <select id="petHealth" name="petHealth">
+                            <option value="">-- Chọn tình trạng --</option>
+                            <option value="healthy">Khỏe mạnh</option>
+                            <option value="normal">Bình thường</option>
+                            <option value="sensitive">Nhạy cảm/Dị ứng</option>
+                            <option value="other">Khác</option>
+                        </select>
+                    </div>
+
+                    <div class="survey-actions">
+                        <button type="button" class="btn-skip" id="surveySkip">Bỏ qua</button>
+                        <button type="submit" class="btn-primary">Gửi thông tin</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <!-- Scripts -->
     <script src="assets/js/api.js"></script>
     <script src="assets/js/ui.js"></script>
     <script src="assets/js/chatbot.js"></script>
     <script src="assets/js/search.js"></script>
     <script src="assets/js/cart.js"></script>
+    <script src="assets/js/checkout.js"></script>
     <script src="assets/js/main.js"></script>
 </body>
 </html>

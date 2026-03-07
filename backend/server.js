@@ -6,6 +6,8 @@ const chatbotRoutes = require('./routes/chatbot');
 const recommendationRoutes = require('./routes/recommendations');
 const searchRoutes = require('./routes/search');
 const imageRoutes = require('./routes/images');
+const surveyRoutes = require('./routes/survey');
+const ordersRoutes = require('./routes/orders');
 
 const app = express();
 
@@ -23,6 +25,8 @@ app.use('/api/chatbot', chatbotRoutes);
 app.use('/api/recommendations', recommendationRoutes);
 app.use('/api/search', searchRoutes);
 app.use('/api/images', imageRoutes);
+app.use('/api/survey', surveyRoutes);
+app.use('/api/orders', ordersRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {

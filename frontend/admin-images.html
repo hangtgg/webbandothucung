@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quản lý ảnh sản phẩm - PetShop</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f8f9fa;
+      color: #333;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    header {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 30px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      color: #667eea;
+      margin-bottom: 10px;
+    }
+
+    .upload-section {
+      background: white;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      margin-bottom: 30px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    input[type="number"],
+    input[type="file"] {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #e0e0e0;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+
+    input[type="number"]:focus,
+    input[type="file"]:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    .file-input-wrapper {
+      position: relative;
+      overflow: hidden;
+      display: inline-block;
+      width: 100%;
+    }
+
+    .file-input-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 15px;
+      border: 2px dashed #667eea;
+      border-radius: 6px;
+      background: #f0f4ff;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .file-input-label:hover {
+      background: #e8eef7;
+      border-color: #764ba2;
+    }
+
+    input[type="file"] {
+      display: none;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 10px;
+    }
+
+    button {
+      flex: 1;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-size: 14px;
+    }
+
+    .btn-upload {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+
+    .btn-upload:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    }
+
+    .btn-upload:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .btn-reset {
+      background: #f0f0f0;
+      color: #333;
+    }
+
+    .btn-reset:hover {
+      background: #e0e0e0;
+    }
+
+    .images-list {
+      background: white;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .images-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .image-card {
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #fafafa;
+      transition: all 0.3s;
+    }
+
+    .image-card:hover {
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .image-preview {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      background: #f0f0f0;
+    }
+
+    .image-info {
+      padding: 12px;
+    }
+
+    .image-id {
+      font-weight: 600;
+      color: #667eea;
+      margin-bottom: 8px;
+    }
+
+    .image-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .img-btn {
+      flex: 1;
+      padding: 8px;
+      font-size: 12px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .img-btn-delete {
+      background: #ff6b6b;
+      color: white;
+    }
+
+    .img-btn-delete:hover {
+      background: #ff5252;
+    }
+
+    .img-btn-view {
+      background: #667eea;
+      color: white;
+    }
+
+    .img-btn-view:hover {
+      background: #764ba2;
+    }
+
+    .message {
+      padding: 15px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+      display: none;
+      animation: slideIn 0.3s ease;
+    }
+
+    .message.success {
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+      display: block;
+    }
+
+    .message.error {
+      background: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+      display: block;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .loading {
+      display: none;
+      text-align: center;
+    }
+
+    .loading.active {
+      display: block;
+    }
+
+    .spinner {
+      display: inline-block;
+      width: 30px;
+      height: 30px;
+      border: 3px solid #f0f0f0;
+      border-top: 3px solid #667eea;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: #999;
+    }
+
+    .empty-state i {
+      font-size: 48px;
+      margin-bottom: 15px;
+      opacity: 0.5;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 10px;
+      border-bottom: 2px solid #e0e0e0;
+    }
+
+    .tab-btn {
+      padding: 12px 20px;
+      background: none;
+      border: none;
+      border-bottom: 3px solid transparent;
+      cursor: pointer;
+      font-weight: 600;
+      color: #999;
+      transition: all 0.3s;
+      font-size: 14px;
+    }
+
+    .tab-btn:hover {
+      color: #667eea;
+    }
+
+    .tab-btn.active {
+      color: #667eea;
+      border-bottom-color: #667eea;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1><i class="fas fa-images"></i> Quản lý ảnh & sản phẩm</h1>
+      <p>Upload, quản lý ảnh và tạo sản phẩm mới</p>
+    </header>
+
+    <div class="tabs" style="margin-bottom: 30px;">
+      <button class="tab-btn active" data-tab="upload">
+        <i class="fas fa-cloud-upload-alt"></i> Upload ảnh
+      </button>
+      <button class="tab-btn" data-tab="create">
+        <i class="fas fa-plus-circle"></i> Tạo sản phẩm
+      </button>
+    </div>
+
+    <!-- Upload Tab -->
+    <div id="upload" class="tab-content active">
+    <div class="upload-section">
+      <h2>Upload ảnh mới</h2>
+      <div id="message" class="message"></div>
+
+      <form id="uploadForm">
+        <div class="form-group">
+          <label for="productId">ID sản phẩm (1-40)</label>
+          <input type="number" id="productId" name="productId" min="1" max="40" required placeholder="Ví dụ: 5">
+        </div>
+
+        <div class="form-group">
+          <label for="imageFile">Chọn ảnh</label>
+          <div class="file-input-wrapper">
+            <label for="imageFile" class="file-input-label">
+              <i class="fas fa-cloud-upload-alt"></i>
+              <span id="fileName">Kéo ảnh vào hoặc click để chọn</span>
+            </label>
+            <input type="file" id="imageFile" name="image" accept="image/*" required>
+          </div>
+        </div>
+
+        <div class="loading" id="loading">
+          <div class="spinner"></div>
+          <p>Đang upload...</p>
+        </div>
+
+        <div class="button-group">
+          <button type="submit" class="btn-upload">
+            <i class="fas fa-upload"></i> Upload ảnh
+          </button>
+          <button type="reset" class="btn-reset">
+            <i class="fas fa-redo"></i> Reset
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <div class="images-list">
+      <h2>Ảnh đã upload</h2>
+      <div id="imagesList" class="images-grid">
+        <div class="empty-state">
+          <i class="fas fa-inbox"></i>
+          <p>Chưa có ảnh nào được upload. Hãy upload ảnh đầu tiên!</p>
+        </div>
+      </div>
+    </div>
+    </div> <!-- End Upload Tab -->
+
+    <!-- Create Product Tab -->
+    <div id="create" class="tab-content">
+    <div class="upload-section">
+      <h2>Tạo sản phẩm mới</h2>
+      <div id="createMessage" class="message"></div>
+
+      <form id="createForm">
+        <div class="form-group">
+          <label for="productName">Tên sản phẩm *</label>
+          <input type="text" id="productName" name="name" required placeholder="Ví dụ: Cát vệ sinh mèo">
+        </div>
+
+        <div class="form-group">
+          <label for="productPrice">Giá (VNĐ) *</label>
+          <input type="number" id="productPrice" name="price" required min="0" placeholder="Ví dụ: 50000">
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+          <div class="form-group">
+            <label for="productCategory">Danh mục *</label>
+            <select id="productCategory" name="category" required style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 6px;">
+              <option value="">-- Chọn danh mục --</option>
+              <option value="cat">Mèo</option>
+              <option value="dog">Chó</option>
+              <option value="general">Phụ kiện</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="productSubcategory">Loại *</label>
+            <select id="productSubcategory" name="subcategory" required style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 6px;">
+              <option value="">-- Chọn loại --</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="productDescription">Mô tả</label>
+          <textarea id="productDescription" name="description" placeholder="Mô tả chi tiết sản phẩm" style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 6px; min-height: 100px; font-family: inherit;"></textarea>
+        </div>
+
+        <div class="loading" id="createLoading">
+          <div class="spinner"></div>
+          <p>Đang tạo sản phẩm...</p>
+        </div>
+
+        <div class="button-group">
+          <button type="submit" class="btn-upload">
+            <i class="fas fa-save"></i> Tạo sản phẩm
+          </button>
+          <button type="reset" class="btn-reset">
+            <i class="fas fa-redo"></i> Reset
+          </button>
+        </div>
+      </form>
+    </div>
+    </div> <!-- End Create Tab -->
+  </div>
+
+  <script>
+    // Tab switching
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const tabName = btn.dataset.tab;
+        
+        // Remove active from all tabs and buttons
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+        
+        // Add active to clicked button and corresponding tab
+        btn.classList.add('active');
+        document.getElementById(tabName).classList.add('active');
+      });
+    });
+
+    const uploadForm = document.getElementById('uploadForm');
+    const imageFile = document.getElementById('imageFile');
+    const fileName = document.getElementById('fileName');
+    const message = document.getElementById('message');
+    const loading = document.getElementById('loading');
+    const imagesList = document.getElementById('imagesList');
+
+    // Upload form handling
+    const createForm = document.getElementById('createForm');
+    const createMessage = document.getElementById('createMessage');
+    const createLoading = document.getElementById('createLoading');
+    const productCategory = document.getElementById('productCategory');
+    const productSubcategory = document.getElementById('productSubcategory');
+
+    // Subcategories mapping
+    const subcategories = {
+      cat: ['Cát/Litter', 'Nhà/Housing', 'Đồ chơi', 'Thức ăn', 'Giường/Bedding'],
+      dog: ['Dây xích', 'Nhà/Housing', 'Thức ăn', 'Giường/Bedding', 'Phụ kiện'],
+      general: ['Chăm sóc', 'Nước uống', 'Vitamin', 'Phụ kiện', 'Điều hòa']
+    };
+
+    // Update subcategory when category changes
+    productCategory.addEventListener('change', () => {
+      const category = productCategory.value;
+      productSubcategory.innerHTML = '<option value="">-- Chọn loại --</option>';
+      
+      if (category && subcategories[category]) {
+        subcategories[category].forEach(sub => {
+          const option = document.createElement('option');
+          option.value = sub;
+          option.textContent = sub;
+          productSubcategory.appendChild(option);
+        });
+      }
+    });
+
+    // Drag & drop
+    document.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+    });
+
+    document.addEventListener('drop', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      if (e.dataTransfer.files.length > 0) {
+        imageFile.files = e.dataTransfer.files;
+        updateFileName();
+      }
+    });
+
+    imageFile.addEventListener('change', updateFileName);
+
+    function updateFileName() {
+      if (imageFile.files.length > 0) {
+        fileName.textContent = imageFile.files[0].name;
+      } else {
+        fileName.textContent = 'Kéo ảnh vào hoặc click để chọn';
+      }
+    }
+
+    uploadForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const productId = document.getElementById('productId').value;
+      const file = imageFile.files[0];
+
+      if (!productId || !file) {
+        showMessage('Vui lòng điền đầy đủ thông tin', 'error');
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append('productId', productId);
+      formData.append('image', file);
+
+      loading.classList.add('active');
+
+      try {
+        const response = await fetch('/api/images/upload', {
+          method: 'POST',
+          body: formData
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          showMessage(data.message, 'success');
+          uploadForm.reset();
+          updateFileName();
+          loadImages();
+        } else {
+          showMessage(data.message, 'error');
+        }
+      } catch (error) {
+        showMessage('Lỗi upload: ' + error.message, 'error');
+      } finally {
+        loading.classList.remove('active');
+      }
+    });
+
+    function showMessage(text, type) {
+      message.textContent = text;
+      message.className = `message ${type}`;
+      setTimeout(() => {
+        message.className = 'message';
+      }, 5000);
+    }
+
+    async function loadImages() {
+      try {
+        const response = await fetch('/api/images/list');
+        const data = await response.json();
+
+        if (data.success && data.images.length > 0) {
+          imagesList.innerHTML = data.images.map(img => `
+            <div class="image-card">
+              <img src="/api/images/image/${img.productId}" alt="Product ${img.productId}" class="image-preview" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 200%22%3E%3Crect fill=%22%23f0f0f0%22 width=%22200%22 height=%22200%22/%3E%3C/svg%3E'">
+              <div class="image-info">
+                <div class="image-id">Sản phẩm #${img.productId}</div>
+                <div class="image-actions">
+                  <button class="img-btn img-btn-view" onclick="window.open('${img.url}')">
+                    <i class="fas fa-eye"></i> Xem
+                  </button>
+                  <button class="img-btn img-btn-delete" onclick="deleteImage(${img.productId})">
+                    <i class="fas fa-trash"></i> Xóa
+                  </button>
+                </div>
+              </div>
+            </div>
+          `).join('');
+        } else {
+          imagesList.innerHTML = `
+            <div class="empty-state" style="grid-column: 1/-1;">
+              <i class="fas fa-inbox"></i>
+              <p>Chưa có ảnh nào được upload</p>
+            </div>
+          `;
+        }
+      } catch (error) {
+        console.error('Lỗi load ảnh:', error);
+      }
+    }
+
+    async function deleteImage(productId) {
+      if (!confirm(`Bạn chắc chắn muốn xóa ảnh sản phẩm #${productId}?`)) return;
+
+      try {
+        const response = await fetch(`/api/images/delete/${productId}`, {
+          method: 'DELETE'
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          showMessage(data.message, 'success');
+          loadImages();
+        } else {
+          showMessage(data.message, 'error');
+        }
+      } catch (error) {
+        showMessage('Lỗi xóa: ' + error.message, 'error');
+      }
+    }
+
+    // Handle create product form
+    createForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById('productName').value;
+      const price = document.getElementById('productPrice').value;
+      const category = document.getElementById('productCategory').value;
+      const subcategory = document.getElementById('productSubcategory').value;
+      const description = document.getElementById('productDescription').value;
+
+      if (!name || !price || !category || !subcategory) {
+        showCreateMessage('Vui lòng điền đầy đủ thông tin bắt buộc', 'error');
+        return;
+      }
+
+      createLoading.classList.add('active');
+
+      try {
+        const response = await fetch('/api/products', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            name,
+            price: parseFloat(price),
+            category,
+            subcategory,
+            description
+          })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          showCreateMessage(data.message + ` (ID: ${data.product.id})`, 'success');
+          createForm.reset();
+          document.getElementById('productSubcategory').innerHTML = '<option value="">-- Chọn loại --</option>';
+        } else {
+          showCreateMessage(data.message, 'error');
+        }
+      } catch (error) {
+        showCreateMessage('Lỗi tạo sản phẩm: ' + error.message, 'error');
+      } finally {
+        createLoading.classList.remove('active');
+      }
+    });
+
+    function showCreateMessage(text, type) {
+      createMessage.textContent = text;
+      createMessage.className = `message ${type}`;
+      setTimeout(() => {
+        createMessage.className = 'message';
+      }, 5000);
+    }
+
+    // Load images on page load
+    loadImages();
+  </script>
+</body>
+</html>

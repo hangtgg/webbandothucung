@@ -1,0 +1,367 @@
+================================================================================
+                        CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM
+                         Độc lập – Tự do – Hạnh phúc
+                              ---------------------
+================================================================================
+
+                              BÁO CÁO ĐỒ ÁN MÔN HỌC
+                        LẬP TRÌNH ỨNG DỤNG WEB / TIẾP THỊ KINH DOANH
+
+================================================================================
+
+  Trường       : ................................................................
+  Khoa         : Công nghệ Thông tin / Kinh tế – Quản trị Kinh doanh
+  Lớp          : ................................................................
+  Môn học      : ................................................................
+  Giảng viên   : ................................................................
+  Nhóm         : ................................................................
+  Ngày nộp     : ................................................................
+
+================================================================================
+
+
+    TÊN ĐỀ TÀI:  PETSHOP – CỬA HÀNG THÚ CƯNG TRỰC TUYẾN
+                 (Website TMĐT tích hợp Chatbot AI & Tìm kiếm Thông minh)
+
+
+================================================================================
+DANH SÁCH THÀNH VIÊN NHÓM
+================================================================================
+
+  STT  |  Họ và tên              |  MSSV          |  Vai trò
+  -----|-------------------------|----------------|----------------------------
+   1   |  ....................    |  ..........    |  Trưởng nhóm / Backend Dev
+   2   |  ....................    |  ..........    |  Frontend Developer
+   3   |  ....................    |  ..........    |  Chatbot & Search Module
+   4   |  ....................    |  ..........    |  Testing & Documentation
+
+================================================================================
+PHẦN I. GIỚI THIỆU ĐỀ TÀI
+================================================================================
+
+1.1. Lý do chọn đề tài
+-----------------------
+  Thị trường thú cưng Việt Nam đang trên đà tăng trưởng mạnh mẽ với tốc độ
+  tăng trưởng ước tính 15%/năm. Nhu cầu mua sắm trực tuyến các sản phẩm và
+  dịch vụ chăm sóc thú cưng ngày càng cao, đặc biệt trong giới trẻ tại các
+  đô thị lớn.
+
+  Nhóm lựa chọn xây dựng website thương mại điện tử chuyên về thú cưng với
+  mục tiêu ứng dụng các công nghệ hiện đại (AI Chatbot, Voice Search, Image
+  Search) để mang lại trải nghiệm mua sắm thông minh và tiện lợi cho người dùng.
+
+1.2. Mục tiêu đề tài
+---------------------
+  - Xây dựng hệ thống website TMĐT thú cưng hoàn chỉnh với kiến trúc
+    Client-Server rõ ràng.
+  - Tích hợp Chatbot AI hỗ trợ tư vấn sản phẩm bằng tiếng Việt.
+  - Triển khai tính năng tìm kiếm đa phương thức: văn bản, giọng nói, hình ảnh.
+  - Xây dựng hệ thống gợi ý sản phẩm thông minh dựa trên hành vi người dùng.
+  - Giao diện responsive, thân thiện, hoạt động tốt trên mọi thiết bị.
+
+1.3. Phạm vi đề tài
+--------------------
+  - Đối tượng hướng đến: Người nuôi thú cưng (chó, mèo) tại Việt Nam.
+  - Phạm vi địa lý: Không giới hạn (website trực tuyến).
+  - Công nghệ: Node.js (Backend), HTML/CSS/JavaScript thuần (Frontend).
+  - Thời gian thực hiện: ......................
+
+================================================================================
+PHẦN II. PHÂN TÍCH VÀ THIẾT KẾ HỆ THỐNG
+================================================================================
+
+2.1. Yêu cầu chức năng
+-----------------------
+  [1] Hiển thị danh sách sản phẩm theo danh mục (Chó, Mèo, Phụ kiện chung)
+  [2] Tìm kiếm sản phẩm bằng văn bản, giọng nói và hình ảnh
+  [3] Lọc sản phẩm theo giá, danh mục và thẻ từ khóa (tag)
+  [4] Xem chi tiết sản phẩm kèm gợi ý sản phẩm liên quan
+  [5] Chatbot tư vấn bằng tiếng Việt (hỗ trợ 24/7)
+  [6] Quản lý giỏ hàng (thêm, xóa, cập nhật số lượng, tính tổng giá)
+  [7] Gợi ý sản phẩm bổ sung dựa trên giỏ hàng hiện tại
+
+2.2. Yêu cầu phi chức năng
+---------------------------
+  - Hiệu năng    : Thời gian phản hồi API < 500ms
+  - Bảo mật      : Biến môi trường (.env), CORS được cấu hình đúng
+  - Khả năng mở rộng : Kiến trúc module hóa, dễ thêm tính năng mới
+  - Tương thích  : Hoạt động trên Chrome, Firefox, Edge, Safari
+  - Responsive   : Tương thích Desktop, Tablet và Mobile
+
+2.3. Kiến trúc hệ thống
+------------------------
+
+  ┌─────────────────────────────────────────────────────────────┐
+  │                     KIẾN TRÚC TỔNG QUAN                     │
+  │                                                             │
+  │   [Người dùng / Browser]                                    │
+  │          │                                                  │
+  │          ▼                                                  │
+  │   [Frontend Layer]                                          │
+  │     HTML + CSS + Vanilla JavaScript                         │
+  │     • index.html   • style.css   • main.js                  │
+  │     • api.js       • ui.js       • chatbot.js               │
+  │     • search.js    • cart.js                                │
+  │          │  HTTP Requests (Fetch API)                       │
+  │          ▼                                                  │
+  │   [Backend Layer – Express.js / Node.js]                    │
+  │     server.js → routes/                                     │
+  │     • products.js       (GET /api/products)                 │
+  │     • search.js         (GET/POST /api/search)              │
+  │     • recommendations.js (GET/POST /api/recommendations)    │
+  │     • chatbot.js        (POST /api/chatbot/message)         │
+  │          │                                                  │
+  │          ▼                                                  │
+  │   [Data Layer]                                              │
+  │     database.js – Dữ liệu sản phẩm & chatbot responses     │
+  └─────────────────────────────────────────────────────────────┘
+
+2.4. Cấu trúc thư mục dự án
+-----------------------------
+
+  WEB THU CUNG/
+  ├── backend/
+  │   ├── server.js              (Entry point – Express server)
+  │   ├── database.js            (Dữ liệu sản phẩm, chatbot)
+  │   └── routes/
+  │       ├── products.js        (API sản phẩm)
+  │       ├── chatbot.js         (API chatbot)
+  │       ├── recommendations.js (API gợi ý)
+  │       └── search.js          (API tìm kiếm)
+  ├── frontend/
+  │   ├── index.html             (Giao diện chính)
+  │   └── assets/
+  │       ├── css/style.css      (Styling toàn bộ ứng dụng)
+  │       └── js/
+  │           ├── api.js         (Tập trung lời gọi API)
+  │           ├── ui.js          (Render component giao diện)
+  │           ├── chatbot.js     (Logic & UI chatbot)
+  │           ├── search.js      (Tìm kiếm đa phương thức)
+  │           ├── cart.js        (Quản lý giỏ hàng)
+  │           └── main.js        (Khởi tạo ứng dụng)
+  ├── package.json               (Dependencies: Express, CORS, Multer...)
+  ├── .env                       (Biến môi trường: PORT, API_KEY...)
+  └── README.md                  (Tài liệu hướng dẫn)
+
+================================================================================
+PHẦN III. CÔNG NGHỆ SỬ DỤNG
+================================================================================
+
+3.1. Backend
+-------------
+  - Runtime      : Node.js v18+
+  - Framework    : Express.js v4.18.2
+  - Thư viện     : cors, dotenv, multer, axios, nodemon (dev)
+  - Kiến trúc    : RESTful API, MVC-like pattern
+
+3.2. Frontend
+--------------
+  - Ngôn ngữ     : HTML5, CSS3, Vanilla JavaScript (ES6+)
+  - API trình duyệt: Web Speech API (tìm kiếm giọng nói)
+  - Lưu trữ      : localStorage (giỏ hàng)
+  - Icon         : Font Awesome
+  - Font         : Google Fonts
+
+3.3. Công cụ & Môi trường phát triển
+--------------------------------------
+  - IDE          : Visual Studio Code
+  - Version Control: Git / GitHub
+  - OS           : Windows 10/11
+  - Trình duyệt test: Chrome, Edge, Firefox
+
+================================================================================
+PHẦN IV. TÍNH NĂNG CHI TIẾT VÀ THUẬT TOÁN
+================================================================================
+
+4.1. Chatbot Tư vấn AI
+-----------------------
+  Chatbot sử dụng phương pháp NLP Pattern Matching đơn giản:
+    1. Người dùng nhập câu hỏi (tiếng Việt)
+    2. Server nhận POST /api/chatbot/message
+    3. Phân tích từ khóa trong message: nhận diện intent
+    4. Trả về response phù hợp + danh sách sản phẩm gợi ý
+
+  Ví dụ intent được nhận diện:
+    - "thức ăn", "ăn", "đói"  → Gợi ý nhóm thức ăn
+    - "vệ sinh", "cát", "bồn" → Gợi ý nhóm vệ sinh
+    - "đồ chơi", "chơi"       → Gợi ý đồ chơi
+    - "bệnh", "ốm", "khám"    → Tư vấn thú y
+
+4.2. Hệ thống Gợi ý Sản phẩm (Recommendation Engine)
+------------------------------------------------------
+  Thuật toán tính điểm tương đồng Content-Based Filtering:
+
+    Điểm(A, B) = tổng [ trọng_số_i × khớp(A, B, tiêu_chí_i) ]
+
+    Trong đó:
+      • relatedProducts khớp trực tiếp   : +3 điểm
+      • Cùng category (cat/dog/general)  : +2 điểm
+      • Cùng tags (từ khóa đặc trưng)    : +1 điểm/tag
+
+  Kết quả: Top 5 sản phẩm có điểm cao nhất được trả về.
+
+4.3. Tìm kiếm Đa phương thức
+------------------------------
+  a) Tìm kiếm văn bản:
+     - GET /api/search/text?q={keyword}
+     - So khớp tên, mô tả, tags sản phẩm (case-insensitive)
+
+  b) Tìm kiếm giọng nói:
+     - Sử dụng Web Speech API (SpeechRecognition)
+     - Ngôn ngữ: vi-VN (tiếng Việt)
+     - Chuyển audio → text → gọi API tìm kiếm văn bản
+
+  c) Tìm kiếm hình ảnh:
+     - POST /api/search/image (multipart/form-data)
+     - Phân tích metadata hình ảnh upload
+     - Khớp với sản phẩm dựa trên đặc trưng trích xuất
+
+================================================================================
+PHẦN V. DANH SÁCH API ENDPOINTS
+================================================================================
+
+  PHƯƠNG THỨC | ENDPOINT                      | MÔ TẢ
+  ------------|-------------------------------|--------------------------------
+  GET         | /api/products                 | Lấy tất cả sản phẩm
+  GET         | /api/products?category=cat    | Lọc sản phẩm theo danh mục
+  GET         | /api/products/:id             | Chi tiết 1 sản phẩm
+  ------------|-------------------------------|--------------------------------
+  GET         | /api/search/text?q=query      | Tìm kiếm bằng văn bản
+  POST        | /api/search/voice             | Tìm kiếm bằng giọng nói
+  POST        | /api/search/image             | Tìm kiếm bằng hình ảnh
+  GET         | /api/search/filter            | Lọc nâng cao (giá, tag...)
+  ------------|-------------------------------|--------------------------------
+  GET         | /api/recommendations/:id      | Gợi ý theo sản phẩm đang xem
+  POST        | /api/recommendations/cart     | Gợi ý theo giỏ hàng
+  ------------|-------------------------------|--------------------------------
+  POST        | /api/chatbot/message          | Gửi câu hỏi cho chatbot AI
+
+================================================================================
+PHẦN VI. HƯỚNG DẪN CÀI ĐẶT VÀ CHẠY DỰ ÁN
+================================================================================
+
+  Yêu cầu môi trường:
+    - Node.js v14 trở lên (https://nodejs.org)
+    - npm (đi kèm Node.js)
+    - Trình duyệt hiện đại (Chrome, Edge, Firefox)
+
+  Các bước thực hiện:
+
+  Bước 1: Giải nén hoặc mở thư mục dự án
+    > cd "WEB THU CUNG"
+
+  Bước 2: Cài đặt các thư viện cần thiết
+    > npm install
+
+  Bước 3: Khởi động server (chế độ phát triển)
+    > npm run dev
+    [Kết quả mong đợi]: Server is running on http://localhost:3000
+
+  Bước 4: Mở ứng dụng trên trình duyệt
+    Truy cập địa chỉ: http://localhost:3000
+
+  Lưu ý khi thử nghiệm tìm kiếm giọng nói:
+    - Chỉ hoạt động trên HTTPS hoặc localhost
+    - Cần cho phép quyền truy cập Microphone khi trình duyệt yêu cầu
+    - Hỗ trợ tốt nhất trên Google Chrome
+
+================================================================================
+PHẦN VII. KẾT QUẢ ĐẠT ĐƯỢC VÀ ĐÁNH GIÁ
+================================================================================
+
+7.1. Tính năng đã hoàn thành
+------------------------------
+  [x] Hiển thị và lọc danh sách sản phẩm theo danh mục
+  [x] Chatbot tư vấn bằng tiếng Việt với NLP pattern matching
+  [x] Tìm kiếm văn bản nhanh, lọc theo giá và tag
+  [x] Tìm kiếm bằng giọng nói (Web Speech API – vi-VN)
+  [x] Tìm kiếm bằng hình ảnh (upload file)
+  [x] Hệ thống gợi ý sản phẩm thông minh dựa trên điểm số
+  [x] Quản lý giỏ hàng với localStorage (thêm/xóa/cập nhật)
+  [x] Giao diện responsive, hoạt động trên mobile và desktop
+
+7.2. Hạn chế và hướng phát triển
+----------------------------------
+  Hạn chế:
+    - Dữ liệu sản phẩm hiện được lưu tĩnh trong database.js,
+      chưa kết nối cơ sở dữ liệu thực (MongoDB, MySQL...)
+    - Chatbot mới nhận diện khoảng 15-20 intent cơ bản
+    - Tìm kiếm hình ảnh chưa sử dụng mô hình Computer Vision thực sự
+
+  Hướng phát triển tương lai:
+    [ ] Tích hợp thanh toán: VNPay, MoMo, ZaloPay
+    [ ] Authentication: Đăng ký / đăng nhập (JWT)
+    [ ] Database: MongoDB Atlas hoặc MySQL
+    [ ] Nâng cấp Chatbot với OpenAI GPT API
+    [ ] Machine Learning cho gợi ý cá nhân hóa
+    [ ] Admin Dashboard quản lý sản phẩm
+    [ ] Mobile Application (React Native)
+
+7.3. Tự đánh giá
+-----------------
+  Tiêu chí                    | Nhóm tự chấm | Ghi chú
+  ----------------------------|--------------|--------------------------------
+  Hoàn thành tính năng chính  |   9/10       | Đủ các tính năng đề ra
+  Chất lượng code             |   8/10       | Modular, có comment
+  Giao diện UI/UX             |   9/10       | Responsive, animation mượt
+  Tài liệu & báo cáo         |   9/10       | Đầy đủ, chi tiết
+  Tính sáng tạo              |   8/10       | Voice + Image search
+
+================================================================================
+PHẦN VIII. PHÂN CÔNG CÔNG VIỆC
+================================================================================
+
+  Thành viên   | Công việc chính                              | Tỷ lệ đóng góp
+  -------------|----------------------------------------------|---------------
+  TV 1         | Backend Express, API sản phẩm, server setup  |    25%
+  TV 2         | Frontend HTML/CSS, UI components, animation  |    25%
+  TV 3         | Chatbot logic, Search module, Recommendation |    25%
+  TV 4         | Testing, Debugging, Báo cáo, Demo           |    25%
+
+================================================================================
+PHẦN IX. TÀI LIỆU THAM KHẢO
+================================================================================
+
+  [1] Node.js Documentation. https://nodejs.org/en/docs
+  [2] Express.js Guide. https://expressjs.com/en/guide/routing.html
+  [3] MDN Web Docs – Web Speech API.
+      https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API
+  [4] MDN Web Docs – Fetch API.
+      https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
+  [5] Philip Kotler, Gary Armstrong (2021). Principles of Marketing (18th ed.).
+      Pearson Education.
+  [6] Báo cáo thị trường thú cưng Việt Nam 2024 – Q&Me Vietnam Research.
+  [7] Tài liệu giảng dạy môn học – Khoa CNTT, năm học 2025–2026.
+
+================================================================================
+LỜI CẢM ƠN
+================================================================================
+
+  Nhóm xin chân thành cảm ơn Thầy/Cô ................................................
+  đã tận tình hướng dẫn, hỗ trợ và tạo điều kiện cho nhóm hoàn thành đồ án
+  này. Đây là cơ hội quý báu để chúng em ứng dụng kiến thức học thuật vào
+  một sản phẩm thực tế, từ đó củng cố và nâng cao kỹ năng lập trình và tư
+  duy thiết kế hệ thống.
+
+  Nhóm cam kết đây là công trình do nhóm tự thực hiện, không sao chép từ
+  các nguồn khác mà không có trích dẫn rõ ràng.
+
+                                        TP. Hồ Chí Minh, ngày ... tháng ... năm 2026
+                                                      Đại diện nhóm
+
+                                              ......................................
+                                                    (Ký và ghi rõ họ tên)
+
+================================================================================
+           THÔNG TIN FILE NỘP
+================================================================================
+
+  Tên file báo cáo HTML  : BAO_CAO_MON_HOC.html
+  Tên file báo cáo text  : BAO_CAO_NOP_GIANG_VIEN.txt
+  Thư mục source code    : WEB THU CUNG/
+  Link demo              : http://localhost:3000 (chạy npm run dev)
+  Link GitHub (nếu có)   : https://github.com/...........................
+
+================================================================================
+                            -- HẾT BÁO CÁO --
+================================================================================

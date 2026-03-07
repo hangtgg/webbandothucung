@@ -1,0 +1,134 @@
+═══════════════════════════════════════════════════════════════════════════════
+                    DANH SÁCH SẢN PHẨM PETSHOP
+═══════════════════════════════════════════════════════════════════════════════
+
+🐱 DANH MỤC: MÈO (11 sản phẩm)
+───────────────────────────────────────────────────────────────────────────────
+ID   | Tên sản phẩm                              | Loại           | Giá
+───────────────────────────────────────────────────────────────────────────────
+1    | Cát vệ sinh cao cấp (10kg)                | Litter         | 150.000 VNĐ
+2    | Bồn vệ sinh cho mèo - Đôi                 | Toilet         | 350.000 VNĐ
+3    | Nhà mèo đa tầng - Premium                 | Housing        | 800.000 VNĐ
+4    | Chuỗi đồ chơi cho mèo - Set 5             | Toys           | 50.000 VNĐ
+5    | Nệm mèo cao cấp - Lớn                     | Bedding        | 200.000 VNĐ
+7    | Thức ăn mèo cao cấp - 1kg                 | Food           | 250.000 VNĐ
+14   | Cát vệ sinh hạt tròn                       | Litter         | 120.000 VNĐ
+15   | Cát vệ sinh gỗ tự nhiên                    | Litter         | 180.000 VNĐ
+16   | Giường mèo dạng túi ấm                     | Bedding        | 280.000 VNĐ
+17   | Ngói cạo móng mèo                          | Toys           | 75.000 VNĐ
+18   | Snack mèo - Cá hồi                         | Food           | 65.000 VNĐ
+
+
+🐕 DANH MỤC: CHÓ (7 sản phẩm)
+───────────────────────────────────────────────────────────────────────────────
+ID   | Tên sản phẩm                              | Loại           | Giá
+───────────────────────────────────────────────────────────────────────────────
+8    | Dây dắt chó cao cấp - 2m                   | Leash          | 180.000 VNĐ
+9    | Thức ăn chó cao cấp - 2kg                 | Food           | 300.000 VNĐ
+10   | Ghế nằm chó - XL                           | Bedding        | 400.000 VNĐ
+19   | Dây dắt tự động - 5m                       | Leash          | 220.000 VNĐ
+20   | Cổ chó đeo - Phản quang                    | Leash          | 95.000 VNĐ
+21   | Nhà chó di động                            | Housing        | 650.000 VNĐ
+22   | Snack chó - Người bạn                      | Food           | 85.000 VNĐ
+
+
+🎁 DANH MỤC: PHỤ KIỆN CHUNG (22 sản phẩm)
+───────────────────────────────────────────────────────────────────────────────
+ID   | Tên sản phẩm                              | Loại           | Giá
+───────────────────────────────────────────────────────────────────────────────
+6    | Máy uống nước tự động - USB                | Water          | 300.000 VNĐ
+11   | Chuốt lông chó mèo - Pro                   | Grooming       | 120.000 VNĐ
+12   | Dầu gội đặc biệt - Mềm mại                | Grooming       | 200.000 VNĐ
+13   | Vitamin cho thú cưng - Hộp                 | Supplement     | 250.000 VNĐ
+23   | Dầu xả cho thú cưng                        | Grooming       | 180.000 VNĐ
+24   | Kéo cắt lông thú cưng                      | Grooming       | 280.000 VNĐ
+25   | Bàn chải đánh răng thú cưng                | Grooming       | 115.000 VNĐ
+26   | Chỉ nha khoa thú cưng                      | Grooming       | 95.000 VNĐ
+27   | Bộ đồ chơi bóng mèo - 6 cái                | Toys           | 60.000 VNĐ
+28   | Bồn tắm dạo phố                            | Housing        | 320.000 VNĐ
+29   | Khay ăn inox cho thú cưng                  | Accessories    | 85.000 VNĐ
+30   | Vòng chuông cho thú cưng                   | Accessories    | 45.000 VNĐ
+31   | Balo chó mèo cao cấp                       | Accessories    | 450.000 VNĐ
+32   | Quần áo thú cưng - Nhiều size              | Accessories    | 150.000 VNĐ
+33   | Tấm lót cho thú cưng - 50 cái              | Accessories    | 120.000 VNĐ
+34   | Xe kéo thú cưng - Gấp được                 | Accessories    | 580.000 VNĐ
+35   | Rương chứa đồ thú cưng                     | Accessories    | 380.000 VNĐ
+36   | Đèn chiếu sáng thú cưng                    | Accessories    | 200.000 VNĐ
+37   | Máy quạt cho thú cưng                      | Accessories    | 350.000 VNĐ
+38   | Máy sưởi cho thú cưng                      | Accessories    | 420.000 VNĐ
+39   | Tấm cách âm thú cưng                       | Accessories    | 280.000 VNĐ
+40   | Toilet tấm lót thú cưng - 100 miếng        | Accessories    | 150.000 VNĐ
+
+
+═══════════════════════════════════════════════════════════════════════════════
+                              THỐNG KỊ CHUNG
+═══════════════════════════════════════════════════════════════════════════════
+Tổng số sản phẩm: 40
+  - Mèo (cat):       11 sản phẩm (ID: 1-7, 14-18)
+  - Chó (dog):        7 sản phẩm (ID: 8-10, 19-22)
+  - Phụ kiện (general): 22 sản phẩm (ID: 6, 11-13, 23-40)
+
+Giá dao động: 45.000 - 800.000 VNĐ
+Giá trung bình: ~270.000 VNĐ
+
+
+═══════════════════════════════════════════════════════════════════════════════
+                           HƯỚNG DẪN SỬ DỤNG
+═══════════════════════════════════════════════════════════════════════════════
+
+1. UPLOAD ẢNH CHO SẢN PHẨM:
+   - Truy cập: http://localhost:3000/admin-images.html
+   - Tab "Upload ảnh"
+   - Chọn ID sản phẩm (1-40 hoặc các sản phẩm mới)
+   - Kéo hoặc click chọn file ảnh
+   - Click "Upload ảnh"
+
+2. TẠO SẢN PHẨM MỚI:
+   - Truy cập: http://localhost:3000/admin-images.html
+   - Tab "Tạo sản phẩm"
+   - Điền thông tin:
+     * Tên sản phẩm (bắt buộc)
+     * Giá VNĐ (bắt buộc)
+     * Danh mục: Mèo / Chó / Phụ kiện (bắt buộc)
+     * Loại (tự động update dựa trên danh mục) (bắt buộc)
+     * Mô tả (tùy chọn)
+   - Click "Tạo sản phẩm"
+   - Sản phẩm mới sẽ được gán ID tự động
+
+3. DANH MỤC & LOẠI:
+   Mèo (cat):
+     - Litter: Cát vệ sinh
+     - Housing: Nhà/Housing
+     - Bedding: Giường/Nệm
+     - Toys: Đồ chơi
+     - Food: Thức ăn
+
+   Chó (dog):
+     - Leash: Dây dắt
+     - Housing: Nhà
+     - Bedding: Giường
+     - Food: Thức ăn
+
+   Phụ kiện (general):
+     - Grooming: Chăm sóc
+     - Water: Nước uống
+     - Supplement: Vitamin
+     - Accessories: Phụ kiện
+     - Toys: Đồ chơi
+
+4. ĐẶC BIỆT:
+   - Mỗi sản phẩm tự động được gán ID duy nhất
+   - ID được gán tuần tự từ thứ tự tạo
+   - Có thể upload ảnh cho bất kỳ sản phẩm nào
+   - Ảnh local sẽ được ưu tiên hơn Unsplash
+   - Nếu không có ảnh → dùng ảnh Unsplash → SVG placeholder
+
+
+═══════════════════════════════════════════════════════════════════════════════
+                         THÔNG TIN LIÊN HỆ
+═══════════════════════════════════════════════════════════════════════════════
+Website: http://localhost:3000
+Admin: http://localhost:3000/admin-images.html
+
+Cập nhật lần cuối: 2026-03-07
+═══════════════════════════════════════════════════════════════════════════════
