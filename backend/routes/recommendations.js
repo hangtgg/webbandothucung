@@ -106,4 +106,86 @@ router.post('/cart', (req, res) => {
   });
 });
 
+// Get recommendations based on pet type from survey
+router.post('/pet-type', (req, res) => {
+  const { petType } = req.body;
+  
+  if (!petType) {
+    return res.status(400).json({ error: 'Pet type is required' });
+  }
+  
+  // Map loài thú cưng sang category
+  const categoryMap = {
+    'cat': 'cat',
+    'dog': 'dog',
+    'bird': 'bird',
+    'fish': 'fish',
+    'hamster': 'hamster',
+    'rabbit': 'rabbit',
+    'reptile': 'reptile',
+    'other': null
+  };
+  
+  const category = categoryMap[petType.toLowerCase()];
+  
+  if (!category) {
+    // If pet type is not specific, show general products
+    const generalProducts = products
+      .filter(p => p.category === 'general' || p.subcategory === 'accessories')
+      .slice(0, 5);
+    
+    return res.json({
+      petType,
+      recommendations: generalProducts,
+      message: `Chúng tôi gợi ý những phụ kiện hữu ích cho thú cưng của bạn`
+    });
+  }
+  
+  // Get products for the selected pet type
+  const petProducts = products.filter(p => p.category === category);
+  
+  if (petProducts.length === 0) {
+    return res.json({
+      petType,
+      recommendations: [],
+      message: `Xin lỗi, hiện chúng tôi chưa có sản phẩm cho loài thú cưng này`
+    });
+  }
+  
+  // Prioritize by subcategory (essentials first)
+  const essentialSubcategories = ['food', 'litter', 'toilet', 'water', 'housing', 'bedding'];
+  
+  const prioritized = petProducts.sort((a, b) => {
+    const aIndex = essentialSubcategories.indexOf(a.subcategory);
+    const bIndex = essentialSubcategories.indexOf(b.subcategory);
+    
+    if (aIndex !== -1 && bIndex !== -1) return aIndex - bIndex;
+    if (aIndex !== -1) return -1;
+    if (bIndex !== -1) return 1;
+    return 0;
+  });
+  
+  const recommendations = prioritized.slice(0, 6);
+  
+  // Get pet display name
+  const petDisplayNames = {
+    'cat': 'mèo',
+    'dog': 'chó',
+    'bird': 'chim',
+    'fish': 'cá',
+    'hamster': 'hamster',
+    'rabbit': 'thỏ',
+    'reptile': 'bò sát'
+  };
+  
+  const petDisplayName = petDisplayNames[category];
+  
+  res.json({
+    petType,
+    category,
+    recommendations,
+    message: `Dựa trên loài ${petDisplayName}, tôi gợi ý những sản phẩm cần thiết cho thú cưng của bạn`
+  });
+});
+
 module.exports = router;

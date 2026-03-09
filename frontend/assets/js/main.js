@@ -10,11 +10,8 @@ class SurveyManager {
   }
 
   init() {
-    // Check if survey was completed before
-    if (!this.isSurveyCompleted()) {
-      // Show survey after a short delay to allow page to load
-      setTimeout(() => this.showSurvey(), 500);
-    }
+    // Always show survey when page loads
+    setTimeout(() => this.showSurvey(), 500);
 
     // Event listeners
     this.surveyClose.addEventListener('click', () => this.closeSurvey());
@@ -86,6 +83,87 @@ class SurveyManager {
 
     // Show success message
     this.showSuccessMessage();
+
+    // Get product recommendations based on pet type
+    if (formData.petType) {
+      this.fetchPetTypeRecommendations(formData.petType);
+    }
+  }
+
+  async fetchPetTypeRecommendations(petType) {
+    try {
+      const response = await fetch('http://localhost:3000/api/recommendations/pet-type', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ petType })
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        // Show recommendations after survey closes
+        setTimeout(() => {
+          this.showPetTypeRecommendations(data);
+        }, 1500);
+      }
+    } catch (error) {
+      console.warn('Could not fetch pet type recommendations:', error);
+    }
+  }
+
+  showPetTypeRecommendations(data) {
+    // Create modal for recommendations
+    const modal = document.createElement('div');
+    modal.className = 'modal';
+    modal.style.display = 'flex';
+    modal.id = 'recommendationModal';
+
+    let recommendationsHTML = data.recommendations.map(product => {
+      return `
+        <div class="product-card" data-product-id="${product.id}">
+          <div class="product-image">
+            <img src="/api/images/image/${product.id}?name=${encodeURIComponent(product.name)}" alt="${product.name}" style="width: 100%; height: 150px; object-fit: cover;">
+          </div>
+          <div class="product-info">
+            <h3>${product.name}</h3>
+            <p class="product-description" style="font-size: 13px; color: #666; margin: 8px 0;">${product.description}</p>
+            <div class="product-footer" style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
+              <span class="price" style="font-weight: bold; color: var(--primary-color); font-size: 16px;">₫${product.price.toLocaleString('vi-VN')}</span>
+              <button class="btn-add-cart" onclick="Cart.addToCart({id: ${product.id}, name: '${product.name.replace(/'/g, "\\'")}', price: ${product.price}, image: '${product.image}'}); alert('Đã thêm vào giỏ hàng')" style="background: var(--primary-color); color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 13px;">
+                <i class="fas fa-shopping-cart"></i> Thêm
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    modal.innerHTML = `
+      <div class="modal-content" style="max-width: 90%; width: 900px; max-height: 80vh; overflow-y: auto;">
+        <span class="close-btn" onclick="this.closest('.modal').remove()" style="font-size: 28px; cursor: pointer;">&times;</span>
+        <div class="survey-header" style="text-align: center; padding: 20px; background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white; border-radius: 8px 8px 0 0;">
+          <i class="fas fa-lightbulb" style="font-size: 32px; margin-bottom: 10px;"></i>
+          <h2 style="margin: 10px 0; color: white;">${data.message}</h2>
+          <p style="margin: 5px 0; opacity: 0.9;">Khám phá các sản phẩm phù hợp cho thú cưng của bạn</p>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; padding: 20px;">
+          ${recommendationsHTML}
+        </div>
+        <div style="text-align: center; padding: 20px; border-top: 1px solid #eee;">
+          <button class="btn-primary" onclick="this.closest('.modal').remove()" style="background: var(--primary-color); color: white; padding: 10px 30px; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;">Tiếp tục mua sắm</button>
+        </div>
+      </div>
+    `;
+
+    document.body.appendChild(modal);
+
+    // Close on outside click
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.remove();
+      }
+    });
   }
 
   showSuccessMessage() {

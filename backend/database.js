@@ -454,6 +454,379 @@ const products = [
     description: "Tấm lót toilet cho chó mèo, chất lượng cao",
     relatedProducts: [2, 1],
     tags: ["vệ sinh", "tấm lót", "toilet"]
+  },
+  
+  // Hamster Products
+  {
+    id: 41,
+    name: "Chuồng hamster 2 tầng - Kính",
+    category: "hamster",
+    subcategory: "cage",
+    price: 450000,
+    image: "hamster-cage.svg",
+    description: "Chuồng hamster kính 2 tầng, thoáng khí, dễ vệ sinh",
+    relatedProducts: [42, 45, 46],
+    tags: ["hamster", "chuồng", "nhà"]
+  },
+  {
+    id: 42,
+    name: "Bánh xe chạy hamster - Có núi",
+    category: "hamster",
+    subcategory: "wheel",
+    price: 150000,
+    image: "hamster-wheel.svg",
+    description: "Bánh xe chạy an toàn, lặng lẽ, kích thước 20cm",
+    relatedProducts: [41, 46],
+    tags: ["hamster", "bánh xe", "vận động"]
+  },
+  {
+    id: 43,
+    name: "Thức ăn hamster - 500g",
+    category: "hamster",
+    subcategory: "feed",
+    price: 80000,
+    image: "hamster-food.svg",
+    description: "Thức ăn hamster dinh dưỡng cân bằng, giàu vitamin",
+    relatedProducts: [41, 44],
+    tags: ["hamster", "thức ăn", "dinh dưỡng"]
+  },
+  {
+    id: 44,
+    name: "Đệm lót chuồng hamster - 1kg",
+    category: "hamster",
+    subcategory: "bedding",
+    price: 120000,
+    image: "hamster-bedding.svg",
+    description: "Đệm lót từ giấy bào, an toàn, hấp thụ mùi",
+    relatedProducts: [41, 43],
+    tags: ["hamster", "đệm", "sạch sẽ"]
+  },
+  {
+    id: 45,
+    name: "Bộ đồ chơi hamster - 6 món",
+    category: "hamster",
+    subcategory: "toys",
+    price: 200000,
+    image: "hamster-toys.svg",
+    description: "Bộ đồ chơi gồm lưới leo, ống, cầu đơi",
+    relatedProducts: [41, 42],
+    tags: ["hamster", "đồ chơi", "vui chơi"]
+  },
+  {
+    id: 46,
+    name: "Bình uống nước hamster - Tự động",
+    category: "hamster",
+    subcategory: "water",
+    price: 60000,
+    image: "hamster-water.svg",
+    description: "Bình uống nước tự động, không tinh cọc, an toàn",
+    relatedProducts: [41, 43],
+    tags: ["hamster", "nước", "uống"]
+  },
+  {
+    id: 47,
+    name: "Chảy ăn hamster - Gốm",
+    category: "hamster",
+    subcategory: "feed",
+    price: 45000,
+    image: "hamster-bowl.svg",
+    description: "Chảy ăn từ gốm, không độc hại, dễ vệ sinh",
+    relatedProducts: [41, 43],
+    tags: ["hamster", "chảy ăn", "ăn"]
+  },
+
+  // Rabbit Products
+  {
+    id: 48,
+    name: "Chuồng thỏ - Gỗ ngoài trời",
+    category: "rabbit",
+    subcategory: "cage",
+    price: 1200000,
+    image: "rabbit-cage.svg",
+    description: "Chuồng thỏ gỗ lớn, thoáng khí, bền lâu",
+    relatedProducts: [49, 51, 52],
+    tags: ["thỏ", "chuồng", "ngoài trời"]
+  },
+  {
+    id: 49,
+    name: "Cỏ khô cho thỏ - 1kg",
+    category: "rabbit",
+    subcategory: "hay",
+    price: 100000,
+    image: "rabbit-hay.svg",
+    description: "Cỏ khô cao cấp, tự nhiên, tốt cho tiêu hóa",
+    relatedProducts: [48, 50],
+    tags: ["thỏ", "cỏ khô", "thực vật"]
+  },
+  {
+    id: 50,
+    name: "Thức ăn hạt thỏ - 800g",
+    category: "rabbit",
+    subcategory: "feed",
+    price: 180000,
+    image: "rabbit-food.svg",
+    description: "Thức ăn thỏ cân bằng, không chứa hạt lạ",
+    relatedProducts: [48, 49],
+    tags: ["thỏ", "thức ăn", "hạt"]
+  },
+  {
+    id: 51,
+    name: "Đệm lót chuồng thỏ - 2kg",
+    category: "rabbit",
+    subcategory: "bedding",
+    price: 150000,
+    image: "rabbit-bedding.svg",
+    description: "Đệm lót từ gỗ, an toàn, hấp thụ tốt",
+    relatedProducts: [48, 49],
+    tags: ["thỏ", "đệm", "thoáng"]
+  },
+  {
+    id: 52,
+    name: "Bộ đồ chơi thỏ - 5 món",
+    category: "rabbit",
+    subcategory: "toys",
+    price: 280000,
+    image: "rabbit-toys.svg",
+    description: "Đồ chơi gỗ tự nhiên, bóp, chuỗi, an toàn",
+    relatedProducts: [48, 53],
+    tags: ["thỏ", "đồ chơi", "gỗ"]
+  },
+  {
+    id: 53,
+    name: "Bình uống thỏ - Mũi nhỏ",
+    category: "rabbit",
+    subcategory: "water",
+    price: 80000,
+    image: "rabbit-water.svg",
+    description: "Bình uống có mũi nhỏ, không bị rơi vãi",
+    relatedProducts: [48, 50],
+    tags: ["thỏ", "nước", "uống"]
+  },
+  {
+    id: 54,
+    name: "Chảy ăn thỏ - Nhôm",
+    category: "rabbit",
+    subcategory: "feed",
+    price: 120000,
+    image: "rabbit-bowl.svg",
+    description: "Chảy ăn nhôm chắc chắn, dễ dàng vệ sinh",
+    relatedProducts: [48, 50],
+    tags: ["thỏ", "chảy", "ăn"]
+  },
+
+  // Bird Products
+  {
+    id: 55,
+    name: "Lồng chim - Đồng loại",
+    category: "bird",
+    subcategory: "cage",
+    price: 800000,
+    image: "bird-cage.svg",
+    description: "Lồng chim sắt mạ, độc đáo, nhiều tầng",
+    relatedProducts: [56, 59, 60],
+    tags: ["chim", "lồng", "nhà"]
+  },
+  {
+    id: 56,
+    name: "Thức ăn chim - Hạt cao cấp",
+    category: "bird",
+    subcategory: "feed",
+    price: 120000,
+    image: "bird-feed.svg",
+    description: "Hạt thực phẩm sạch, dinh dưỡng cho chim cảnh",
+    relatedProducts: [55, 57],
+    tags: ["chim", "thức ăn", "hạt"]
+  },
+  {
+    id: 57,
+    name: "Bình uống chim - Tự động",
+    category: "bird",
+    subcategory: "water",
+    price: 70000,
+    image: "bird-water.svg",
+    description: "Bình uống tự động, không bị kiến bò vô",
+    relatedProducts: [55, 56],
+    tags: ["chim", "nước", "uống"]
+  },
+  {
+    id: 58,
+    name: "Cây đậu chim - Thiên nhiên",
+    category: "bird",
+    subcategory: "perch",
+    price: 150000,
+    image: "bird-perch.svg",
+    description: "Cây đậu từ gỗ tự nhiên, an toàn cho chim",
+    relatedProducts: [55, 60],
+    tags: ["chim", "cây đậu", "tự nhiên"]
+  },
+  {
+    id: 59,
+    name: "Bộ đồ chơi chim - 4 món",
+    category: "bird",
+    subcategory: "toys",
+    price: 200000,
+    image: "bird-toys.svg",
+    description: "Bóp, chuỗi, gương, chuông cho chim",
+    relatedProducts: [55, 60],
+    tags: ["chim", "đồ chơi", "vui"]
+  },
+  {
+    id: 60,
+    name: "Chảy ăn chim - Gỗ",
+    category: "bird",
+    subcategory: "feed",
+    price: 85000,
+    image: "bird-bowl.svg",
+    description: "Chảy ăn gỗ tự nhiên, an toàn, không độc",
+    relatedProducts: [55, 56],
+    tags: ["chim", "chảy", "ăn"]
+  },
+
+  // Fish Products
+  {
+    id: 61,
+    name: "Bể cá - Mớ nước thủy sinh",
+    category: "fish",
+    subcategory: "tank",
+    price: 2500000,
+    image: "fish-tank.svg",
+    description: "Bể cá thủy sinh 100L, kèm lọc và đèn LED",
+    relatedProducts: [62, 64, 65],
+    tags: ["cá", "bể", "thủy sinh"]
+  },
+  {
+    id: 62,
+    name: "Máy lọc bể cá - Cấp 3",
+    category: "fish",
+    subcategory: "filter",
+    price: 600000,
+    image: "fish-filter.svg",
+    description: "Máy lọc 3 tầng, sạch sẽ nước, yên tĩnh",
+    relatedProducts: [61, 63],
+    tags: ["cá", "lọc", "máy"]
+  },
+  {
+    id: 63,
+    name: "Thức ăn cá - Hạt",
+    category: "fish",
+    subcategory: "feed",
+    price: 100000,
+    image: "fish-feed.svg",
+    description: "Thức ăn cá hạt, giàu protein, dễ tiêu",
+    relatedProducts: [61, 62],
+    tags: ["cá", "thức ăn", "hạt"]
+  },
+  {
+    id: 64,
+    name: "Cây thủy sinh - Combo 5 cây",
+    category: "fish",
+    subcategory: "plants",
+    price: 250000,
+    image: "fish-plants.svg",
+    description: "Bộ 5 cây thủy sinh, sạch nước, tự nhiên",
+    relatedProducts: [61, 65],
+    tags: ["cá", "cây", "thủy sinh"]
+  },
+  {
+    id: 65,
+    name: "Đá trang trí bể cá - 10kg",
+    category: "fish",
+    subcategory: "accessories",
+    price: 180000,
+    image: "fish-rocks.svg",
+    description: "Đá xám, trắng, đen, không độc, lọc nước",
+    relatedProducts: [61, 64],
+    tags: ["cá", "đá", "trang trí"]
+  },
+  {
+    id: 66,
+    name: "Muối cân bằng bể cá - 500g",
+    category: "fish",
+    subcategory: "accessories",
+    price: 120000,
+    image: "fish-salt.svg",
+    description: "Muối biển cân bằng, kiểm soát pH ",
+    relatedProducts: [61, 62],
+    tags: ["cá", "muối", "cân bằng"]
+  },
+
+  // Reptile Products
+  {
+    id: 67,
+    name: "Terrarium mặp - Kính 120x60",
+    category: "reptile",
+    subcategory: "enclosure",
+    price: 3500000,
+    image: "reptile-enclosure.svg",
+    description: "Terrarium kính cao cấp, thoáng khí, toàn phần",
+    relatedProducts: [68, 70, 71],
+    tags: ["bò sát", "terrarium", "nhà"]
+  },
+  {
+    id: 68,
+    name: "Đèn UV cho bò sát - 18W",
+    category: "reptile",
+    subcategory: "lighting",
+    price: 450000,
+    image: "reptile-uv.svg",
+    description: "Đèn UV-B, UVA, tốt cho xương và da",
+    relatedProducts: [67, 69],
+    tags: ["bò sát", "đèn", "UV"]
+  },
+  {
+    id: 69,
+    name: "Bộ sưởi bò sát - PTC",
+    category: "reptile",
+    subcategory: "heat",
+    price: 650000,
+    image: "reptile-heater.svg",
+    description: "Máy sưởi PTC an toàn, không khô bò sát",
+    relatedProducts: [67, 68],
+    tags: ["bò sát", "sưởi", "nhiệt"]
+  },
+  {
+    id: 70,
+    name: "Thức ăn bò sát - Côn trùng",
+    category: "reptile",
+    subcategory: "feed",
+    price: 200000,
+    image: "reptile-feed.svg",
+    description: "Côn trùng sấy khô, dinh dưỡng cao",
+    relatedProducts: [67, 71],
+    tags: ["bò sát", "thức ăn", "côn trùng"]
+  },
+  {
+    id: 71,
+    name: "Đệm lót terrarium - Coco husk",
+    category: "reptile",
+    subcategory: "substrate",
+    price: 250000,
+    image: "reptile-substrate.svg",
+    description: "Đệm lót từ vỏ dừa, giữ độ ẩm tốt",
+    relatedProducts: [67, 69],
+    tags: ["bò sát", "đệm", "ẩm"]
+  },
+  {
+    id: 72,
+    name: "Hộp ấp trứng bò sát",
+    category: "reptile",
+    subcategory: "accessories",
+    price: 500000,
+    image: "reptile-incubator.svg",
+    description: "Hộp ấp trứng tự động, kiểm soát nhiệt độ",
+    relatedProducts: [67, 68],
+    tags: ["bò sát", "ấp", "trứng"]
+  },
+  {
+    id: 73,
+    name: "Nước khử clorin bò sát - 500ml",
+    category: "reptile",
+    subcategory: "accessories",
+    price: 150000,
+    image: "reptile-water.svg",
+    description: "Dung dịch khử clorin, an toàn cho bò sát",
+    relatedProducts: [67, 70],
+    tags: ["bò sát", "nước", "khỏe"]
   }
 ];
 
@@ -463,7 +836,7 @@ const chatbotResponses = {
     "Chào bạn! Bạn cần tìm gì cho thú cưng của mình hôm nay?"
   ],
   help: [
-    "Tôi có thể giúp bạn:\n- Tìm sản phẩm cho mèo hoặc chó\n- Nhận gợi ý sản phẩm liên quan\n- Tìm kiếm bằng hình ảnh hoặc giọng nói\n- Trả lời câu hỏi về chăm sóc thú cưng"
+    "Tôi có thể giúp bạn:\n- Tìm sản phẩm cho chó, mèo, hamster, thỏ, chim, cá, bò sát\n- Nhận gợi ý sản phẩm liên quan\n- Tìm kiếm bằng hình ảnh hoặc giọng nói\n- Trả lời câu hỏi về chăm sóc thú cưng"
   ],
   recommendation_litter: "Bạn đang chọn cát vệ sinh! Để giữ vệ sinh tốt hơn, tôi xin gợi ý máy uống nước tự động hoặc bồn vệ sinh cao cấp.",
   recommendation_food: "Bạn đang chọn thức ăn! Máy uống nước tự động sẽ rất hữu ích để thú cưng của bạn luôn có nước sạch sẽ.",

@@ -34,13 +34,13 @@ function detectPetType(message) {
   const msg = normalizeForSearch(message);
 
   const petMap = [
-    { type: 'dog', keywords: ['cho', 'dog', 'cun'] },
-    { type: 'cat', keywords: ['meo', 'cat', 'meok'] },
+    { type: 'dog', keywords: ['cho', 'dog', 'cun', 'chó'] },
+    { type: 'cat', keywords: ['meo', 'cat', 'meok', 'mèo'] },
+    { type: 'hamster', keywords: ['hamster', 'hamsterr', 'hamsters'] },
+    { type: 'rabbit', keywords: ['tho', 'rabbit', 'tho trang', 'thỏ'] },
     { type: 'bird', keywords: ['chim', 'bird', 'chuot bay'] },
-    { type: 'fish', keywords: ['ca', 'fish', 'tay ca'] },
-    { type: 'hamster', keywords: ['hamster', 'chuot', 'chuot tuong lau'] },
-    { type: 'rabbit', keywords: ['tho', 'rabbit', 'tho trang'] },
-    { type: 'reptile', keywords: ['bo sat', 'reptile', 'ran', 'thao nhan'] }
+    { type: 'fish', keywords: ['ca', 'fish', 'tay ca', 'cá'] },
+    { type: 'reptile', keywords: ['bo sat', 'reptile', 'ran', 'thao nhan', 'bò sát'] }
   ];
 
   const found = petMap.find(item => containsAny(msg, item.keywords));
@@ -310,7 +310,9 @@ function buildSmartSuggestions(context, matchedProducts = []) {
   if (!context.petType) {
     suggestions.push('Sản phẩm cho chó');
     suggestions.push('Sản phẩm cho mèo');
-    suggestions.push('Phụ kiện chung');
+    suggestions.push('Sản phẩm cho hamster');
+    suggestions.push('Sản phẩm cho thỏ');
+    suggestions.push('Sản phẩm cho chim');
   }
 
   if (context.petType === 'cat' && context.needs.length === 0) {
@@ -323,6 +325,36 @@ function buildSmartSuggestions(context, matchedProducts = []) {
     suggestions.push('Thức ăn chó bán chạy');
     suggestions.push('Dây dắt & cổ chó');
     suggestions.push('Giường cho chó');
+  }
+
+  if (context.petType === 'hamster' && context.needs.length === 0) {
+    suggestions.push('Chuồng hamster 2 tầng');
+    suggestions.push('Bánh xe chạy');
+    suggestions.push('Đồ chơi hamster');
+  }
+
+  if (context.petType === 'rabbit' && context.needs.length === 0) {
+    suggestions.push('Chuồng thỏ');
+    suggestions.push('Cỏ khô cao cấp');
+    suggestions.push('Đồ chơi thỏ');
+  }
+
+  if (context.petType === 'bird' && context.needs.length === 0) {
+    suggestions.push('Lồng chim');
+    suggestions.push('Thức ăn chim hạt');
+    suggestions.push('Cây đậu chim');
+  }
+
+  if (context.petType === 'fish' && context.needs.length === 0) {
+    suggestions.push('Bể cá thủy sinh');
+    suggestions.push('Máy lọc bể cá');
+    suggestions.push('Cây thủy sinh');
+  }
+
+  if (context.petType === 'reptile' && context.needs.length === 0) {
+    suggestions.push('Terrarium mặp');
+    suggestions.push('Đèn UV cho bò sát');
+    suggestions.push('Bộ sưởi bò sát');
   }
 
   if (context.needs.length === 0 && context.petType) {

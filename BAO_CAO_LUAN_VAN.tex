@@ -1,0 +1,748 @@
+% ============================================================
+%  BÁO CÁO ĐỒ ÁN MÔN HỌC – PETSHOP WEBSITE
+%  LaTeX Template – Chuẩn học thuật Việt Nam
+%  Biên dịch: pdflatex → BAO_CAO_LUAN_VAN.pdf
+%  Hoặc upload lên Overleaf (overleaf.com) để dịch online
+% ============================================================
+
+\documentclass[12pt, a4paper]{report}
+
+% ===== PACKAGES =====
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage[vietnamese]{babel}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{setspace}
+\usepackage{indentfirst}
+\usepackage{tcolorbox}
+\usepackage{fontawesome5}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+% ===== PAGE GEOMETRY =====
+\geometry{
+    top=3cm,
+    bottom=3cm,
+    left=3.5cm,
+    right=2.5cm,
+    headheight=15pt
+}
+
+% ===== COLORS =====
+\definecolor{primaryColor}{RGB}{108, 99, 255}
+\definecolor{accentColor}{RGB}{253, 121, 168}
+\definecolor{darkColor}{RGB}{26, 26, 46}
+\definecolor{codeBackground}{RGB}{13, 17, 23}
+\definecolor{codeText}{RGB}{201, 209, 217}
+\definecolor{successColor}{RGB}{85, 239, 196}
+\definecolor{warningColor}{RGB}{253, 203, 110}
+
+% ===== HYPERREF SETUP =====
+\hypersetup{
+    colorlinks=true,
+    linkcolor=primaryColor,
+    urlcolor=accentColor,
+    citecolor=primaryColor,
+    pdftitle={Báo Cáo Đồ Án – PetShop Website},
+    pdfauthor={Nhóm sinh viên},
+    pdfsubject={Lập trình Ứng dụng Web},
+    pdfkeywords={PetShop, E-commerce, Chatbot, Node.js, Express.js}
+}
+
+% ===== CODE LISTING STYLE =====
+\lstdefinestyle{jsStyle}{
+    backgroundcolor=\color{codeBackground},
+    basicstyle=\ttfamily\footnotesize\color{codeText},
+    keywordstyle=\color{accentColor}\bfseries,
+    stringstyle=\color{successColor},
+    commentstyle=\color{gray}\itshape,
+    numberstyle=\tiny\color{gray},
+    numbers=left,
+    numbersep=8pt,
+    stepnumber=1,
+    breaklines=true,
+    breakatwhitespace=false,
+    tabsize=2,
+    frame=single,
+    frameround=tttt,
+    rulecolor=\color{primaryColor},
+    captionpos=b,
+    xleftmargin=15pt,
+    xrightmargin=5pt,
+    showstringspaces=false,
+    language=JavaScript
+}
+
+% ===== HEADER / FOOTER =====
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primaryColor}{PetShop – Cửa Hàng Thú Cưng Trực Tuyến}}
+\fancyhead[R]{\small\thepage}
+\fancyfoot[C]{\small\textcolor{gray}{Báo cáo Đồ án Môn học · Năm học 2025--2026}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% ===== CHAPTER/SECTION STYLE =====
+\titleformat{\chapter}[display]
+    {\normalfont\huge\bfseries\color{primaryColor}}
+    {\chaptertitlename\ \thechapter}{20pt}{\Huge}
+\titleformat{\section}
+    {\normalfont\Large\bfseries\color{darkColor}}
+    {\thesection}{1em}{}
+\titleformat{\subsection}
+    {\normalfont\large\bfseries\color{primaryColor!80!black}}
+    {\thesubsection}{1em}{}
+
+% ===== LINE SPACING =====
+\onehalfspacing
+
+% ===== TCOLORBOX STYLES =====
+\tcbuselibrary{skins,breakable}
+\newtcolorbox{infobox}[1][]{
+    enhanced,
+    colback=primaryColor!10,
+    colframe=primaryColor,
+    fonttitle=\bfseries,
+    title={#1},
+    breakable
+}
+\newtcolorbox{warningbox}[1][]{
+    enhanced,
+    colback=warningColor!15,
+    colframe=warningColor!80!black,
+    fonttitle=\bfseries,
+    title={#1},
+    breakable
+}
+\newtcolorbox{successbox}[1][]{
+    enhanced,
+    colback=successColor!10,
+    colframe=successColor!70!black,
+    fonttitle=\bfseries,
+    title={#1},
+    breakable
+}
+
+% ============================================================
+%  BEGIN DOCUMENT
+% ============================================================
+\begin{document}
+
+% ===== BÌA =====
+\begin{titlepage}
+    \centering
+    \vspace*{1cm}
+
+    {\large\textbf{TRƯỜNG ĐẠI HỌC .................................}}\\[0.3cm]
+    {\large\textbf{KHOA CÔNG NGHỆ THÔNG TIN}}\\[0.2cm]
+    {\normalsize Bộ môn: Lập trình Ứng dụng Web}
+
+    \vspace{1.5cm}
+    \rule{\textwidth}{2pt}\\[0.5cm]
+
+    {\Huge\bfseries\textcolor{primaryColor}{BÁO CÁO ĐỒ ÁN MÔN HỌC}}\\[0.5cm]
+    \rule{\textwidth}{2pt}
+
+    \vspace{1cm}
+
+    {\huge\bfseries 🐾 PetShop}\\[0.3cm]
+    {\LARGE\bfseries Cửa Hàng Thú Cưng Trực Tuyến}\\[0.5cm]
+    {\large\textit{Website TMĐT tích hợp Chatbot AI \& Tìm kiếm Thông minh}}
+
+    \vspace{1cm}
+
+    % Số liệu nổi bật
+    \begin{tcolorbox}[colback=primaryColor!5, colframe=primaryColor, width=0.8\textwidth]
+        \centering
+        \begin{tabular}{cccc}
+            \Large\textbf{\textcolor{primaryColor}{70+}} &
+            \Large\textbf{\textcolor{primaryColor}{7}} &
+            \Large\textbf{\textcolor{primaryColor}{9}} &
+            \Large\textbf{\textcolor{primaryColor}{9}} \\
+            \small Sản phẩm &
+            \small Danh mục &
+            \small API Endpoints &
+            \small Tính năng \\
+        \end{tabular}
+    \end{tcolorbox}
+
+    \vspace{1.5cm}
+
+    \begin{tabular}{rl}
+        \textbf{Giảng viên hướng dẫn:} & TS./ThS. ....................... \\[0.3cm]
+        \textbf{Nhóm thực hiện:}        & Nhóm số: ...................... \\[0.2cm]
+        \textbf{Thành viên 1:}          & .......................... – MSSV: .............. \\[0.2cm]
+        \textbf{Thành viên 2:}          & .......................... – MSSV: .............. \\[0.2cm]
+        \textbf{Thành viên 3:}          & .......................... – MSSV: .............. \\[0.2cm]
+        \textbf{Thành viên 4:}          & .......................... – MSSV: .............. \\[0.3cm]
+        \textbf{Học kỳ / Năm học:}      & ............... / 2025--2026 \\[0.2cm]
+        \textbf{Ngày nộp:}              & ......./......./2026 \\
+    \end{tabular}
+
+    \vfill
+    {\large TP. Hồ Chí Minh – 2026}
+\end{titlepage}
+
+% ===== NHẬN XÉT CỦA GIẢNG VIÊN =====
+\newpage
+\thispagestyle{plain}
+\chapter*{Nhận Xét Của Giảng Viên Hướng Dẫn}
+\addcontentsline{toc}{chapter}{Nhận Xét Của Giảng Viên Hướng Dẫn}
+
+\vspace{1cm}
+
+\noindent Họ và tên GVHD: \underline{\hspace{8cm}}\\[0.5cm]
+\noindent Nhận xét về đồ án:
+
+\vspace{7cm}
+
+\begin{flushright}
+    \textit{TP. Hồ Chí Minh, ngày \ldots{} tháng \ldots{} năm 2026}\\[1cm]
+    \textbf{(Ký và ghi rõ họ tên)}\\[2cm]
+    \underline{\hspace{6cm}}
+\end{flushright}
+
+% ===== MỤC LỤC =====
+\tableofcontents
+\newpage
+
+% ===== DANH SÁCH BẢNG BIỂU =====
+\listoftables
+\addcontentsline{toc}{chapter}{Danh Sách Bảng Biểu}
+\newpage
+
+% ===== LỜI NÓI ĐẦU =====
+\chapter*{Lời Nói Đầu}
+\addcontentsline{toc}{chapter}{Lời Nói Đầu}
+
+Thương mại điện tử đang trở thành xu hướng tất yếu trong thời đại số hóa, đặc biệt trong bối cảnh người dùng ngày càng quen thuộc với các nền tảng mua sắm trực tuyến. Cùng với sự phát triển của thị trường thú cưng tại Việt Nam – ước tính tăng trưởng hơn 15\% mỗi năm – nhu cầu xây dựng một nền tảng TMĐT chuyên biệt, hiện đại và thông minh cho lĩnh vực này ngày càng trở nên cấp thiết.
+
+Trong khuôn khổ môn học \textbf{Lập trình Ứng dụng Web}, nhóm chúng em đã lựa chọn và phát triển dự án \textbf{PetShop – Cửa Hàng Thú Cưng Trực Tuyến}. Dự án không chỉ xây dựng một website bán hàng thông thường mà còn tích hợp các công nghệ AI hiện đại như \textbf{Chatbot tư vấn}, \textbf{Tìm kiếm bằng giọng nói} và \textbf{Tìm kiếm bằng hình ảnh} để tạo ra một trải nghiệm mua sắm thông minh và tiện lợi.
+
+Hệ thống được phát triển với quy mô \textbf{70+ sản phẩm}, phủ rộng \textbf{7 danh mục thú cưng} đa dạng, sử dụng kiến trúc Client-Server với Node.js/Express.js ở backend và HTML5/CSS3/VanillaJS ở frontend.
+
+Chúng em xin gửi lời cảm ơn chân thành đến Thầy/Cô \underline{\hspace{5cm}} đã tận tình hướng dẫn và hỗ trợ trong suốt quá trình thực hiện đồ án này.
+
+% ============================================================
+\chapter{Giới Thiệu Đề Tài}
+% ============================================================
+
+\section{Lý Do Chọn Đề Tài}
+
+Thị trường thú cưng Việt Nam đang tăng trưởng mạnh mẽ với tốc độ \textbf{15\%/năm}, theo báo cáo Q\&Me Vietnam Research 2024. Người nuôi thú cưng ngày càng chi tiêu nhiều hơn cho việc chăm sóc thú cưng, bao gồm thức ăn, đồ dùng, phụ kiện và dịch vụ thú y.
+
+Nhóm nhận thấy:
+\begin{itemize}[leftmargin=*]
+    \item Nhu cầu mua sắm online các sản phẩm thú cưng tăng cao
+    \item Người dùng mong muốn được tư vấn chuyên sâu về từng loại thú cưng
+    \item Tìm kiếm sản phẩm bằng hình ảnh và giọng nói chưa phổ biến trong TMĐT thú cưng
+\end{itemize}
+
+\begin{infobox}[Lý do chọn đề tài]
+Xây dựng website TMĐT thú cưng với tích hợp AI để mang lại trải nghiệm mua sắm thông minh, không chỉ hỗ trợ người dùng tìm sản phẩm mà còn tư vấn chăm sóc đúng cách cho từng loại thú cưng.
+\end{infobox}
+
+\section{Mục Tiêu Đề Tài}
+
+\begin{enumerate}[leftmargin=*, label=\textbf{\arabic*.}]
+    \item Xây dựng hệ thống website TMĐT thú cưng hoàn chỉnh với kiến trúc Client-Server
+    \item Cơ sở dữ liệu \textbf{70+ sản phẩm} phân bổ trên \textbf{7 danh mục thú cưng}
+    \item Tích hợp \textbf{Chatbot AI} hỗ trợ tư vấn sản phẩm bằng tiếng Việt
+    \item Triển khai \textbf{tìm kiếm đa phương thức}: văn bản, giọng nói, hình ảnh
+    \item Xây dựng \textbf{hệ thống gợi ý sản phẩm} thông minh (Content-Based Filtering)
+    \item Giao diện \textbf{responsive}, thân thiện trên mọi thiết bị
+\end{enumerate}
+
+\section{Phạm Vi Đề Tài}
+
+\begin{table}[H]
+    \centering
+    \caption{Phạm vi thực hiện đề tài}
+    \begin{tabular}{>{\bfseries}p{4cm}p{9cm}}
+        \toprule
+        Tiêu chí & Mô tả \\
+        \midrule
+        Đối tượng & Người nuôi thú cưng (chó, mèo, hamster, thỏ, chim, cá, bò sát) tại Việt Nam \\
+        Phạm vi địa lý & Không giới hạn (website trực tuyến) \\
+        Công nghệ Backend & Node.js + Express.js \\
+        Công nghệ Frontend & HTML5, CSS3, Vanilla JavaScript \\
+        Thời gian thực hiện & .......................... \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+% ============================================================
+\chapter{Danh Mục Sản Phẩm}
+% ============================================================
+
+Hệ thống PetShop cung cấp hơn \textbf{70 sản phẩm} được phân bổ trên \textbf{7 danh mục thú cưng} chính và một danh mục phụ kiện chung.
+
+\begin{table}[H]
+    \centering
+    \caption{Thống kê sản phẩm theo danh mục}
+    \begin{tabular}{clp{6cm}c}
+        \toprule
+        \textbf{STT} & \textbf{Danh mục} & \textbf{Phân loại sản phẩm} & \textbf{Số SP} \\
+        \midrule
+        1 & Mèo (Cat)        & Vệ sinh, Nhà ở, Đồ chơi, Thức ăn         & 11 \\
+        2 & Chó (Dog)        & Dây dắt, Thức ăn, Nhà ở, Phụ kiện        & 8  \\
+        3 & Hamster          & Chuồng, Bánh xe, Thức ăn, Đồ chơi        & 7  \\
+        4 & Thỏ (Rabbit)     & Chuồng, Cỏ khô, Thức ăn, Đệm lót         & 7  \\
+        5 & Chim (Bird)      & Lồng, Thức ăn, Đồ chơi, Cây đậu          & 6  \\
+        6 & Cá (Fish)        & Bể cá, Máy lọc, Thức ăn, Trang trí       & 6  \\
+        7 & Bò sát (Reptile) & Terrarium, Đèn UV, Sưởi, Thức ăn         & 5  \\
+        8 & Chung (General)  & Chăm sóc, Phụ kiện, Sức khỏe             & 25+ \\
+        \midrule
+        \multicolumn{3}{r}{\textbf{Tổng cộng}} & \textbf{70+} \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+% Biểu đồ phân bổ sản phẩm
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[
+            ybar,
+            bar width=0.6cm,
+            width=12cm,
+            height=7cm,
+            xlabel={Danh mục thú cưng},
+            ylabel={Số sản phẩm},
+            xtick=data,
+            xticklabels={Mèo, Chó, Hamster, Thỏ, Chim, Cá, Bò sát},
+            xticklabel style={rotate=30, anchor=east},
+            ymin=0, ymax=15,
+            nodes near coords,
+            nodes near coords align={vertical},
+            every node near coord/.style={font=\small\bfseries},
+            bar shift=0pt,
+            ymajorgrids=true,
+            grid style=dashed,
+            fill=primaryColor!70,
+            draw=primaryColor,
+        ]
+            \addplot coordinates {(1,11) (2,8) (3,7) (4,7) (5,6) (6,6) (7,5)};
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Phân bổ số lượng sản phẩm theo danh mục (không tính General)}
+\end{figure}
+
+% ============================================================
+\chapter{Phân Tích và Thiết Kế Hệ Thống}
+% ============================================================
+
+\section{Yêu Cầu Chức Năng}
+
+\begin{enumerate}[leftmargin=*, label=\textbf{[\arabic*]}]
+    \item Hiển thị danh sách sản phẩm theo danh mục (7 loại thú cưng)
+    \item Tìm kiếm sản phẩm bằng văn bản, giọng nói và hình ảnh
+    \item Lọc sản phẩm theo giá, danh mục và thẻ từ khóa (tag)
+    \item Xem chi tiết sản phẩm kèm gợi ý sản phẩm liên quan
+    \item Chatbot tư vấn bằng tiếng Việt (hỗ trợ 24/7)
+    \item Quản lý giỏ hàng (thêm, xóa, cập nhật số lượng, tính tổng giá)
+    \item Gợi ý sản phẩm bổ sung dựa trên giỏ hàng hiện tại
+    \item Điều hướng đa danh mục với UI trực quan
+    \item Responsive layout tương thích mọi thiết bị
+\end{enumerate}
+
+\section{Yêu Cầu Phi Chức Năng}
+
+\begin{table}[H]
+    \centering
+    \caption{Yêu cầu phi chức năng}
+    \begin{tabular}{>{\bfseries}p{3.5cm}p{9.5cm}}
+        \toprule
+        Tiêu chí & Mô tả \\
+        \midrule
+        Hiệu năng    & Thời gian phản hồi API $< 500$ms \\
+        Bảo mật      & Biến môi trường (.env), CORS được cấu hình đúng \\
+        Mở rộng     & Kiến trúc module hóa, dễ thêm tính năng mới \\
+        Tương thích  & Hoạt động trên Chrome, Firefox, Edge, Safari \\
+        Responsive   & Tương thích Desktop, Tablet và Mobile \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\section{Kiến Trúc Hệ Thống}
+
+Hệ thống PetShop sử dụng kiến trúc \textbf{Client-Server} ba lớp:
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[
+        node distance=1.5cm,
+        box/.style={rectangle, draw=primaryColor, fill=primaryColor!10,
+                    text centered, rounded corners, minimum width=4cm, minimum height=1.2cm,
+                    font=\small\bfseries},
+        arr/.style={->, thick, color=primaryColor}
+    ]
+        \node[box] (user) {Người dùng / Browser};
+        \node[box, below=of user] (fe) {Frontend Layer\\{\footnotesize HTML + CSS + Vanilla JS}};
+        \node[box, below=of fe] (be) {Backend Layer\\{\footnotesize Express.js / Node.js}};
+        \node[box, below=of be] (db) {Data Layer\\{\footnotesize database.js (70+ sản phẩm)}};
+
+        \draw[arr] (user) -- node[right]{\footnotesize HTTP} (fe);
+        \draw[arr] (fe) -- node[right]{\footnotesize Fetch API / AJAX} (be);
+        \draw[arr] (be) -- node[right]{\footnotesize Query / Response} (db);
+        \draw[arr] (db.east) -- ++(1.5,0) |- node[right]{} (be.east);
+        \draw[arr] (be.west) -- ++(-1.5,0) |- node[left]{} (fe.west);
+        \draw[arr] (fe.east) -- ++(1.5,0) |- node[right]{} (user.east);
+    \end{tikzpicture}
+    \caption{Kiến trúc tổng quan hệ thống PetShop}
+\end{figure}
+
+\section{Cấu Trúc Thư Mục}
+
+\begin{lstlisting}[style=jsStyle, caption={Cấu trúc thư mục dự án}]
+WEB THU CUNG/
+├── backend/
+│   ├── server.js              // Entry point – Express server
+│   ├── database.js            // 70+ sản phẩm, 7 danh mục
+│   └── routes/
+│       ├── products.js        // GET /api/products
+│       ├── chatbot.js         // POST /api/chatbot/message
+│       ├── recommendations.js // GET/POST /api/recommendations
+│       └── search.js          // Tìm kiếm đa phương thức
+├── frontend/
+│   ├── index.html             // Giao diện chính
+│   └── assets/
+│       ├── css/style.css      // Styling toàn bộ ứng dụng
+│       └── js/
+│           ├── api.js         // Tập trung lời gọi API
+│           ├── ui.js          // Render component giao diện
+│           ├── chatbot.js     // Logic & UI chatbot
+│           ├── search.js      // Tìm kiếm đa phương thức
+│           ├── cart.js        // Quản lý giỏ hàng
+│           └── main.js        // Khởi tạo ứng dụng
+├── package.json               // Dependencies
+├── .env                       // Biến môi trường
+└── README.md                  // Tài liệu dự án
+\end{lstlisting}
+
+% ============================================================
+\chapter{Công Nghệ Sử Dụng}
+% ============================================================
+
+\section{Backend}
+
+\begin{table}[H]
+    \centering
+    \caption{Công nghệ và thư viện backend}
+    \begin{tabular}{>{\bfseries}p{3cm}p{4cm}p{6cm}}
+        \toprule
+        Thành phần & Phiên bản & Mục đích \\
+        \midrule
+        Node.js     & v18+         & Runtime JavaScript phía server \\
+        Express.js  & v4.18.2      & Web framework, định tuyến API \\
+        CORS        & v2.8.5       & Cho phép cross-origin requests \\
+        Multer      & v1.4.5       & Xử lý file upload (ảnh tìm kiếm) \\
+        Dotenv      & v16          & Quản lý biến môi trường \\
+        Axios       & v1.x         & HTTP client để gọi API ngoài \\
+        Nodemon     & v3.x (dev)   & Auto-restart server khi có thay đổi \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\section{Frontend}
+
+\begin{table}[H]
+    \centering
+    \caption{Công nghệ frontend}
+    \begin{tabular}{>{\bfseries}p{3.5cm}p{9.5cm}}
+        \toprule
+        Công nghệ & Mô tả \\
+        \midrule
+        HTML5            & Cấu trúc trang, semantic elements \\
+        CSS3             & Styling, flexbox, grid, animation, responsive \\
+        Vanilla JS (ES6+) & Logic ứng dụng, không dùng framework \\
+        Web Speech API   & Nhận diện giọng nói tiếng Việt (vi-VN) \\
+        localStorage     & Lưu trữ giỏ hàng phía client \\
+        Font Awesome     & Thư viện icon \\
+        Google Fonts     & Typography (Be Vietnam Pro) \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+% ============================================================
+\chapter{Tính Năng Chi Tiết và Thuật Toán}
+% ============================================================
+
+\section{Chatbot Tư vấn AI}
+
+Chatbot sử dụng phương pháp \textbf{NLP Pattern Matching} – phân tích từ khóa trong câu hỏi tiếng Việt của người dùng:
+
+\begin{enumerate}[leftmargin=*, label=\textbf{Bước \arabic*.}]
+    \item Người dùng nhập câu hỏi (tiếng Việt)
+    \item Server nhận \texttt{POST /api/chatbot/message}
+    \item Phân tích từ khóa, nhận diện \textit{intent}
+    \item Trả về response phù hợp + sản phẩm gợi ý
+\end{enumerate}
+
+\begin{table}[H]
+    \centering
+    \caption{Ví dụ intent được nhận diện}
+    \begin{tabular}{p{5cm}p{8cm}}
+        \toprule
+        \textbf{Từ khóa} & \textbf{Intent / Hành động} \\
+        \midrule
+        ``thức ăn'', ``ăn'', ``đói'' & Gợi ý nhóm thức ăn theo loài \\
+        ``vệ sinh'', ``cát'', ``bồn'' & Gợi ý nhóm vệ sinh, cát nền \\
+        ``đồ chơi'', ``chơi''          & Gợi ý đồ chơi, hoạt động \\
+        ``bệnh'', ``ốm'', ``khám''     & Tư vấn thú y, vitamin \\
+        ``nhà'', ``ngủ'', ``nệm''      & Gợi ý nhà ở, đệm nằm \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\section{Hệ Thống Gợi Ý Sản Phẩm}
+
+Sử dụng thuật toán \textbf{Content-Based Filtering} với hàm tính điểm tương đồng:
+
+\begin{equation}
+    \text{Score}(A, B) = \sum_{i} \left[ w_i \cdot \text{match}(A, B, \text{criterion}_i) \right]
+\end{equation}
+
+\begin{table}[H]
+    \centering
+    \caption{Bảng trọng số gợi ý sản phẩm}
+    \begin{tabular}{p{6cm}cc}
+        \toprule
+        \textbf{Tiêu chí} & \textbf{Điểm} & \textbf{Mô tả} \\
+        \midrule
+        Sản phẩm liên quan trực tiếp & +3 & Định nghĩa trong \texttt{relatedProducts[]} \\
+        Cùng danh mục & +2 & Cùng category (cat, dog, general...) \\
+        Cùng nhãn tag & +1/tag & Chia sẻ từ khóa hoặc tính năng chung \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\begin{infobox}[Kết quả]
+Top 5 sản phẩm có điểm cao nhất sẽ được trả về và hiển thị cho người dùng trong phần ``Sản phẩm gợi ý''.
+\end{infobox}
+
+\section{Tìm Kiếm Đa Phương Thức}
+
+\subsection{Tìm kiếm văn bản}
+\begin{itemize}
+    \item Endpoint: \texttt{GET /api/search/text?q=\{keyword\}}
+    \item So khớp tên, mô tả, tags sản phẩm (case-insensitive)
+\end{itemize}
+
+\subsection{Tìm kiếm giọng nói}
+\begin{itemize}
+    \item Sử dụng \textbf{Web Speech API} (SpeechRecognition)
+    \item Ngôn ngữ: \texttt{vi-VN} (tiếng Việt)
+    \item Luồng: Audio → Text → Gọi API tìm kiếm văn bản
+\end{itemize}
+
+\subsection{Tìm kiếm hình ảnh}
+\begin{itemize}
+    \item Endpoint: \texttt{POST /api/search/image} (multipart/form-data)
+    \item Phân tích metadata hình ảnh upload
+    \item Khớp với sản phẩm dựa trên đặc trưng trích xuất
+\end{itemize}
+
+% ============================================================
+\chapter{Danh Sách API Endpoints}
+% ============================================================
+
+\begin{table}[H]
+    \centering
+    \caption{Danh sách API Endpoints}
+    \begin{tabular}{>{\bfseries}p{1.8cm}p{5.5cm}p{5.5cm}}
+        \toprule
+        \textbf{Method} & \textbf{Endpoint} & \textbf{Mô tả} \\
+        \midrule
+        \multicolumn{3}{l}{\textit{\textbf{Sản phẩm}}} \\
+        GET    & \texttt{/api/products}                & Lấy tất cả sản phẩm \\
+        GET    & \texttt{/api/products?category=cat}   & Lọc theo danh mục \\
+        GET    & \texttt{/api/products/:id}            & Chi tiết 1 sản phẩm \\
+        \midrule
+        \multicolumn{3}{l}{\textit{\textbf{Tìm kiếm}}} \\
+        GET    & \texttt{/api/search/text?q=query}     & Tìm kiếm văn bản \\
+        POST   & \texttt{/api/search/voice}            & Tìm kiếm giọng nói \\
+        POST   & \texttt{/api/search/image}            & Tìm kiếm hình ảnh \\
+        GET    & \texttt{/api/search/filter}           & Lọc nâng cao \\
+        \midrule
+        \multicolumn{3}{l}{\textit{\textbf{Gợi ý}}} \\
+        GET    & \texttt{/api/recommendations/:id}     & Gợi ý theo sản phẩm \\
+        POST   & \texttt{/api/recommendations/cart}    & Gợi ý theo giỏ hàng \\
+        \midrule
+        \multicolumn{3}{l}{\textit{\textbf{Chatbot}}} \\
+        POST   & \texttt{/api/chatbot/message}         & Gửi câu hỏi cho chatbot \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+% ============================================================
+\chapter{Hướng Dẫn Cài Đặt}
+% ============================================================
+
+\section{Yêu Cầu Môi Trường}
+
+\begin{itemize}
+    \item Node.js v14 trở lên (\url{https://nodejs.org})
+    \item npm (đi kèm Node.js)
+    \item Trình duyệt hiện đại (Chrome, Edge, Firefox)
+\end{itemize}
+
+\section{Các Bước Thực Hiện}
+
+\begin{lstlisting}[style=jsStyle, caption={Lệnh cài đặt và khởi chạy}]
+# Bước 1: Mở thư mục dự án
+cd "WEB THU CUNG"
+
+# Bước 2: Cài đặt dependencies
+npm install
+
+# Bước 3: Khởi động server (development mode)
+npm run dev
+
+# Kết quả mong đợi:
+# Server is running on http://localhost:3000
+
+# Bước 4: Mở trình duyệt và truy cập
+# http://localhost:3000
+\end{lstlisting}
+
+\begin{warningbox}[Lưu ý về tìm kiếm giọng nói]
+Tính năng tìm kiếm giọng nói chỉ hoạt động trên HTTPS hoặc localhost. Cần cho phép quyền truy cập Microphone. Hỗ trợ tốt nhất trên Google Chrome.
+\end{warningbox}
+
+% ============================================================
+\chapter{Kết Quả Đạt Được và Đánh Giá}
+% ============================================================
+
+\section{Tính Năng Đã Hoàn Thành}
+
+\begin{table}[H]
+    \centering
+    \caption{Checklist tính năng đã hoàn thành}
+    \begin{tabular}{clc}
+        \toprule
+        \textbf{STT} & \textbf{Tính năng} & \textbf{Trạng thái} \\
+        \midrule
+        1 & Hiển thị và lọc sản phẩm theo danh mục (7 loại) & {\color{successColor}\checkmark} \\
+        2 & Chatbot tư vấn tiếng Việt (NLP Pattern)          & {\color{successColor}\checkmark} \\
+        3 & Tìm kiếm văn bản, lọc giá và tag                & {\color{successColor}\checkmark} \\
+        4 & Tìm kiếm giọng nói (Web Speech API vi-VN)        & {\color{successColor}\checkmark} \\
+        5 & Tìm kiếm hình ảnh (upload file)                  & {\color{successColor}\checkmark} \\
+        6 & Gợi ý sản phẩm thông minh (Content-Based)        & {\color{successColor}\checkmark} \\
+        7 & Quản lý giỏ hàng localStorage                    & {\color{successColor}\checkmark} \\
+        8 & Giao diện responsive (Desktop/Tablet/Mobile)      & {\color{successColor}\checkmark} \\
+        9 & 70+ sản phẩm, 7 danh mục thú cưng đa dạng       & {\color{successColor}\checkmark} \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\section{Tự Đánh Giá}
+
+\begin{table}[H]
+    \centering
+    \caption{Bảng tự đánh giá của nhóm}
+    \begin{tabular}{>{\bfseries}p{6cm}cc}
+        \toprule
+        \textbf{Tiêu chí} & \textbf{Điểm tự chấm} & \textbf{Ghi chú} \\
+        \midrule
+        Hoàn thành tính năng chính  & 9/10 & Đủ các tính năng đề ra \\
+        Quy mô dữ liệu (70+ SP)    & 9/10 & 7 danh mục, đa dạng \\
+        Chất lượng code             & 8/10 & Modular, có comment \\
+        Giao diện UI/UX             & 9/10 & Responsive, animation mượt \\
+        Tài liệu \& báo cáo        & 9/10 & 4 định dạng: HTML, TXT, LaTeX, PPT \\
+        Tính sáng tạo (AI features) & 8/10 & Voice + Image Search \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\section{Hướng Phát Triển Tương Lai}
+
+\begin{itemize}[leftmargin=*]
+    \item[$\square$] Tích hợp thanh toán: VNPay, MoMo, ZaloPay
+    \item[$\square$] Authentication: Đăng ký / đăng nhập (JWT)
+    \item[$\square$] Database: MongoDB Atlas hoặc MySQL
+    \item[$\square$] Nâng cấp Chatbot với OpenAI GPT API
+    \item[$\square$] Machine Learning cho gợi ý cá nhân hóa
+    \item[$\square$] Admin Dashboard quản lý sản phẩm
+    \item[$\square$] Mobile Application (React Native)
+\end{itemize}
+
+% ============================================================
+\chapter{Phân Công Công Việc}
+% ============================================================
+
+\begin{table}[H]
+    \centering
+    \caption{Phân công công việc trong nhóm}
+    \begin{tabular}{clp{6.5cm}c}
+        \toprule
+        \textbf{TV} & \textbf{Sinh viên} & \textbf{Công việc chính} & \textbf{Đóng góp} \\
+        \midrule
+        1 & .................. & Backend Express, API sản phẩm, server setup  & 25\% \\
+        2 & .................. & Frontend HTML/CSS, UI components, animation  & 25\% \\
+        3 & .................. & Chatbot logic, Search module, Recommendation & 25\% \\
+        4 & .................. & Testing, Debugging, Báo cáo, Demo           & 25\% \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+% ============================================================
+\chapter*{Kết Luận}
+\addcontentsline{toc}{chapter}{Kết Luận}
+% ============================================================
+
+Qua quá trình thực hiện dự án \textbf{PetShop – Cửa hàng thú cưng trực tuyến}, nhóm đã đạt được những kết quả quan trọng:
+
+\begin{successbox}[Thành quả đạt được]
+\begin{itemize}
+    \item Xây dựng thành công website TMĐT với \textbf{70+ sản phẩm} trải rộng \textbf{7 danh mục thú cưng}
+    \item Tích hợp thành công \textbf{Chatbot AI, Voice Search, Image Search}
+    \item Kiến trúc Client-Server rõ ràng với \textbf{10 RESTful API endpoints}
+    \item Giao diện responsive, tương thích mọi thiết bị
+    \item Bộ báo cáo đầy đủ: HTML, TXT, LaTeX, Slide PPT
+\end{itemize}
+\end{successbox}
+
+Dự án không chỉ là cơ hội để áp dụng kiến thức lập trình web mà còn giúp nhóm hiểu sâu hơn về \textbf{RESTful API design}, \textbf{module hóa JavaScript}, \textbf{NLP cơ bản} và \textbf{Content-Based Filtering}.
+
+% ============================================================
+%  TÀI LIỆU THAM KHẢO
+% ============================================================
+\begin{thebibliography}{99}
+
+\bibitem{nodejs} Node.js Foundation. \textit{Node.js Documentation}. 2024. \url{https://nodejs.org/en/docs}
+
+\bibitem{expressjs} Express.js Team. \textit{Express.js Guide – Routing}. 2024. \url{https://expressjs.com/en/guide/routing.html}
+
+\bibitem{speechapi} MDN Web Docs. \textit{Web Speech API}. Mozilla. \url{https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API}
+
+\bibitem{fetchapi} MDN Web Docs. \textit{Fetch API}. Mozilla. \url{https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API}
+
+\bibitem{kotler} Philip Kotler, Gary Armstrong. \textit{Principles of Marketing} (18th ed.). Pearson Education, 2021.
+
+\bibitem{petmarket} Q\&Me Vietnam Research. \textit{Báo cáo thị trường thú cưng Việt Nam 2024}. Q\&Me, 2024.
+
+\bibitem{course} Khoa Công nghệ Thông tin. \textit{Tài liệu giảng dạy môn Lập trình Ứng dụng Web}. Năm học 2025--2026.
+
+\bibitem{contentbased} F. Ricci et al. \textit{Recommender Systems Handbook} (2nd ed.). Springer, 2015.
+
+\end{thebibliography}
+
+\end{document}

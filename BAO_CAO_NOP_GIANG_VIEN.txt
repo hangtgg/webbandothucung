@@ -23,6 +23,8 @@
     TÊN ĐỀ TÀI:  PETSHOP – CỬA HÀNG THÚ CƯNG TRỰC TUYẾN
                  (Website TMĐT tích hợp Chatbot AI & Tìm kiếm Thông minh)
 
+    Quy mô:  70+ sản phẩm | 7 danh mục thú cưng | 9 API endpoints | 9 tính năng
+
 
 ================================================================================
 DANH SÁCH THÀNH VIÊN NHÓM
@@ -54,33 +56,54 @@ PHẦN I. GIỚI THIỆU ĐỀ TÀI
 ---------------------
   - Xây dựng hệ thống website TMĐT thú cưng hoàn chỉnh với kiến trúc
     Client-Server rõ ràng.
-  - Tích hợp Chatbot AI hỗ trợ tư vấn sản phẩm bằng tiếng Việt.
+  - Cơ sở dữ liệu 70+ sản phẩm, phân bố trên 7 danh mục thú cưng đa dạng.
+  - Tích hợp Chatbot AI hỗ trợ tư vấn sản phẩm bằng tiếng Việt (NLP pattern).
   - Triển khai tính năng tìm kiếm đa phương thức: văn bản, giọng nói, hình ảnh.
-  - Xây dựng hệ thống gợi ý sản phẩm thông minh dựa trên hành vi người dùng.
+  - Xây dựng hệ thống gợi ý sản phẩm thông minh (Content-Based Filtering).
   - Giao diện responsive, thân thiện, hoạt động tốt trên mọi thiết bị.
 
 1.3. Phạm vi đề tài
 --------------------
-  - Đối tượng hướng đến: Người nuôi thú cưng (chó, mèo) tại Việt Nam.
+  - Đối tượng hướng đến: Người nuôi thú cưng (chó, mèo, hamster, thỏ,
+    chim, cá, bò sát) tại Việt Nam.
   - Phạm vi địa lý: Không giới hạn (website trực tuyến).
   - Công nghệ: Node.js (Backend), HTML/CSS/JavaScript thuần (Frontend).
   - Thời gian thực hiện: ......................
 
 ================================================================================
-PHẦN II. PHÂN TÍCH VÀ THIẾT KẾ HỆ THỐNG
+PHẦN II. DANH MỤC SẢN PHẨM
 ================================================================================
 
-2.1. Yêu cầu chức năng
+  Danh mục         | Icon  | Phân loại con                            | Số SP
+  -----------------|-------|------------------------------------------|------
+  Mèo (Cat)        | 🐱    | Vệ sinh, Nhà ở, Đồ chơi, Thức ăn       |  11
+  Chó (Dog)        | 🐶    | Dây dắt, Thức ăn, Nhà ở, Phụ kiện      |   8
+  Hamster          | 🐹    | Chuồng, Bánh xe, Thức ăn, Đồ chơi      |   7
+  Thỏ (Rabbit)     | 🐰    | Chuồng, Cỏ khô, Thức ăn, Đệm lót      |   7
+  Chim (Bird)      | 🐦    | Lồng, Thức ăn, Đồ chơi, Cây đậu       |   6
+  Cá (Fish)        | 🐠    | Bể cá, Lọc, Thức ăn, Trang trí         |   6
+  Bò sát (Reptile) | 🦎    | Terrarium, Đèn UV, Sưởi, Thức ăn       |   5
+  Chung (General)  | 🛒    | Chăm sóc, Phụ kiện, Sức khỏe           |  25+
+  -----------------|-------|------------------------------------------|------
+  TỔNG CỘNG        |       |                                          |  70+
+
+================================================================================
+PHẦN III. PHÂN TÍCH VÀ THIẾT KẾ HỆ THỐNG
+================================================================================
+
+3.1. Yêu cầu chức năng
 -----------------------
-  [1] Hiển thị danh sách sản phẩm theo danh mục (Chó, Mèo, Phụ kiện chung)
+  [1] Hiển thị danh sách sản phẩm theo danh mục (7 loại thú cưng)
   [2] Tìm kiếm sản phẩm bằng văn bản, giọng nói và hình ảnh
   [3] Lọc sản phẩm theo giá, danh mục và thẻ từ khóa (tag)
   [4] Xem chi tiết sản phẩm kèm gợi ý sản phẩm liên quan
   [5] Chatbot tư vấn bằng tiếng Việt (hỗ trợ 24/7)
   [6] Quản lý giỏ hàng (thêm, xóa, cập nhật số lượng, tính tổng giá)
   [7] Gợi ý sản phẩm bổ sung dựa trên giỏ hàng hiện tại
+  [8] Điều hướng đa danh mục với UI trực quan
+  [9] Responsive layout tương thích mọi thiết bị
 
-2.2. Yêu cầu phi chức năng
+3.2. Yêu cầu phi chức năng
 ---------------------------
   - Hiệu năng    : Thời gian phản hồi API < 500ms
   - Bảo mật      : Biến môi trường (.env), CORS được cấu hình đúng
@@ -88,7 +111,7 @@ PHẦN II. PHÂN TÍCH VÀ THIẾT KẾ HỆ THỐNG
   - Tương thích  : Hoạt động trên Chrome, Firefox, Edge, Safari
   - Responsive   : Tương thích Desktop, Tablet và Mobile
 
-2.3. Kiến trúc hệ thống
+3.3. Kiến trúc hệ thống
 ------------------------
 
   ┌─────────────────────────────────────────────────────────────┐
@@ -113,16 +136,16 @@ PHẦN II. PHÂN TÍCH VÀ THIẾT KẾ HỆ THỐNG
   │          │                                                  │
   │          ▼                                                  │
   │   [Data Layer]                                              │
-  │     database.js – Dữ liệu sản phẩm & chatbot responses     │
+  │     database.js – 70+ sản phẩm & chatbot responses         │
   └─────────────────────────────────────────────────────────────┘
 
-2.4. Cấu trúc thư mục dự án
+3.4. Cấu trúc thư mục dự án
 -----------------------------
 
   WEB THU CUNG/
   ├── backend/
   │   ├── server.js              (Entry point – Express server)
-  │   ├── database.js            (Dữ liệu sản phẩm, chatbot)
+  │   ├── database.js            (70+ sản phẩm, 7 danh mục, chatbot)
   │   └── routes/
   │       ├── products.js        (API sản phẩm)
   │       ├── chatbot.js         (API chatbot)
@@ -139,30 +162,34 @@ PHẦN II. PHÂN TÍCH VÀ THIẾT KẾ HỆ THỐNG
   │           ├── search.js      (Tìm kiếm đa phương thức)
   │           ├── cart.js        (Quản lý giỏ hàng)
   │           └── main.js        (Khởi tạo ứng dụng)
+  ├── BAO_CAO_MON_HOC.html       (Báo cáo HTML – xem trên trình duyệt)
+  ├── BAO_CAO_NOP_GIANG_VIEN.txt (Báo cáo văn bản – nộp giảng viên)
+  ├── BAO_CAO_LUAN_VAN.tex       (Báo cáo LaTeX – in PDF chất lượng cao)
+  ├── SLIDE_TRINH_BAY.html       (Slide thuyết trình – trình chiếu)
   ├── package.json               (Dependencies: Express, CORS, Multer...)
   ├── .env                       (Biến môi trường: PORT, API_KEY...)
   └── README.md                  (Tài liệu hướng dẫn)
 
 ================================================================================
-PHẦN III. CÔNG NGHỆ SỬ DỤNG
+PHẦN IV. CÔNG NGHỆ SỬ DỤNG
 ================================================================================
 
-3.1. Backend
+4.1. Backend
 -------------
   - Runtime      : Node.js v18+
   - Framework    : Express.js v4.18.2
   - Thư viện     : cors, dotenv, multer, axios, nodemon (dev)
   - Kiến trúc    : RESTful API, MVC-like pattern
 
-3.2. Frontend
+4.2. Frontend
 --------------
   - Ngôn ngữ     : HTML5, CSS3, Vanilla JavaScript (ES6+)
-  - API trình duyệt: Web Speech API (tìm kiếm giọng nói)
+  - API trình duyệt: Web Speech API (tìm kiếm giọng nói, vi-VN)
   - Lưu trữ      : localStorage (giỏ hàng)
   - Icon         : Font Awesome
-  - Font         : Google Fonts
+  - Font         : Google Fonts (Be Vietnam Pro)
 
-3.3. Công cụ & Môi trường phát triển
+4.3. Công cụ & Môi trường phát triển
 --------------------------------------
   - IDE          : Visual Studio Code
   - Version Control: Git / GitHub
@@ -170,10 +197,10 @@ PHẦN III. CÔNG NGHỆ SỬ DỤNG
   - Trình duyệt test: Chrome, Edge, Firefox
 
 ================================================================================
-PHẦN IV. TÍNH NĂNG CHI TIẾT VÀ THUẬT TOÁN
+PHẦN V. TÍNH NĂNG CHI TIẾT VÀ THUẬT TOÁN
 ================================================================================
 
-4.1. Chatbot Tư vấn AI
+5.1. Chatbot Tư vấn AI
 -----------------------
   Chatbot sử dụng phương pháp NLP Pattern Matching đơn giản:
     1. Người dùng nhập câu hỏi (tiếng Việt)
@@ -187,9 +214,9 @@ PHẦN IV. TÍNH NĂNG CHI TIẾT VÀ THUẬT TOÁN
     - "đồ chơi", "chơi"       → Gợi ý đồ chơi
     - "bệnh", "ốm", "khám"    → Tư vấn thú y
 
-4.2. Hệ thống Gợi ý Sản phẩm (Recommendation Engine)
-------------------------------------------------------
-  Thuật toán tính điểm tương đồng Content-Based Filtering:
+5.2. Hệ thống Gợi ý Sản phẩm (Content-Based Filtering)
+--------------------------------------------------------
+  Thuật toán tính điểm tương đồng:
 
     Điểm(A, B) = tổng [ trọng_số_i × khớp(A, B, tiêu_chí_i) ]
 
@@ -200,7 +227,7 @@ PHẦN IV. TÍNH NĂNG CHI TIẾT VÀ THUẬT TOÁN
 
   Kết quả: Top 5 sản phẩm có điểm cao nhất được trả về.
 
-4.3. Tìm kiếm Đa phương thức
+5.3. Tìm kiếm Đa phương thức
 ------------------------------
   a) Tìm kiếm văn bản:
      - GET /api/search/text?q={keyword}
@@ -217,7 +244,7 @@ PHẦN IV. TÍNH NĂNG CHI TIẾT VÀ THUẬT TOÁN
      - Khớp với sản phẩm dựa trên đặc trưng trích xuất
 
 ================================================================================
-PHẦN V. DANH SÁCH API ENDPOINTS
+PHẦN VI. DANH SÁCH API ENDPOINTS
 ================================================================================
 
   PHƯƠNG THỨC | ENDPOINT                      | MÔ TẢ
@@ -237,7 +264,7 @@ PHẦN V. DANH SÁCH API ENDPOINTS
   POST        | /api/chatbot/message          | Gửi câu hỏi cho chatbot AI
 
 ================================================================================
-PHẦN VI. HƯỚNG DẪN CÀI ĐẶT VÀ CHẠY DỰ ÁN
+PHẦN VII. HƯỚNG DẪN CÀI ĐẶT VÀ CHẠY DỰ ÁN
 ================================================================================
 
   Yêu cầu môi trường:
@@ -266,10 +293,17 @@ PHẦN VI. HƯỚNG DẪN CÀI ĐẶT VÀ CHẠY DỰ ÁN
     - Hỗ trợ tốt nhất trên Google Chrome
 
 ================================================================================
-PHẦN VII. KẾT QUẢ ĐẠT ĐƯỢC VÀ ĐÁNH GIÁ
+PHẦN VIII. KẾT QUẢ ĐẠT ĐƯỢC VÀ ĐÁNH GIÁ
 ================================================================================
 
-7.1. Tính năng đã hoàn thành
+8.1. Thống kê quy mô dự án
+-----------------------------
+  - Tổng số sản phẩm   : 70+ sản phẩm
+  - Danh mục thú cưng  : 7 loại (mèo, chó, hamster, thỏ, chim, cá, bò sát)
+  - API endpoints       : 10 endpoints RESTful
+  - Module frontend     : 6 module JavaScript (api, ui, chatbot, search, cart, main)
+
+8.2. Tính năng đã hoàn thành
 ------------------------------
   [x] Hiển thị và lọc danh sách sản phẩm theo danh mục
   [x] Chatbot tư vấn bằng tiếng Việt với NLP pattern matching
@@ -279,8 +313,9 @@ PHẦN VII. KẾT QUẢ ĐẠT ĐƯỢC VÀ ĐÁNH GIÁ
   [x] Hệ thống gợi ý sản phẩm thông minh dựa trên điểm số
   [x] Quản lý giỏ hàng với localStorage (thêm/xóa/cập nhật)
   [x] Giao diện responsive, hoạt động trên mobile và desktop
+  [x] Đa danh mục với 70+ sản phẩm (7 loại thú cưng)
 
-7.2. Hạn chế và hướng phát triển
+8.3. Hạn chế và hướng phát triển
 ----------------------------------
   Hạn chế:
     - Dữ liệu sản phẩm hiện được lưu tĩnh trong database.js,
@@ -297,18 +332,19 @@ PHẦN VII. KẾT QUẢ ĐẠT ĐƯỢC VÀ ĐÁNH GIÁ
     [ ] Admin Dashboard quản lý sản phẩm
     [ ] Mobile Application (React Native)
 
-7.3. Tự đánh giá
+8.4. Tự đánh giá
 -----------------
   Tiêu chí                    | Nhóm tự chấm | Ghi chú
   ----------------------------|--------------|--------------------------------
   Hoàn thành tính năng chính  |   9/10       | Đủ các tính năng đề ra
+  Quy mô dữ liệu (70+ SP)    |   9/10       | 7 danh mục, đa dạng
   Chất lượng code             |   8/10       | Modular, có comment
   Giao diện UI/UX             |   9/10       | Responsive, animation mượt
-  Tài liệu & báo cáo         |   9/10       | Đầy đủ, chi tiết
+  Tài liệu & báo cáo         |   9/10       | 4 định dạng: HTML, TXT, LaTeX, PPT
   Tính sáng tạo              |   8/10       | Voice + Image search
 
 ================================================================================
-PHẦN VIII. PHÂN CÔNG CÔNG VIỆC
+PHẦN IX. PHÂN CÔNG CÔNG VIỆC
 ================================================================================
 
   Thành viên   | Công việc chính                              | Tỷ lệ đóng góp
@@ -319,7 +355,7 @@ PHẦN VIII. PHÂN CÔNG CÔNG VIỆC
   TV 4         | Testing, Debugging, Báo cáo, Demo           |    25%
 
 ================================================================================
-PHẦN IX. TÀI LIỆU THAM KHẢO
+PHẦN X. TÀI LIỆU THAM KHẢO
 ================================================================================
 
   [1] Node.js Documentation. https://nodejs.org/en/docs
@@ -356,8 +392,10 @@ LỜI CẢM ƠN
            THÔNG TIN FILE NỘP
 ================================================================================
 
-  Tên file báo cáo HTML  : BAO_CAO_MON_HOC.html
-  Tên file báo cáo text  : BAO_CAO_NOP_GIANG_VIEN.txt
+  [1] BAO_CAO_MON_HOC.html        – Báo cáo HTML (xem qua trình duyệt, in PDF)
+  [2] BAO_CAO_NOP_GIANG_VIEN.txt  – Báo cáo văn bản thuần (file này)
+  [3] BAO_CAO_LUAN_VAN.tex        – Báo cáo LaTeX (biên dịch bằng pdflatex/overleaf)
+  [4] SLIDE_TRINH_BAY.html        – Slide thuyết trình (mở bằng trình duyệt)
   Thư mục source code    : WEB THU CUNG/
   Link demo              : http://localhost:3000 (chạy npm run dev)
   Link GitHub (nếu có)   : https://github.com/...........................
