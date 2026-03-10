@@ -42,5 +42,83 @@
     "timestamp": "2026-03-09T01:01:13.357Z",
     "id": 4,
     "submittedAt": "2026-03-09T01:01:13.365Z"
+  },
+  {
+    "petType": "cat",
+    "petAge": "",
+    "petWeight": "",
+    "petBreed": "",
+    "petName": "",
+    "petHealth": "",
+    "recommendationPreference": "all",
+    "algorithmInfoInterest": true,
+    "timestamp": "2026-03-10T06:43:29.100Z",
+    "recommendationAlgorithm": "Hybrid-Scoring-System",
+    "id": 5,
+    "submittedAt": "2026-03-10T06:43:29.239Z"
+  },
+  {
+    "petType": "cat",
+    "petAge": "",
+    "petWeight": "",
+    "petBreed": "",
+    "petName": "",
+    "petHealth": "",
+    "recommendationPreference": "all",
+    "algorithmInfoInterest": true,
+    "timestamp": "2026-03-10T06:43:29.107Z",
+    "recommendationAlgorithm": "Hybrid-Scoring-System",
+    "id": 6,
+    "submittedAt": "2026-03-10T06:43:29.249Z"
+  },
+  {
+    "petType": "cat",
+    "petAge": "2",
+    "petWeight": "4.5",
+    "petBreed": "",
+    "petName": "",
+    "petHealth": "healthy",
+    "timestamp": "2026-03-10T06:46:53.571Z",
+    "id": 7,
+    "submittedAt": "2026-03-10T06:46:53.581Z"
+  },
+  {
+    "petType": "cat",
+    "petAge": "2",
+    "petWeight": "4.5",
+    "petBreed": "",
+    "petName": "",
+    "petHealth": "healthy",
+    "timestamp": "2026-03-10T06:46:53.577Z",
+    "id": 8,
+    "submittedAt": "2026-03-10T06:46:53.590Z"
+  },
+  {
+    "petType": "dog",
+    "petAge": "2",
+    "petWeight": "4",
+    "petName": "Cún",
+    "petHealth": "normal",
+    "basicNeeds": [
+      "food",
+      "water"
+    ],
+    "timestamp": "2026-03-10T06:53:32.859Z",
+    "id": 9,
+    "submittedAt": "2026-03-10T06:53:32.904Z"
+  },
+  {
+    "petType": "dog",
+    "petAge": "2",
+    "petWeight": "4",
+    "petName": "Cún",
+    "petHealth": "normal",
+    "basicNeeds": [
+      "food",
+      "water"
+    ],
+    "timestamp": "2026-03-10T06:53:32.866Z",
+    "id": 10,
+    "submittedAt": "2026-03-10T06:53:32.914Z"
   }
 ]

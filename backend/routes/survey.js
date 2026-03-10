@@ -40,7 +40,7 @@ router.post('/', (req, res) => {
     fs.writeFileSync(surveyDataFile, JSON.stringify(surveys, null, 2));
 
     // Log survey submission
-    console.log(`Survey submitted: Pet type: ${surveyData.petType}, Age: ${surveyData.petAge}, Health: ${surveyData.petHealth}`);
+    console.log(`Survey submitted: Pet type: ${surveyData.petType}, Age: ${surveyData.petAge}, Health: ${surveyData.petHealth}, Basic Needs: ${Array.isArray(surveyData.basicNeeds) ? surveyData.basicNeeds.join(', ') : 'N/A'}`);
 
     res.json({
       success: true,
@@ -71,6 +71,7 @@ router.get('/responses', (req, res) => {
       total: surveys.length,
       petTypes: {},
       healthStatus: {},
+      basicNeeds: {},
       averageAge: 0,
       averageWeight: 0
     };
@@ -86,6 +87,12 @@ router.get('/responses', (req, res) => {
       }
       if (survey.petHealth) {
         stats.healthStatus[survey.petHealth] = (stats.healthStatus[survey.petHealth] || 0) + 1;
+      }
+      // Count basic needs
+      if (Array.isArray(survey.basicNeeds)) {
+        survey.basicNeeds.forEach(need => {
+          stats.basicNeeds[need] = (stats.basicNeeds[need] || 0) + 1;
+        });
       }
       if (survey.petAge) {
         totalAge += parseInt(survey.petAge) || 0;
@@ -129,6 +136,7 @@ router.get('/stats', (req, res) => {
       total: surveys.length,
       petTypes: {},
       healthStatus: {},
+      basicNeeds: {},
       averageAge: 0,
       averageWeight: 0
     };
@@ -144,6 +152,12 @@ router.get('/stats', (req, res) => {
       }
       if (survey.petHealth) {
         stats.healthStatus[survey.petHealth] = (stats.healthStatus[survey.petHealth] || 0) + 1;
+      }
+      // Count basic needs
+      if (Array.isArray(survey.basicNeeds)) {
+        survey.basicNeeds.forEach(need => {
+          stats.basicNeeds[need] = (stats.basicNeeds[need] || 0) + 1;
+        });
       }
       if (survey.petAge) {
         totalAge += parseInt(survey.petAge) || 0;

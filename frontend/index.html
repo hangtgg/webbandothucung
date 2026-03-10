@@ -415,8 +415,27 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="petBreed">Giống loài <span class="optional">(Tùy chọn)</span></label>
-                        <input type="text" id="petBreed" name="petBreed" placeholder="Nhập giống loài">
+                        <label>Ưu tiên nhu cầu cơ bản <span class="optional">(Tùy chọn)</span></label>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                            <label style="display: flex; align-items: center; margin-bottom: 0;">
+                                <input type="checkbox" name="basicNeeds" value="food"> 🍖 Thức ăn
+                            </label>
+                            <label style="display: flex; align-items: center; margin-bottom: 0;">
+                                <input type="checkbox" name="basicNeeds" value="litter"> 🚽 Cát vệ sinh
+                            </label>
+                            <label style="display: flex; align-items: center; margin-bottom: 0;">
+                                <input type="checkbox" name="basicNeeds" value="toilet"> 🚽 Bồn vệ sinh
+                            </label>
+                            <label style="display: flex; align-items: center; margin-bottom: 0;">
+                                <input type="checkbox" name="basicNeeds" value="water"> 💧 Nước uống
+                            </label>
+                            <label style="display: flex; align-items: center; margin-bottom: 0;">
+                                <input type="checkbox" name="basicNeeds" value="housing"> 🏠 Nhà ở
+                            </label>
+                            <label style="display: flex; align-items: center; margin-bottom: 0;">
+                                <input type="checkbox" name="basicNeeds" value="bedding"> 🛏️ Giường ngủ
+                            </label>
+                        </div>
                     </div>
 
                     <div class="form-group">

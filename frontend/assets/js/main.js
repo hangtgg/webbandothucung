@@ -53,14 +53,18 @@ class SurveyManager {
   handleSubmit(e) {
     e.preventDefault();
 
+    // Get selected basic needs
+    const basicNeedsCheckboxes = document.querySelectorAll('input[name="basicNeeds"]:checked');
+    const basicNeeds = Array.from(basicNeedsCheckboxes).map(cb => cb.value);
+
     // Collect form data
     const formData = {
       petType: document.getElementById('petType').value,
       petAge: document.getElementById('petAge').value,
       petWeight: document.getElementById('petWeight').value,
-      petBreed: document.getElementById('petBreed').value,
       petName: document.getElementById('petName').value,
       petHealth: document.getElementById('petHealth').value,
+      basicNeeds: basicNeeds,
       timestamp: new Date().toISOString()
     };
 
@@ -74,7 +78,8 @@ class SurveyManager {
         'event_category': 'engagement',
         'pet_type': formData.petType,
         'pet_age': formData.petAge,
-        'pet_health': formData.petHealth
+        'pet_health': formData.petHealth,
+        'basic_needs': basicNeeds.join(',')
       });
     }
 

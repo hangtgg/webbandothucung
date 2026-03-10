@@ -19,6 +19,8 @@ This document explains the survey feature and Google Analytics integration for t
 4. **Giống loài (Breed)** - Text input
 5. **Tên thú cưng (Pet Name)** - Text input
 6. **Tình trạng sức khỏe (Health Status)** - Select: Khỏe mạnh, Bình thường, Nhạy cảm, Khác
+7. **Ưu tiên gợi ý sản phẩm (Recommendation Preference)** - Select: Sản phẩm liên quan, Cùng danh mục, Cùng thẻ/nhãn, Tất cả
+8. **Muốn biết thêm về thuật toán (Algorithm Interest)** - Checkbox
 
 ### Frontend Implementation
 - **File**: `frontend/assets/js/main.js` - `SurveyManager` class
@@ -41,8 +43,17 @@ The backend calculates:
 - Total survey responses
 - Pet type distribution
 - Health status distribution
+- Recommendation algorithm used (Hybrid-Scoring-System)
+- User recommendation preference distribution
+- Number of users interested in algorithm information
 - Average pet age
 - Average pet weight
+
+### Algorithm Information
+The system tracks:
+- **recommendationAlgorithm**: The algorithm used (currently "Hybrid-Scoring-System")
+- **recommendationPreference**: User's preferred recommendation type (related_products, same_category, same_tags, all)
+- **algorithmInfoInterest**: Whether the user wants to learn more about the algorithm
 
 ## Google Analytics Setup
 
@@ -81,11 +92,20 @@ The application tracks these events in Google Analytics:
 2. **survey_submitted**
    - When user submits survey form
    - Category: engagement
-   - Includes: pet_type, pet_age, pet_health
+   - Includes: pet_type, pet_age, pet_health, recommendation_algo, recommendation_preference
 
 3. **survey_skipped**
    - When user skips/closes survey
    - Category: engagement
+
+### Algorithm Information Display
+When a user checks the "Muốn biết thêm về thuật toán" checkbox, they will see:
+- A detailed modal explaining the Hybrid-Scoring-System
+- How the three criteria (related products, category, tags) are weighted
+- Examples of how the algorithm calculates recommendations
+- Benefits of the recommendation system
+
+See [RECOMMENDATION_ALGORITHM.md](RECOMMENDATION_ALGORITHM.md) for full algorithm documentation.
 
 ### Viewing Analytics Data
 - Go to [Google Analytics Dashboard](https://analytics.google.com/)
@@ -115,6 +135,16 @@ Response:
       "healthy": 12,
       "sensitive": 3
     },
+    "recommendationAlgorithm": {
+      "Hybrid-Scoring-System": 15
+    },
+    "recommendationPreferences": {
+      "related_products": 6,
+      "same_category": 4,
+      "same_tags": 2,
+      "all": 3
+    },
+    "algorithmInfoInterest": 8,
     "averageAge": "3.5",
     "averageWeight": "4.2"
   }
