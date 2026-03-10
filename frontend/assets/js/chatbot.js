@@ -71,18 +71,6 @@ const Chatbot = {
         <div class="bot-response-text">${message}</div>
       </div>
     `);
-
-    if (response.products && response.products.length > 0) {
-      Chatbot.addProductCards(response.products);
-    }
-
-    if (response.followUpQuestions && response.followUpQuestions.length > 0) {
-      Chatbot.addQuestionSuggestions(response.followUpQuestions);
-    }
-
-    if (response.suggestions && response.suggestions.length > 0) {
-      Chatbot.addSuggestions(response.suggestions);
-    }
   },
 
   addMessage: (sender, html) => {
@@ -138,108 +126,6 @@ const Chatbot = {
       container.appendChild(btn);
     });
 
-    wrapper.appendChild(container);
-    messagesDiv.appendChild(wrapper);
-    Chatbot.scrollToBottom();
-  },
-
-  addQuestionSuggestions: (questions = []) => {
-    const messagesDiv = document.getElementById('chatbotMessages');
-    if (!messagesDiv || !questions.length) return;
-
-    const wrapper = document.createElement('div');
-    wrapper.className = 'chat-message message-bot';
-
-    const container = document.createElement('div');
-    container.className = 'chatbot-questions';
-
-    const title = document.createElement('div');
-    title.className = 'question-title';
-    title.textContent = '❓ Bạn có thể hỏi tiếp:';
-    container.appendChild(title);
-
-    questions.forEach((question) => {
-      const btn = document.createElement('button');
-      btn.className = 'question-btn';
-      btn.type = 'button';
-      btn.textContent = question;
-      btn.addEventListener('click', () => Chatbot.handleSuggestion(question));
-      container.appendChild(btn);
-    });
-
-    wrapper.appendChild(container);
-    messagesDiv.appendChild(wrapper);
-    Chatbot.scrollToBottom();
-  },
-
-  addProductCards: (products = []) => {
-    const messagesDiv = document.getElementById('chatbotMessages');
-    if (!messagesDiv || !products.length) return;
-
-    const wrapper = document.createElement('div');
-    wrapper.className = 'chat-message message-bot';
-
-    const container = document.createElement('div');
-    container.className = 'chatbot-product-list';
-
-    const title = document.createElement('div');
-    title.className = 'product-list-title';
-    title.textContent = '📦 Sản phẩm gợi ý';
-    container.appendChild(title);
-
-    const grid = document.createElement('div');
-    grid.className = 'chatbot-product-grid';
-
-    products.forEach((product) => {
-      const card = document.createElement('div');
-      card.className = 'chatbot-product-card';
-
-      const image = product.image
-        ? `<img src="${Chatbot.escapeAttribute(product.image)}" alt="${Chatbot.escapeAttribute(product.name)}" class="chatbot-product-image">`
-        : `<div class="chatbot-product-image placeholder">Không có ảnh</div>`;
-
-      const oldPriceHtml = product.oldPrice
-        ? `<div class="product-old-price">${Chatbot.formatCurrency(product.oldPrice)}</div>`
-        : '';
-
-      const stockStatus = product.stock > 0 
-        ? `<span class="stock-status in-stock">✓ Còn hàng</span>`
-        : `<span class="stock-status out-stock">✗ Hết hàng</span>`;
-
-      card.innerHTML = `
-        ${image}
-        <div class="chatbot-product-info">
-          <div class="product-name">${Chatbot.escapeHtml(product.name)}</div>
-          <div class="product-price-wrap">
-            ${oldPriceHtml}
-            <div class="product-price">${Chatbot.formatCurrency(product.price)}</div>
-          </div>
-          <div class="product-meta">
-            <span>⭐ ${Number(product.rating || 0).toFixed(1)}</span>
-            <span>Bán được ${product.sold || 0}</span>
-          </div>
-          <div class="product-stock">
-            ${stockStatus}
-          </div>
-          <div class="product-actions">
-            <button class="product-action-btn" data-product-name="${Chatbot.escapeAttribute(product.name)}">
-              Xem chi tiết
-            </button>
-          </div>
-        </div>
-      `;
-
-      const btn = card.querySelector('.product-action-btn');
-      if (btn) {
-        btn.addEventListener('click', () => {
-          Chatbot.handleSuggestion(`Tôi muốn xem chi tiết ${product.name}`);
-        });
-      }
-
-      grid.appendChild(card);
-    });
-
-    container.appendChild(grid);
     wrapper.appendChild(container);
     messagesDiv.appendChild(wrapper);
     Chatbot.scrollToBottom();

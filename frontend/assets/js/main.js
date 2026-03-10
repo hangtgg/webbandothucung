@@ -199,6 +199,97 @@ class SurveyManager {
   }
 }
 
+// Banner Carousel
+class BannerCarousel {
+  constructor() {
+    this.slides = document.querySelectorAll('.carousel-slide');
+    this.indicators = document.querySelectorAll('.indicator');
+    this.prevBtn = document.getElementById('prevSlide');
+    this.nextBtn = document.getElementById('nextSlide');
+    this.currentSlide = 0;
+    this.autoPlayInterval = null;
+    
+    if (this.slides.length === 0) return;
+    
+    this.init();
+  }
+
+  init() {
+    // Event listeners
+    this.prevBtn?.addEventListener('click', () => this.previousSlide());
+    this.nextBtn?.addEventListener('click', () => this.nextSlide());
+    
+    this.indicators.forEach((indicator, index) => {
+      indicator.addEventListener('click', () => this.goToSlide(index));
+    });
+
+    // Auto-play carousel every 5 seconds
+    this.startAutoPlay();
+    
+    // Pause on hover
+    document.querySelector('.banner-carousel')?.addEventListener('mouseenter', () => this.stopAutoPlay());
+    document.querySelector('.banner-carousel')?.addEventListener('mouseleave', () => this.startAutoPlay());
+  }
+
+  showSlide(n) {
+    // Remove active class from all slides and indicators
+    this.slides.forEach(slide => slide.classList.remove('active'));
+    this.indicators.forEach(indicator => indicator.classList.remove('active'));
+
+    // Add active class to current slide and indicator
+    if (this.slides[n]) {
+      this.slides[n].classList.add('active');
+    }
+    if (this.indicators[n]) {
+      this.indicators[n].classList.add('active');
+    }
+  }
+
+  nextSlide() {
+    this.currentSlide = (this.currentSlide + 1) % this.slides.length;
+    this.showSlide(this.currentSlide);
+    this.resetAutoPlay();
+  }
+
+  previousSlide() {
+    this.currentSlide = (this.currentSlide - 1 + this.slides.length) % this.slides.length;
+    this.showSlide(this.currentSlide);
+    this.resetAutoPlay();
+  }
+
+  goToSlide(index) {
+    this.currentSlide = index;
+    this.showSlide(this.currentSlide);
+    this.resetAutoPlay();
+  }
+
+  startAutoPlay() {
+    this.autoPlayInterval = setInterval(() => this.nextSlide(), 5000);
+  }
+
+  stopAutoPlay() {
+    if (this.autoPlayInterval) {
+      clearInterval(this.autoPlayInterval);
+    }
+  }
+
+  resetAutoPlay() {
+    this.stopAutoPlay();
+    this.startAutoPlay();
+  }
+}
+
+// Initialize on DOM ready
+document.addEventListener('DOMContentLoaded', async () => {
+  // Initialize components
+  const surveyManager = new SurveyManager();
+  const carousel = new BannerCarousel();
+  
+  // Initialize other modules
+  // These are loaded via separate script tags and initialized
+  // via DOMContentLoaded events, so we just need to ensure they load properly.
+});
+
 // Main application initialization
 document.addEventListener('DOMContentLoaded', async () => {
   console.log('PetShop application starting...');

@@ -3,8 +3,15 @@ const UI = {
   // Render product grid
   renderProducts: (products, containerId = 'productsGrid') => {
     const container = document.getElementById(containerId);
+    console.log('renderProducts called with', products.length, 'products, container:', container);
+    
+    if (!container) {
+      console.error('Container not found:', containerId);
+      return;
+    }
     
     if (!products || products.length === 0) {
+      console.warn('No products to display');
       container.innerHTML = `
         <div class="no-results" style="grid-column: 1/-1;">
           <i class="fas fa-search"></i>
@@ -14,7 +21,7 @@ const UI = {
       return;
     }
     
-    container.innerHTML = products.map(product => `
+    const html = products.map(product => `
       <div class="product-card" onclick="UI.openProductModal(${product.id})">
         <div class="product-image">
           <img src="/api/images/image/${product.id}?name=${encodeURIComponent(product.name)}" alt="${product.name}">
@@ -34,6 +41,10 @@ const UI = {
         </div>
       </div>
     `).join('');
+    
+    console.log('Setting innerHTML, length:', html.length);
+    container.innerHTML = html;
+    console.log('Products rendered, container innerHTML length:', container.innerHTML.length);
   },
 
   // Open product modal

@@ -1,8 +1,56 @@
 // Search functionality
 const Search = {
+  // Detect pet type from voice transcript
+  detectPetTypeFromVoice: (transcript) => {
+    const msg = transcript.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    
+    const petMap = [
+      { type: 'dog', keywords: ['cho', 'dog', 'cun', 'chó'] },
+      { type: 'cat', keywords: ['meo', 'cat', 'meok', 'mèo'] },
+      { type: 'hamster', keywords: ['hamster', 'hamsterr'] },
+      { type: 'rabbit', keywords: ['tho', 'rabbit', 'thỏ'] },
+      { type: 'bird', keywords: ['chim', 'bird', 'chuot bay', 'chuyên', 'chim chích'] },
+      { type: 'fish', keywords: ['ca', 'fish', 'tay ca', 'cá'] },
+      { type: 'reptile', keywords: ['bo sat', 'reptile', 'ran', 'bò sát'] }
+    ];
+
+    const found = petMap.find(item => item.keywords.some(keyword => msg.includes(keyword)));
+    return found ? found.type : null;
+  },
+
+  // Detect needs from voice transcript
+  detectNeedsFromVoice: (transcript) => {
+    const msg = transcript.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    const needs = [];
+
+    const needMap = [
+      { key: 'food', keywords: ['thuc an', 'food', 'hat', 'pate', 'an vat', 'snack', 'thức ăn'] },
+      { key: 'toy', keywords: ['do choi', 'toy', 'bong', 'can gam', 'choi', 'đồ chơi'] },
+      { key: 'hygiene', keywords: ['ve sinh', 'cat', 'toilet', 'khay', 'bon', 'vệ sinh'] },
+      { key: 'accessory', keywords: ['phu kien', 'vong co', 'day dat', 'quan ao', 'balo', 'phụ kiện'] },
+      { key: 'water', keywords: ['nuoc', 'uong', 'may uong', 'binh', 'fountain', 'nước'] },
+      { key: 'bath', keywords: ['tam', 'bon tam', 'sua tam', 'goi', 'tắm'] },
+      { key: 'bedding', keywords: ['nem', 'giuong', 'ghe nam', 'nap', 'giường'] },
+      { key: 'grooming', keywords: ['chuot', 'dai', 'ke', 'cat toc', 'groom', 'duong da'] }
+    ];
+
+    for (const item of needMap) {
+      if (item.keywords.some(keyword => msg.includes(keyword))) {
+        needs.push(item.key);
+      }
+    }
+
+    return needs;
+  },
+
   init: () => {
     const searchBtn = document.getElementById('searchBtn');
     const searchInput = document.getElementById('searchInput');
+
+    if (!searchBtn || !searchInput) {
+      console.warn('Search elements not found');
+      return;
+    }
 
     searchBtn.addEventListener('click', Search.textSearch);
     searchInput.addEventListener('keypress', (e) => {
@@ -12,10 +60,16 @@ const Search = {
     });
 
     // Voice search
-    document.getElementById('voiceRecordBtn').addEventListener('click', Search.startVoiceSearch);
+    const voiceRecordBtn = document.getElementById('voiceRecordBtn');
+    if (voiceRecordBtn) {
+      voiceRecordBtn.addEventListener('click', Search.startVoiceSearch);
+    }
 
-    // Image search
-    document.getElementById('imageInput').addEventListener('change', Search.handleImageUpload);
+    // Image search  
+    const imageInput = document.getElementById('imageInput');
+    if (imageInput) {
+      imageInput.addEventListener('change', Search.handleImageUpload);
+    }
 
     // Navigation filters
     document.querySelectorAll('.nav-item').forEach(btn => {
@@ -30,8 +84,10 @@ const Search = {
     // Price range filter
     const minPrice = document.getElementById('minPrice');
     const maxPrice = document.getElementById('maxPrice');
-    minPrice.addEventListener('input', Search.applyFilters);
-    maxPrice.addEventListener('input', Search.applyFilters);
+    if (minPrice && maxPrice) {
+      minPrice.addEventListener('input', Search.applyFilters);
+      maxPrice.addEventListener('input', Search.applyFilters);
+    }
 
     // Category checkboxes
     document.querySelectorAll('input[name="category"]').forEach(checkbox => {
@@ -44,12 +100,26 @@ const Search = {
     });
 
     // Load all products initially
+    console.log('Search initialized, loading products...');
     Search.loadAllProducts();
   },
 
   loadAllProducts: async () => {
-    const products = await API.getProducts();
-    UI.renderProducts(products);
+    try {
+      console.log('Fetching all products...');
+      const products = await API.getProducts();
+      console.log('Products fetched:', products.length, products);
+      const container = document.getElementById('productsGrid');
+      if (!container) {
+        console.error('productsGrid container not found!');
+        return;
+      }
+      console.log('Rendering products to container...');
+      UI.renderProducts(products);
+      console.log('Products rendered successfully');
+    } catch (error) {
+      console.error('Error in loadAllProducts:', error);
+    }
   },
 
   textSearch: async () => {
@@ -93,29 +163,70 @@ const Search = {
       const transcript = event.results[0][0].transcript;
       statusDiv.textContent = `Bạn nói: "${transcript}"`;
 
-      // Search
-      const result = await API.searchVoice(transcript);
+      // Detect pet type and needs from voice
+      const petType = Search.detectPetTypeFromVoice(transcript);
+      const needs = Search.detectNeedsFromVoice(transcript);
+
       const resultsDiv = document.getElementById('voiceResults');
-      
-      if (result.results && result.results.length > 0) {
-        resultsDiv.innerHTML = `
-          <h3>Kết quả (${result.results.length} sản phẩm):</h3>
-          <div class="search-results-list">
-            ${result.results.slice(0, 4).map(p => `
-              <div class="product-card" onclick="UI.openProductModal(${p.id})">
-                <div class="product-image">
-                  <img src="/api/images/image/${p.id}?name=${encodeURIComponent(p.name)}" alt="${p.name}">
+
+      // If pet type detected -> show products for that pet type
+      if (petType) {
+        const products = await API.getProducts(petType);
+        
+        // Filter by needs if detected
+        let filteredProducts = products;
+        if (needs.length > 0) {
+          filteredProducts = products.filter(p => {
+            const tags = p.tags || [];
+            return needs.some(need => tags.includes(need));
+          });
+        }
+
+        // Show results
+        if (filteredProducts.length > 0) {
+          resultsDiv.innerHTML = `
+            <h3>🎯 Sản phẩm gợi ý (${filteredProducts.length}):</h3>
+            <div class="search-results-list">
+              ${filteredProducts.slice(0, 6).map(p => `
+                <div class="product-card" onclick="UI.openProductModal(${p.id})">
+                  <div class="product-image">
+                    <img src="/api/images/image/${p.id}?name=${encodeURIComponent(p.name)}" alt="${p.name}">
+                  </div>
+                  <div class="product-body">
+                    <div class="product-name">${p.name}</div>
+                    <div class="product-price">${p.price.toLocaleString()} VND</div>
+                  </div>
                 </div>
-                <div class="product-body">
-                  <div class="product-name">${p.name}</div>
-                  <div class="product-price">${p.price.toLocaleString()} VND</div>
-                </div>
-              </div>
-            `).join('')}
-          </div>
-        `;
+              `).join('')}
+            </div>
+          `;
+        } else {
+          resultsDiv.innerHTML = '<p style="color: #999;">Không tìm thấy sản phẩm phù hợp</p>';
+        }
       } else {
-        resultsDiv.innerHTML = '<p style="color: #999;">Không tìm thấy sản phẩm nào</p>';
+        // Fallback to text search if no pet type detected
+        const result = await API.searchVoice(transcript);
+        
+        if (result.results && result.results.length > 0) {
+          resultsDiv.innerHTML = `
+            <h3>Kết quả tìm kiếm (${result.results.length} sản phẩm):</h3>
+            <div class="search-results-list">
+              ${result.results.slice(0, 6).map(p => `
+                <div class="product-card" onclick="UI.openProductModal(${p.id})">
+                  <div class="product-image">
+                    <img src="/api/images/image/${p.id}?name=${encodeURIComponent(p.name)}" alt="${p.name}">
+                  </div>
+                  <div class="product-body">
+                    <div class="product-name">${p.name}</div>
+                    <div class="product-price">${p.price.toLocaleString()} VND</div>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          `;
+        } else {
+          resultsDiv.innerHTML = '<p style="color: #999;">Không tìm thấy sản phẩm nào</p>';
+        }
       }
     };
 

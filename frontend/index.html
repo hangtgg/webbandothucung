@@ -85,50 +85,48 @@
             </nav>
         </header>
 
-        <!-- Introduction Banner -->
-        <section class="intro-banner" style="background: url('https://images.unsplash.com/photo-1587300411107-a3677e2b5d59?w=1200&h=400&fit=crop') center/cover no-repeat;">
-            <div class="intro-overlay"></div>
-            <div class="intro-content">
-                <div class="intro-text">
-                    <h2>🐾 PetShop - Cửa hàng thú cưng</h2>
-                    <p>Chó • Mèo • Hamster • Thỏ • Chim • Cá • Bò sát</p>
-                    <div class="intro-features">
-                        <span><i class="fas fa-truck"></i> Giao 24h</span>
-                        <span><i class="fas fa-star"></i> ★★★★★</span>
-                        <span><i class="fas fa-headset"></i> HDT 24/7</span>
-                        <span><i class="fas fa-lock"></i> An toàn</span>
+        <!-- Banner Carousel (Giới thiệu + Khuyến mãi) -->
+        <section class="banner-carousel">
+            <div class="carousel-container">
+                <div class="carousel-slide active" style="background: url('https://images.unsplash.com/photo-1587300411107-a3677e2b5d59?w=1200&h=400&fit=crop') center/cover no-repeat;">
+                    <div class="carousel-overlay"></div>
+                    <div class="carousel-content">
+                        <div class="carousel-text">
+                            <h2>🐾 PetShop - Cửa hàng thú cưng</h2>
+                            <p>Chó • Mèo • Hamster • Thỏ • Chim • Cá • Bò sát</p>
+                            <div class="carousel-features">
+                                <span><i class="fas fa-truck"></i> Giao 24h</span>
+                                <span><i class="fas fa-star"></i> ★★★★★</span>
+                                <span><i class="fas fa-headset"></i> HDT 24/7</span>
+                                <span><i class="fas fa-lock"></i> An toàn</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="carousel-slide" style="background: url('https://images.unsplash.com/photo-1557821552-17105176677c?w=1200&h=300&fit=crop') center/cover no-repeat;">
+                    <div class="carousel-overlay"></div>
+                    <div class="carousel-content">
+                        <div class="promo-text">
+                            <h3>🎉 KHUYẾN MÃI HOT</h3>
+                            <h2>-30% TẤT CẢ SẢN PHẨM</h2>
+                            <p>🎁 + Quà Tặng | 📅 Hạn: 31/03</p>
+                            <button class="btn-promo" onclick="document.querySelector('[data-category=\"all\"]').click()">
+                                <i class="fas fa-shopping-bag"></i> MUA NGAY
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </section>
 
-        <!-- Promotion Banner -->
-        <section class="promo-section" style="background: url('https://images.unsplash.com/photo-1557821552-17105176677c?w=1200&h=300&fit=crop') center/cover no-repeat;">
-            <div class="promo-overlay"></div>
-            <div class="promo-banner">
-                <div class="promo-content">
-                    <h3>🎉 KHUYẾN MÃI HOT</h3>
-                    <h2>-30% TẤT CẢ SẢN PHẨM</h2>
-                    <p>🎁 + Quà Tặng | 📅 Tựa hạn: 31/03</p>
-                    <button class="btn-promo" onclick="document.querySelector('[data-category=\"all\"]').click()">
-                        <i class="fas fa-shopping-bag"></i> MUA NGAY
-                    </button>
-                </div>
-            </div>
-        </section>
-
-        <!-- TikTok Section -->
-        <section class="tiktok-section" style="background: url('https://images.unsplash.com/photo-1516549655201-750a172e7de9?w=1200&h=300&fit=crop') center/cover no-repeat;">
-            <div class="tiktok-overlay"></div>
-            <div class="tiktok-container">
-                <h3> Theo Dõi Chúng Tôi</h3>
-                <p>Video, Mẹo, Khuyến mãi hấp dẫn</p>
-                <div class="tiktok-links">
-                    <a href="https://www.tiktok.com/@petshopdnh" target="_blank" class="tiktok-btn">
-                        <i class="fab fa-tiktok"></i> PetShop
-                    </a>
-                    
-                </div>
+            <!-- Carousel Controls -->
+            <button class="carousel-btn prev" id="prevSlide">❮</button>
+            <button class="carousel-btn next" id="nextSlide">❯</button>
+            
+            <!-- Carousel Indicators -->
+            <div class="carousel-indicators">
+                <button class="indicator active" data-slide="0"></button>
+                <button class="indicator" data-slide="1"></button>
             </div>
         </section>
 
@@ -446,7 +444,247 @@
         </div>
     </div>
 
-    <!-- Scripts -->
+    </div>
+
+    <!-- Blog Articles Section -->
+    <section class="blog-section">
+        <div class="container">
+            <h2 class="section-title">📚 Bài Đọc Hay</h2>
+            <p class="section-subtitle">Tìm hiểu các bài viết chăm sóc thú cưng từ chuyên gia</p>
+            
+            <div class="blog-container">
+                <!-- Article 1 -->
+                <article class="blog-card">
+                    <div class="blog-image">
+                        <img src="assets/images/baiviet1.jpg" alt="Chăm sóc mèo">
+                        <span class="blog-category">💬 Chăm sóc mèo</span>
+                    </div>
+                    <div class="blog-content">
+                        <h3 class="blog-title">Cách cho mèo con uống sữa chi tiết từ A-Z</h3>
+                        <p class="blog-excerpt">Nuôi mèo con trong giai đoạn đầu là trải nghiệm đầy yêu thương. Tìm hiểu cách chọn loại sữa phù hợp và cho mèo uống đúng cách để bé phát triển khỏe mạnh...</p>
+                        <div class="blog-meta">
+                            <span class="blog-date">📅 15/03/2026</span>
+                            <span class="blog-read">⏱️ 8 phút đọc</span>
+                        </div>
+                        <a href="https://petkitvietnam.com/cach-cho-meo-con-uong-sua-chi-tiet-tu-a-z" class="blog-link">Đọc tiếp →</a>
+                    </div>
+                </article>
+
+                <!-- Article 2 -->
+                <article class="blog-card">
+                    <div class="blog-image">
+                        <img src="assets/images/baiviet2.jpg" alt="Ghẻ ở mèo">
+                        <span class="blog-category">🐱 Sức khỏe</span>
+                    </div>
+                    <div class="blog-content">
+                        <h3 class="blog-title">Cách nhận biết dấu hiệu mèo bị ghẻ chính xác nhất</h3>
+                        <p class="blog-excerpt">Ghẻ là một bệnh lý ngoài da dễ lây nhiễm từ nhiều nguồn khác nhau. Bài viết này giúp bạn nhận diện sớm các dấu hiệu bệnh ghẻ ở mèo...</p>
+                        <div class="blog-meta">
+                            <span class="blog-date">📅 12/03/2026</span>
+                            <span class="blog-read">⏱️ 10 phút đọc</span>
+                        </div>
+                        <a href="https://petkitvietnam.com/cach-nhan-biet-dau-hieu-meo-bi-ghe" class="blog-link">Đọc tiếp →</a>
+                    </div>
+                </article>
+
+                <!-- Article 3 -->
+                <article class="blog-card">
+                    <div class="blog-image">
+                        <img src="assets/images/baiviet3.jpg" alt="Cắt lông thú cưng">
+                        <span class="blog-category">✂️ Chăm sóc lông</span>
+                    </div>
+                    <div class="blog-content">
+                        <h3 class="blog-title">Tông đơ cắt lông chó mèo loại nào tốt nhất hiện nay?</h3>
+                        <p class="blog-excerpt">Tông đơ là dụng cụ không thể thiếu để giữ lông thú cưng gọn gàng. Khám phá các loại tông đơ phổ biến và cách chọn loại tốt nhất...</p>
+                        <div class="blog-meta">
+                            <span class="blog-date">📅 10/03/2026</span>
+                            <span class="blog-read">⏱️ 9 phút đọc</span>
+                        </div>
+                        <a href="https://petkitvietnam.com/tong-do-cat-long-cho-meo-loai-nao-tot-nhat-hien-nay" class="blog-link">Đọc tiếp →</a>
+                    </div>
+                </article>
+
+                <!-- Article 4 -->
+                <article class="blog-card">
+                    <div class="blog-image">
+                        <img src="assets/images/baiviet4.jpg" alt="Cát vệ sinh mèo">
+                        <span class="blog-category">🧹 Vệ sinh</span>
+                    </div>
+                    <div class="blog-content">
+                        <h3 class="blog-title">Điểm danh các loại cát mèo phổ biến nhất hiện nay</h3>
+                        <p class="blog-excerpt">Chọn cát vệ sinh phù hợp không chỉ giúp dễ dàng trong việc dọn vệ sinh mà còn đảm bảo sức khỏe cho mèo. Tìm hiểu từng loại cát...</p>
+                        <div class="blog-meta">
+                            <span class="blog-date">📅 08/03/2026</span>
+                            <span class="blog-read">⏱️ 12 phút đọc</span>
+                        </div>
+                        <a href="https://petkitvietnam.com/cac-loai-cat-meo-pho-bien-nhat-hien-nay" class="blog-link">Đọc tiếp →</a>
+                    </div>
+                </article>
+
+                <!-- Article 5 -->
+                <article class="blog-card">
+                    <div class="blog-image">
+                        <img src="assets/images/baiviet5.jpg" alt="Mèo ốm">
+                        <span class="blog-category">💊 Sức khỏe</span>
+                    </div>
+                    <div class="blog-content">
+                        <h3 class="blog-title">Mèo sơ sinh bị tiêu chảy: Cách nhận biết và xử lý đúng chuẩn</h3>
+                        <p class="blog-excerpt">Tiêu chảy ở mèo sơ sinh có thể là dấu hiệu cảnh báo sức khỏe đang gặp nguy hiểm. Tìm hiểu nguyên nhân và cách xử lý hiệu quả...</p>
+                        <div class="blog-meta">
+                            <span class="blog-date">📅 05/03/2026</span>
+                            <span class="blog-read">⏱️ 11 phút đọc</span>
+                        </div>
+                        <a href="https://petkitvietnam.com/meo-so-sinh-bi-tieu-chay" class="blog-link">Đọc tiếp →</a>
+                    </div>
+                </article>
+
+                <!-- Article 6 -->
+                <article class="blog-card">
+                    <div class="blog-image">
+                        <img src="assets/images/baiviet6.jpg" alt="Chế độ ăn mèo">
+                        <span class="blog-category">🍖 Dinh dưỡng</span>
+                    </div>
+                    <div class="blog-content">
+                        <h3 class="blog-title">Nên cho mèo ăn cơm hay ăn hạt thì tốt hơn?</h3>
+                        <p class="blog-excerpt">Mỗi loại thức ăn đều có ưu và nhược điểm riêng. Biết cách lựa chọn chế độ ăn phù hợp để mèo phát triển khỏe mạnh...</p>
+                        <div class="blog-meta">
+                            <span class="blog-date">📅 01/03/2026</span>
+                            <span class="blog-read">⏱️ 9 phút đọc</span>
+                        </div>
+                        <a href="https://petkitvietnam.com/nen-cho-meo-an-com-hay-an-hat-thi-tot-hon" class="blog-link">Đọc tiếp →</a>
+                    </div>
+                </article>
+            </div>
+
+            <div class="blog-footer">
+                <a href="#" class="btn-view-all">Xem tất cả bài viết</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- TikTok Section (Moved to bottom) -->
+    <section class="tiktok-section">
+        <div class="tiktok-overlay"></div>
+        <div class="tiktok-container">
+            <div class="tiktok-content">
+                <h3><i class="fab fa-tiktok"></i> Theo Dõi Chúng Tôi Trên TikTok</h3>
+                <p>Video, Mẹo chăm sóc thú cưng, Khuyến mãi hấp dẫn và nhiều hơn nữa</p>
+                <a href="https://www.tiktok.com/@petshopdnh" target="_blank" class="tiktok-btn">
+                    <i class="fab fa-tiktok"></i> Nhấn theo dõi
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <!-- About Section -->
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <i class="fas fa-paw"></i>
+                        <h3>PetShop</h3>
+                    </div>
+                    <p>Cửa hàng thú cưng trực tuyến hàng đầu. Cung cấp các sản phẩm chất lượng cao cho tất cả loài thú cưng của bạn.</p>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="footer-section">
+                    <h4>Liên kết nhanh</h4>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-home"></i> Trang chủ</a></li>
+                        <li><a href="#"><i class="fas fa-cube"></i> Sản phẩm</a></li>
+                        <li><a href="#"><i class="fas fa-info-circle"></i> Về chúng tôi</a></li>
+                        <li><a href="#"><i class="fas fa-envelope"></i> Liên hệ</a></li>
+                        <li><a href="#"><i class="fas fa-file-contract"></i> Riêng tư</a></li>
+                    </ul>
+                </div>
+
+                <!-- Categories -->
+                <div class="footer-section">
+                    <h4>Danh mục sản phẩm</h4>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-cat"></i> Mèo</a></li>
+                        <li><a href="#"><i class="fas fa-dog"></i> Chó</a></li>
+                        <li><a href="#"><i class="fas fa-fish"></i> Cá</a></li>
+                        <li><a href="#"><i class="fas fa-dove"></i> Chim</a></li>
+                        <li><a href="#"><i class="fas fa-cube"></i> Phụ kiện</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Information -->
+                <div class="footer-section">
+                    <h4>Thông tin liên hệ</h4>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div>
+                                <strong>Địa chỉ:</strong>
+                                <p>Công viên phần mềm Mekong, Khu phố Phong Thuận, phường Mỹ Phong, tỉnh Đồng Tháp</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <div>
+                                <strong>Điện thoại:</strong>
+                                <p><a href="tel:+842812348765">028 1234 8765</a></p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <div>
+                                <strong>Email:</strong>
+                                <p><a href="mailto:info@petshop.vn">info@petshop.vn</a></p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-clock"></i>
+                            <div>
+                                <strong>Giờ mở cửa:</strong>
+                                <p>Thứ 2 - Chủ nhật: 08:00 - 21:00</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Social Media -->
+                <div class="footer-section">
+                    <h4>Kết nối với chúng tôi</h4>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/petshop" target="_blank" title="Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://www.instagram.com/petshop" target="_blank" title="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://www.tiktok.com/@petshopdnh" target="_blank" title="TikTok">
+                            <i class="fab fa-tiktok"></i>
+                        </a>
+                        <a href="https://www.youtube.com/@petshop" target="_blank" title="YouTube">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                        <a href="https://zalo.me/petshopdnh" target="_blank" title="Zalo">
+                            <i class="fas fa-message"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer Bottom -->
+            <div class="footer-bottom">
+                <div class="footer-bottom-content">
+                    <p>&copy; 2024-2026 PetShop. Tất cả các quyền được bảo vệ.</p>
+                    <ul>
+                        <li><a href="#">Điều khoản sử dụng</a></li>
+                        <li><a href="#">Chính sách bảo mật</a></li>
+                        <li><a href="#">Chính sách hoàn trả</a></li>
+                        <li><a href="#">Hỗ trợ khách hàng</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
     <script src="assets/js/api.js"></script>
     <script src="assets/js/ui.js"></script>
     <script src="assets/js/chatbot.js"></script>

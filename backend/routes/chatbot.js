@@ -406,6 +406,7 @@ function buildResponse(message) {
   let title = 'Tư vấn sản phẩm';
   let responseMessage = '';
   let recommendedProducts = [];
+  let showProductsAndQuestions = false;
 
   switch (context.intent) {
     case 'greeting':
@@ -449,6 +450,7 @@ function buildResponse(message) {
       responseMessage =
         'Đây là những sản phẩm bán chạy nhất mà khách hàng yêu thích:\n\n' +
         formatProductSummary(recommendedProducts);
+      showProductsAndQuestions = true;
       break;
 
     case 'new_arrivals':
@@ -457,6 +459,7 @@ function buildResponse(message) {
       responseMessage =
         'Những sản phẩm mới nhất đã về:\n\n' +
         formatProductSummary(recommendedProducts);
+      showProductsAndQuestions = true;
       break;
 
     case 'price_inquiry':
@@ -469,6 +472,7 @@ function buildResponse(message) {
       } else {
         responseMessage = 'Không tìm thấy sản phẩm phù hợp trong tầm giá này. Bạn có thể thử:\n• Tăng ngân sách\n• Tìm loại sản phẩm khác';
       }
+      showProductsAndQuestions = true;
       break;
 
     case 'consult':
@@ -486,6 +490,7 @@ function buildResponse(message) {
           'Tôi chưa tìm thấy sản phẩm khớp hoàn toàn. Đây là một số sản phẩm nổi bật để bạn tham khảo:\n\n' +
           formatProductSummary(recommendedProducts);
       }
+      showProductsAndQuestions = true;
       break;
   }
 
@@ -493,9 +498,9 @@ function buildResponse(message) {
     success: true,
     title,
     message: responseMessage,
-    suggestions: buildSmartSuggestions(context, recommendedProducts),
-    followUpQuestions: buildSmartFollowUpQuestions(context, recommendedProducts),
-    products: recommendedProducts.map(product => ({
+    suggestions: [],
+    followUpQuestions: showProductsAndQuestions ? buildSmartFollowUpQuestions(context, recommendedProducts) : [],
+    products: showProductsAndQuestions ? recommendedProducts.map(product => ({
       id: product.id,
       name: product.name,
       price: product.price,
@@ -507,7 +512,7 @@ function buildResponse(message) {
       sold: product.sold || 0,
       rating: product.rating || 0,
       tags: product.tags || []
-    })),
+    })) : [],
     detected: {
       intent: context.intent,
       petType: context.petType,
