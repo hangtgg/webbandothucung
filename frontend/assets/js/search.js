@@ -203,13 +203,29 @@ const Search = {
 
   // Helper to render voice/image results with close button
   renderVoiceResults: (title, products) => {
+    console.log('🎨 renderVoiceResults called:', { title, productCount: products.length });
+    
     const resultsDiv = document.getElementById('voiceResults');
-    if (!resultsDiv) return;
+    console.log('Results div found?', !!resultsDiv);
+    
+    if (!resultsDiv) {
+      console.error('❌ voiceResults div not found!');
+      
+      // Try imageResults as fallback for image search
+      const imageDiv = document.getElementById('imageResults');
+      if (imageDiv) {
+        console.log('Using imageResults instead');
+        Search.renderVoiceResults(title, products);
+        return;
+      }
+      return;
+    }
     
     // Make sure div is visible
     resultsDiv.style.display = 'block';
+    console.log('✅ Results div visible');
     
-    resultsDiv.innerHTML = `
+    const html = `
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
         <h3>${title}</h3>
         <button class="voice-close-btn" style="background: #f5f5f5; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 18px;">✕</button>
@@ -229,6 +245,9 @@ const Search = {
       </div>
     `;
     
+    resultsDiv.innerHTML = html;
+    console.log('✅ HTML rendered');
+    
     // Attach event listeners after rendering
     console.log('🔗 Attaching event listeners to voice product cards...');
     
@@ -240,10 +259,13 @@ const Search = {
         resultsDiv.innerHTML = '';
         resultsDiv.style.display = 'none';
       });
+      console.log('✅ Close button listener attached');
     }
     
     // Product cards
     const productCards = resultsDiv.querySelectorAll('.voice-product-card');
+    console.log(`Found ${productCards.length} product cards`);
+    
     productCards.forEach(card => {
       card.addEventListener('click', () => {
         const productId = card.getAttribute('data-product-id');
@@ -253,6 +275,8 @@ const Search = {
       // Add cursor pointer
       card.style.cursor = 'pointer';
     });
+    
+    console.log('✅ Event listeners attached');
   },
 
   // Select product from voice/image search and close results
@@ -397,35 +421,136 @@ const Search = {
 
   handleImageUpload: async (e) => {
     const file = e.target.files[0];
-    if (!file) return;
+    if (!file) {
+      console.error('No file selected');
+      return;
+    }
 
-    // Simulate image recognition - in real app, would use a vision API
+    // Validate file type
+    if (!file.type.startsWith('image/')) {
+      alert('Vui lòng chọn một file hình ảnh');
+      return;
+    }
+
+    const resultsDiv = document.getElementById('imageResults');
+    
+    // Show loading with preview
+    resultsDiv.style.display = 'block';
+    
+    // Read file as data URL for preview
     const reader = new FileReader();
     reader.onload = async (event) => {
-      const imageDescription = 'pet product'; // Placeholder
+      const imageDataUrl = event.target.result;
       
-      const result = await API.searchImage(imageDescription);
-      const resultsDiv = document.getElementById('imageResults');
+      resultsDiv.innerHTML = `
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px;">
+          <div>
+            <h3>📤 Ảnh của bạn</h3>
+            <img src="${imageDataUrl}" style="max-width: 200px; max-height: 200px; border-radius: 8px; margin-top: 10px;">
+          </div>
+          <button onclick="document.getElementById('imageResults').innerHTML=''; document.getElementById('imageResults').style.display='none';" style="background: #f5f5f5; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 18px;">✕</button>
+        </div>
+        <p style="color: #666; font-style: italic; text-align: center; margin-top: 20px;">🔍 Đang tìm kiếm sản phẩm tương tự...</p>
+      `;
       
-      if (result.results && result.results.length > 0) {
-        resultsDiv.innerHTML = `
-          <h3>Kết quả (${result.results.length} sản phẩm tương tự):</h3>
-          <div class="search-results-list">
-            ${result.results.slice(0, 4).map(p => `
-              <div class="product-card" onclick="UI.openProductModal(${p.id})">
-                <div class="product-image">
-                  <img src="/api/images/image/${p.id}?name=${encodeURIComponent(p.name)}" alt="${p.name}">
-                </div>
-                <div class="product-body">
-                  <div class="product-name">${p.name}</div>
-                  <div class="product-price">${p.price.toLocaleString()} VND</div>
-                </div>
+      try {
+        // Create FormData with file
+        const formData = new FormData();
+        formData.append('image', file);
+        
+        console.log('📤 Uploading image:', file.name, file.type, file.size);
+        
+        const response = await fetch('http://localhost:3000/api/search/image', {
+          method: 'POST',
+          body: formData
+        });
+        
+        console.log('📥 Response status:', response.status);
+        
+        if (!response.ok) {
+          console.error('Response not OK:', response.status, response.statusText);
+          const errorData = await response.json().catch(() => ({}));
+          throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
+        }
+        
+        const result = await response.json();
+        console.log('📦 Response data:', result);
+        
+        if (result.results && result.results.length > 0) {
+          console.log('✅ Rendering results:', result.results.length);
+          // Display uploaded image + search results
+          resultsDiv.innerHTML = `
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px;">
+              <div>
+                <h3>📤 Ảnh của bạn</h3>
+                <img src="${imageDataUrl}" style="max-width: 180px; max-height: 180px; border-radius: 8px; margin-top: 10px; border: 2px solid #ddd;">
               </div>
-            `).join('')}
+              <button onclick="document.getElementById('imageResults').innerHTML=''; document.getElementById('imageResults').style.display='none';" style="background: #f5f5f5; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 18px;">✕</button>
+            </div>
+            
+            <div style="border-top: 2px solid #eee; padding-top: 15px; margin-top: 15px;">
+              <h3>🖼️ Sản phẩm tương tự (${result.results.length}):</h3>
+              <div class="search-results-list" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; margin-top: 15px;">
+                ${result.results.slice(0, 6).map(p => `
+                  <div class="product-card voice-product-card" data-product-id="${p.id}" style="cursor: pointer; border: 1px solid #ddd; padding: 10px; border-radius: 8px; transition: transform 0.2s;">
+                    <div class="product-image">
+                      <img src="/api/images/image/${p.id}?name=${encodeURIComponent(p.name)}" alt="${p.name}" style="width: 100%; height: 150px; object-fit: cover; border-radius: 4px;">
+                    </div>
+                    <div class="product-body" style="margin-top: 10px;">
+                      <div class="product-name" style="font-weight: 500; font-size: 14px; margin-bottom: 5px;">${p.name}</div>
+                      <div class="product-price" style="color: #ff6b6b; font-weight: bold;">${p.price.toLocaleString()} VND</div>
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          `;
+          
+          // Attach event listeners
+          const productCards = resultsDiv.querySelectorAll('.voice-product-card');
+          productCards.forEach(card => {
+            card.addEventListener('click', () => {
+              const productId = card.getAttribute('data-product-id');
+              Search.selectProductFromSearch(productId, 'image');
+            });
+            card.addEventListener('mouseenter', function() {
+              this.style.transform = 'translateY(-5px)';
+              this.style.boxShadow = '0 4px 12px rgba(0,0,0,0.1)';
+            });
+            card.addEventListener('mouseleave', function() {
+              this.style.transform = 'translateY(0)';
+              this.style.boxShadow = 'none';
+            });
+          });
+        } else {
+          console.warn('ℹ️ No results found');
+          resultsDiv.innerHTML = `
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px;">
+              <div>
+                <h3>📤 Ảnh của bạn</h3>
+                <img src="${imageDataUrl}" style="max-width: 180px; max-height: 180px; border-radius: 8px; margin-top: 10px;">
+              </div>
+              <button onclick="document.getElementById('imageResults').innerHTML=''; document.getElementById('imageResults').style.display='none';" style="background: #f5f5f5; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 18px;">✕</button>
+            </div>
+            <div style="border-top: 2px solid #eee; padding-top: 15px; margin-top: 15px;">
+              <p style="color: #999;">Không tìm thấy sản phẩm tương tự với hình ảnh bạn upload</p>
+            </div>
+          `;
+        }
+      } catch (error) {
+        console.error('❌ Image upload error:', error);
+        resultsDiv.innerHTML = `
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px;">
+            <div>
+              <h3>📤 Ảnh của bạn</h3>
+              <img src="${imageDataUrl}" style="max-width: 180px; max-height: 180px; border-radius: 8px; margin-top: 10px;">
+            </div>
+            <button onclick="document.getElementById('imageResults').innerHTML=''; document.getElementById('imageResults').style.display='none';" style="background: #f5f5f5; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 18px;">✕</button>
+          </div>
+          <div style="border-top: 2px solid #eee; padding-top: 15px; margin-top: 15px;">
+            <p style="color: #d32f2f;">❌ ${error.message}</p>
           </div>
         `;
-      } else {
-        resultsDiv.innerHTML = '<p style="color: #999;">Không tìm thấy sản phẩm tương tự</p>';
       }
     };
     reader.readAsDataURL(file);

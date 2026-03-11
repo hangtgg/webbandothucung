@@ -50,12 +50,22 @@ const API = {
     }
   },
 
-  searchImage: async (description) => {
+  searchImage: async (file) => {
     try {
+      let body;
+      let headers = {};
+      
+      if (file instanceof FormData) {
+        body = file;
+      } else if (typeof file === 'string') {
+        body = JSON.stringify({ description: file });
+        headers['Content-Type'] = 'application/json';
+      }
+      
       const response = await fetch(`${API_BASE_URL}/search/image`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ description })
+        headers: Object.keys(headers).length > 0 ? headers : undefined,
+        body
       });
       return await response.json();
     } catch (error) {

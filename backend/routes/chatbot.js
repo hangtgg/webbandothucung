@@ -52,23 +52,23 @@ function detectNeeds(message) {
   const needs = [];
 
   const needMap = [
-    { key: 'food', keywords: ['thuc an', 'food', 'hat', 'pate', 'an vat', 'snack'] },
-    { key: 'toy', keywords: ['do choi', 'toy', 'bong', 'can gam', 'choi'] },
-    { key: 'hygiene', keywords: ['ve sinh', 'cat', 'toilet', 'khay ve sinh', 'bon ve sinh'] },
-    { key: 'accessory', keywords: ['phu kien', 'vong co', 'day dat', 'quan ao', 'balo'] },
-    { key: 'water', keywords: ['nuoc', 'uong', 'may uong', 'binh nuoc', 'may', 'fountain'] },
-    { key: 'bath', keywords: ['tam', 'bon tam', 'sua tam', 'goi'] },
-    { key: 'bedding', keywords: ['nem', 'giuong', 'ghe nam', 'nap'] },
-    { key: 'grooming', keywords: ['chuot', 'dai', 'ke', 'cat toc', 'groom', 'duong da'] }
+    { tags: ['thức ăn', 'snack'], keywords: ['thuc an', 'food', 'hat', 'pate', 'an vat', 'snack'] },
+    { tags: ['đồ chơi'], keywords: ['do choi', 'toy', 'bong', 'can gam', 'choi'] },
+    { tags: ['vệ sinh', 'bồn', 'toilet', 'cát'], keywords: ['ve sinh', 'cat', 'toilet', 'khay ve sinh', 'bon ve sinh', 'khay', 'bon'] },
+    { tags: ['dây dắt', 'vòng cổ'], keywords: ['phu kien', 'vong co', 'day dat', 'quan ao', 'balo'] },
+    { tags: ['nước', 'máy uống'], keywords: ['nuoc', 'uong', 'may uong', 'binh nuoc', 'may', 'fountain'] },
+    { tags: ['tắm'], keywords: ['tam', 'bon tam', 'sua tam', 'goi'] },
+    { tags: ['giường', 'nệm'], keywords: ['nem', 'giuong', 'ghe nam', 'nap'] },
+    { tags: ['cạo móng', 'lông'], keywords: ['chuot', 'dai', 'ke', 'cat toc', 'groom', 'duong da', 'cao'] }
   ];
 
   for (const item of needMap) {
     if (containsAny(msg, item.keywords)) {
-      needs.push(item.key);
+      needs.push(...item.tags);
     }
   }
 
-  return needs;
+  return [...new Set(needs)];
 }
 
 function detectIntent(message) {
