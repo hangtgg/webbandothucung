@@ -454,7 +454,7 @@ const Search = {
       `;
       
       try {
-        // Create FormData with file
+        // Create FormData with file only (uses filename for search)
         const formData = new FormData();
         formData.append('image', file);
         

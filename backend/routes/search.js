@@ -72,48 +72,46 @@ router.post('/voice', (req, res) => {
 
 // Image search - accepts file upload
 router.post('/image', uploadImage.single('image'), handleMulterError, (req, res) => {
-  console.log('\n=== IMAGE UPLOAD DEBUG ===');
-  console.log('Method:', req.method);
-  console.log('Content-Type:', req.get('content-type'));
-  console.log('Body keys:', Object.keys(req.body));
-  console.log('File object:', req.file ? { 
-    originalname: req.file.originalname,
-    mimetype: req.file.mimetype,
-    size: req.file.size,
-    fieldname: req.file.fieldname
-  } : 'NO FILE');
-  console.log('Body.description:', req.body.description);
-  console.log('========================\n');
-  
-  let query = '';
-  
-  // Check if image file was uploaded
-  if (req.file) {
-    console.log('✅ Image uploaded:', req.file.originalname);
-    query = req.file.originalname.toLowerCase();
-  } else if (req.body.description) {
-    console.log('✅ Description provided:', req.body.description);
-    query = req.body.description.toLowerCase();
+  if (!req.file) {
+    console.error('❌ No image file provided');
+    return res.status(400).json({ error: 'No image file provided' });
   }
   
-  if (!query) {
-    console.error('❌ No image or description provided');
-    console.error('   req.file:', !!req.file);
-    console.error('   req.body.description:', req.body.description);
-    return res.status(400).json({ error: 'No image or description provided' });
-  }
+  console.log('✅ Image uploaded:', req.file.originalname);
   
-  // Search products
-  let results = products.filter(p => 
-    p.description.toLowerCase().includes(query) ||
-    p.tags.some(tag => tag.toLowerCase().includes(query)) ||
-    p.name.toLowerCase().includes(query) ||
-    p.category.toLowerCase().includes(query)
-  );
+  // Extract keywords from filename (remove extension, split by - or _)
+  const filename = req.file.originalname.toLowerCase();
+  const nameWithoutExt = filename.replace(/\.[^/.]+$/, ''); // Remove extension
+  const keywords = nameWithoutExt.split(/[-_\s]+/).filter(k => k.length > 0); // Split by -, _, space
+  
+  console.log('🔍 Filename:', filename);
+  console.log('🔍 Keywords:', keywords);
+  
+  // Search products - each keyword must match something
+  let results = [];
+  
+  if (keywords.length > 0) {
+    results = products.filter(p => {
+      const name = p.name.toLowerCase();
+      const desc = p.description.toLowerCase();
+      const tags = (p.tags || []).map(t => t.toLowerCase());
+      const category = p.category.toLowerCase();
+      
+      // Product matches if ANY keyword matches ANY field
+      return keywords.some(keyword => 
+        name.includes(keyword) ||
+        desc.includes(keyword) ||
+        tags.some(tag => tag.includes(keyword)) ||
+        category.includes(keyword)
+      );
+    });
+    
+    console.log(`📦 Found ${results.length} products matching keywords:`, keywords);
+  }
   
   // If no results, return popular products
   if (results.length === 0) {
-    console.log('ℹ️ No results found, returning popular products');
+    console.log('ℹ️ No matches found, returning popular products');
     results = products
       .sort((a, b) => (b.sold || 0) - (a.sold || 0))
       .slice(0, 8);
@@ -122,7 +120,8 @@ router.post('/image', uploadImage.single('image'), handleMulterError, (req, res)
   console.log(`✅ Returning ${results.length} results`);
   res.json({
     results: results.slice(0, 6),
-    message: `Dựa trên hình ảnh bạn upload, tôi tìm thấy ${Math.min(results.length, 6)} sản phẩm tương tự`
+    keywords: keywords,
+    message: `Tìm kiếm theo từ khóa: ${keywords.join(', ')} - tìm thấy ${Math.min(results.length, 6)} sản phẩm`
   });
 });
 
