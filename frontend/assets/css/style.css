@@ -984,6 +984,8 @@ a {
 
 #voiceResults, #imageResults {
   margin-top: 20px;
+  z-index: 1;
+  position: relative;
 }
 
 .search-results-list {

@@ -1,9 +1,45 @@
+// Add chatbot message function to existing API object
+API.sendMessage = async (message) => {
+  try {
+    const response = await fetch("http://localhost:3000/api/chatbot/message", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        message: message
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error('API Error:', error);
+    return {
+      success: false,
+      message: 'Lỗi kết nối API. Vui lòng kiểm tra server.',
+      title: 'Lỗi'
+    };
+  }
+};
+
 const Chatbot = {
   init: () => {
+    console.log('🤖 Chatbot.init() called');
+    
     const sendBtn = document.getElementById('chatbotSendBtn');
     const input = document.getElementById('chatbotInput');
+    const messagesDiv = document.getElementById('chatbotMessages');
 
-    if (!sendBtn || !input) return;
+    console.log('Elements check:', { sendBtn: !!sendBtn, input: !!input, messagesDiv: !!messagesDiv });
+
+    if (!sendBtn || !input || !messagesDiv) {
+      console.error('❌ Missing required elements for chatbot');
+      return;
+    }
 
     sendBtn.addEventListener('click', Chatbot.sendMessage);
     input.addEventListener('keypress', (e) => {
@@ -11,6 +47,8 @@ const Chatbot = {
         Chatbot.sendMessage();
       }
     });
+
+    console.log('✅ Welcome message loading...');
 
     Chatbot.addMessage('bot', `
       <div class="bot-welcome">
@@ -22,12 +60,16 @@ const Chatbot = {
       </div>
     `);
 
+    console.log('✅ Suggestions loading...');
+
     Chatbot.addSuggestions([
       'Sản phẩm cho chó',
       'Sản phẩm cho mèo',
       'Sản phẩm bán chạy nhất',
       'Hàng mới về'
     ]);
+
+    console.log('✅ Chatbot initialized successfully');
   },
 
   sendMessage: async (customMessage = null) => {
@@ -173,5 +215,6 @@ const Chatbot = {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
+  console.log('✅ DOMContentLoaded fired - initializing Chatbot');
   Chatbot.init();
 });

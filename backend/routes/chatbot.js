@@ -258,7 +258,6 @@ function getNewArrivalProducts(petType = null) {
 function buildSmartFollowUpQuestions(context, matchedProducts = []) {
   const questions = [];
   
-  // Nếu chưa xác định loại thú cưng
   if (!context.petType) {
     questions.push('Bạn đang tìm cho thú cưng nào? (chó, mèo, hamster, v.v.)');
     questions.push('Loại thú cưng của bạn là gì?');
@@ -273,12 +272,10 @@ function buildSmartFollowUpQuestions(context, matchedProducts = []) {
       reptile: 'bò sát'
     };
     
-    // Nếu đã biết loại nhưng chưa biết nhu cầu
     if (context.needs.length === 0) {
       questions.push(`Bạn muốn tìm thức ăn, đồ chơi, hay phụ kiện cho ${petNames[context.petType]}?`);
       questions.push(`Cần gì để chăm sóc ${petNames[context.petType]} hôm nay?`);
     } else {
-      // Có nhu cầu rồi, gợi ý thêm
       if (!context.priceRange) {
         questions.push('Bạn có ngân sách nhất định không? (VD: dưới 200k, 200-500k)');
         questions.push('Mức giá bạn muốn là khoảng bao nhiêu?');
@@ -291,7 +288,6 @@ function buildSmartFollowUpQuestions(context, matchedProducts = []) {
     }
   }
 
-  // Nếu chưa có sản phẩm phù hợp
   if (matchedProducts.length === 0) {
     questions.push('Bạn có thể mô tả chi tiết hơn nhu cầu của mình không?');
     questions.push('Hãy thử tìm kiếm với từ khóa khác xem sao');
@@ -519,15 +515,105 @@ function buildResponse(message) {
       needs: context.needs,
       priceRange: context.priceRange,
       sortPreference: context.sortPreference
-    }
+    },
+    aiEnhanced: false
   };
 }
 
 // ============================================================================
-// PHẦN 9: API ENDPOINT
+// PHẦN 9: OPENROUTER INTEGRATION
 // ============================================================================
 
-router.post('/message', (req, res) => {
+async function callOpenRouterAPI(message, products = []) {
+  if (!process.env.OPENROUTER_API_KEY) {
+    console.warn('⚠️  OpenRouter API key not configured - using fallback');
+    return null;
+  }
+
+  try {
+    const productContext = products.length > 0 ? 
+      `\n\nDanh sách sản phẩm gợi ý:\n${products.slice(0, 5)
+        .map((p, i) => `${i + 1}. ${p.name} - ${formatCurrency(p.price)} (Rating: ${p.rating}/5)`)
+        .join('\n')}` : '';
+
+    const systemPrompt = `Bạn là một trợ lý mua sắm thú cưng thân thiện, chuyên nghiệp và hiểu biết sâu sắc. 
+Hãy:
+1. Trả lời câu hỏi của khách hàng một cách tự nhiên và hữu ích
+2. Gợi ý sản phẩm phù hợp nếu có
+3. Viết bằng tiếng Việt, tự nhiên và dễ hiểu
+4. Giữ câu trả lời ngắn gọn (2-3 câu) nhưng đủ thông tin
+5. Sử dụng emoji một cách hợp lý để làm cho câu trả lời thân thiện hơn`;
+
+    const userContent = `Khách hàng: "${message}"${productContext}\n\nHãy gợi ý hoặc trả lời một cách tự nhiên.`;
+
+    const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY}`,
+        'HTTP-Referer': 'PetShop-Chatbot'
+      },
+      body: JSON.stringify({
+        model: process.env.OPENROUTER_MODEL || 'mistralai/mistral-7b-instruct:free',
+        messages: [
+          {
+            role: 'system',
+            content: systemPrompt
+          },
+          {
+            role: 'user',
+            content: userContent
+          }
+        ],
+        temperature: 0.7,
+        max_tokens: 300,
+        top_p: 0.9
+      }),
+      timeout: 15000
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      
+      if (errorData.error?.code === 402) {
+        console.warn('⚠️  OpenRouter: Insufficient credits - using fallback mode');
+      } else if (errorData.error?.code === 401) {
+        console.warn('⚠️  OpenRouter: Invalid API key - using fallback mode');
+      } else {
+        console.warn('⚠️  OpenRouter API error:', errorData.error?.message || 'Unknown error');
+      }
+      return null;
+    }
+
+    const data = await response.json();
+    if (data.choices && data.choices[0] && data.choices[0].message) {
+      console.log('✅ OpenRouter API response successful');
+      return data.choices[0].message.content;
+    }
+    return null;
+  } catch (error) {
+    console.warn('⚠️  Error calling OpenRouter API:', error.message, '- using fallback');
+    return null;
+  }
+}
+
+async function enhanceResponseWithAI(responseObject, message) {
+  const aiResponse = await callOpenRouterAPI(message, responseObject.products);
+  if (aiResponse) {
+    responseObject.message = aiResponse;
+    responseObject.aiEnhanced = true;
+  } else {
+    responseObject.aiEnhanced = false;
+    console.log('ℹ️  Using rule-based response (fallback mode)');
+  }
+  return responseObject;
+}
+
+// ============================================================================
+// PHẦN 10: ASYNC MESSAGE ENDPOINT
+// ============================================================================
+
+router.post('/message', async (req, res) => {
   try {
     const message = req.body.message || '';
     
@@ -538,11 +624,18 @@ router.post('/message', (req, res) => {
         message: 'Vui lòng nhập câu hỏi hoặc nhu cầu của bạn',
         suggestions: [],
         followUpQuestions: [],
-        products: []
+        products: [],
+        aiEnhanced: false
       });
     }
 
-    const result = buildResponse(message);
+    let result = buildResponse(message);
+    
+    // Enhance response with AI for better user experience
+    if (process.env.OPENROUTER_API_KEY) {
+      result = await enhanceResponseWithAI(result, message);
+    }
+
     res.json(result);
   } catch (error) {
     console.error('Chatbot error:', error);
@@ -552,46 +645,10 @@ router.post('/message', (req, res) => {
       message: 'Đã có lỗi xảy ra khi xử lý yêu cầu. Vui lòng thử lại sau.',
       suggestions: ['Sản phẩm cho mèo', 'Thức ăn cho chó', 'Sản phẩm bán chạy'],
       followUpQuestions: ['Bạn muốn tìm sản phẩm cho loại thú cưng nào?'],
-      products: []
+      products: [],
+      aiEnhanced: false
     });
   }
 });
-
-// ============================================================================
-// PHẦN 10: OPENAI INTEGRATION (OPTIONAL)
-// ============================================================================
-// 
-// Để tích hợp OpenAI API (tùy chọn):
-// 1. Cài npm: npm install openai
-// 2. Thêm vào .env: OPENAI_API_KEY=sk-...
-// 3. Uncomment đoạn code dưới đây và gọi hàm enhanceWithAI() 
-//
-// const { Configuration, OpenAIApi } = require("openai");
-// 
-// async function enhanceWithAI(message, products) {
-//   if (!process.env.OPENAI_API_KEY) return null;
-//   
-//   try {
-//     const configuration = new Configuration({
-//       apiKey: process.env.OPENAI_API_KEY,
-//     });
-//     const openai = new OpenAIApi(configuration);
-//     
-//     const response = await openai.createChatCompletion({
-//       model: "gpt-3.5-turbo",
-//       messages: [{
-//         role: "user",
-//         content: `Bạn là trợ lý mua sắm thú cưng. Khách hỏi: "${message}"\n\nDanh sách sản phẩm: ${JSON.stringify(products.slice(0, 5))}\n\nHãy gợi ý ngắn gọn (2-3 câu) và thân thiện.`
-//       }],
-//       temperature: 0.7,
-//       max_tokens: 200
-//     });
-//     
-//     return response.data.choices[0].message.content;
-//   } catch (error) {
-//     console.error('OpenAI error:', error);
-//     return null;
-//   }
-// }
 
 module.exports = router;

@@ -146,7 +146,7 @@ class SurveyManager {
 
     modal.innerHTML = `
       <div class="modal-content" style="max-width: 90%; width: 900px; max-height: 80vh; overflow-y: auto;">
-        <span class="close-btn" onclick="this.closest('.modal').remove()" style="font-size: 28px; cursor: pointer;">&times;</span>
+        <span class="close-btn" onclick="this.closest('.modal').remove(); document.querySelector('[data-category=\\'all\\']')?.click(); window.scrollTo({top: 0, behavior: 'smooth'});" style="font-size: 28px; cursor: pointer;">&times;</span>
         <div class="survey-header" style="text-align: center; padding: 20px; background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white; border-radius: 8px 8px 0 0;">
           <i class="fas fa-lightbulb" style="font-size: 32px; margin-bottom: 10px;"></i>
           <h2 style="margin: 10px 0; color: white;">${data.message}</h2>
@@ -156,7 +156,9 @@ class SurveyManager {
           ${recommendationsHTML}
         </div>
         <div style="text-align: center; padding: 20px; border-top: 1px solid #eee;">
-          <button class="btn-primary" onclick="this.closest('.modal').remove()" style="background: var(--primary-color); color: white; padding: 10px 30px; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;">Tiếp tục mua sắm</button>
+          <button class="btn-primary" onclick="this.closest('.modal').remove(); document.querySelector('[data-category=\\'all\\']')?.click(); window.scrollTo({top: 0, behavior: 'smooth'});" style="background: var(--primary-color); color: white; padding: 12px 40px; border: none; border-radius: 4px; cursor: pointer; font-size: 14px; font-weight: bold;">
+            <i class="fas fa-home"></i> Tiếp tục mua sắm
+          </button>
         </div>
       </div>
     `;
@@ -167,6 +169,8 @@ class SurveyManager {
     modal.addEventListener('click', (e) => {
       if (e.target === modal) {
         modal.remove();
+        document.querySelector('[data-category="all"]')?.click();
+        window.scrollTo({top: 0, behavior: 'smooth'});
       }
     });
   }

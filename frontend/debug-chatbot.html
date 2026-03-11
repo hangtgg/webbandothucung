@@ -1,0 +1,138 @@
+<!-- Debug Chatbot Testing Page -->
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot Debug Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border-left: 4px solid #007bff;
+        }
+        .success { color: green; font-weight: bold; }
+        .error { color: red; font-weight: bold; }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            background: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        button:hover { background: #0056b3; }
+        pre {
+            background: #f0f0f0;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>🐾 Chatbot Debug Test</h1>
+    
+    <div class="test-section">
+        <h2>1. Element Check</h2>
+        <p id="elemCheck"></p>
+        <button onclick="checkElements()">Check Elements</button>
+    </div>
+
+    <div class="test-section">
+        <h2>2. API Test</h2>
+        <p id="apiTest"></p>
+        <button onclick="testAPI()">Test API</button>
+    </div>
+
+    <div class="test-section">
+        <h2>3. Send Message Test</h2>
+        <input type="text" id="testMessage" placeholder="Enter message" value="tôi có mèo">
+        <button onclick="sendTestMessage()">Send</button>
+        <pre id="apiResponse"></pre>
+    </div>
+
+    <script>
+        const API_BASE_URL = 'http://localhost:3000/api';
+
+        async function checkElements() {
+            const result = document.getElementById('elemCheck');
+            try {
+                const elements = {
+                    'chatbotMessages': document.getElementById('chatbotMessages'),
+                    'chatbotInput': document.getElementById('chatbotInput'),
+                    'chatbotSendBtn': document.getElementById('chatbotSendBtn'),
+                    'chatbotToggle': document.getElementById('chatbotToggle'),
+                    'chatbotClose': document.getElementById('chatbotClose')
+                };
+
+                let allExist = true;
+                let html = '';
+                for (const [name, elem] of Object.entries(elements)) {
+                    const exists = elem ? 'YES' : 'NO';
+                    const status = elem ? '<span class="success">✓ Found</span>' : '<span class="error">✗ Missing</span>';
+                    html += `${name}: ${status}<br>`;
+                    if (!elem) allExist = false;
+                }
+                result.innerHTML = html;
+            } catch (error) {
+                result.innerHTML = `<span class="error">Error: ${error.message}</span>`;
+            }
+        }
+
+        async function testAPI() {
+            const result = document.getElementById('apiTest');
+            try {
+                const response = await fetch(`${API_BASE_URL}/chatbot/message`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: 'test' })
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    result.innerHTML = `<span class="success">✓ API Working</span><br>Response: ${data.title}`;
+                } else {
+                    result.innerHTML = `<span class="error">✗ API Error: ${response.status}</span>`;
+                }
+            } catch (error) {
+                result.innerHTML = `<span class="error">✗ Error: ${error.message}</span>`;
+            }
+        }
+
+        async function sendTestMessage() {
+            const msgInput = document.getElementById('testMessage');
+            const responseDiv = document.getElementById('apiResponse');
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/chatbot/message`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: msgInput.value })
+                });
+                
+                const data = await response.json();
+                responseDiv.textContent = JSON.stringify(data, null, 2);
+            } catch (error) {
+                responseDiv.textContent = `Error: ${error.message}`;
+            }
+        }
+
+        // Auto-check on load
+        window.addEventListener('load', () => {
+            checkElements();
+            testAPI();
+        });
+    </script>
+</body>
+</html>
