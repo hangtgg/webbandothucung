@@ -4,7 +4,7 @@ const Search = {
   detectPetTypeFromVoice: (transcript) => {
     const msg = transcript.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
     console.log('🔍 Raw message:', msg);
-    
+
     const petMap = [
       { type: 'cat', keywords: ['meo', 'cat', 'meok', 'mèo'] },
       { type: 'dog', keywords: ['cho', 'dog', 'cun', 'chó'] },
@@ -153,7 +153,7 @@ const Search = {
   renderFallbackVoiceResults: (title, message, products) => {
     const resultsDiv = document.getElementById('voiceResults');
     if (!resultsDiv) return;
-    
+
     resultsDiv.style.display = 'block';
     resultsDiv.innerHTML = `
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
@@ -175,10 +175,10 @@ const Search = {
         `).join('')}
       </div>
     `;
-    
+
     // Attach event listeners
     console.log('🔗 Attaching event listeners to fallback voice results...');
-    
+
     // Close button
     const closeBtn = resultsDiv.querySelector('.voice-close-btn');
     if (closeBtn) {
@@ -188,7 +188,7 @@ const Search = {
         resultsDiv.style.display = 'none';
       });
     }
-    
+
     // Product cards
     const productCards = resultsDiv.querySelectorAll('.voice-product-card');
     productCards.forEach(card => {
@@ -204,13 +204,13 @@ const Search = {
   // Helper to render voice/image results with close button
   renderVoiceResults: (title, products) => {
     console.log('🎨 renderVoiceResults called:', { title, productCount: products.length });
-    
+
     const resultsDiv = document.getElementById('voiceResults');
     console.log('Results div found?', !!resultsDiv);
-    
+
     if (!resultsDiv) {
       console.error('❌ voiceResults div not found!');
-      
+
       // Try imageResults as fallback for image search
       const imageDiv = document.getElementById('imageResults');
       if (imageDiv) {
@@ -220,11 +220,11 @@ const Search = {
       }
       return;
     }
-    
+
     // Make sure div is visible
     resultsDiv.style.display = 'block';
     console.log('✅ Results div visible');
-    
+
     const html = `
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
         <h3>${title}</h3>
@@ -244,13 +244,13 @@ const Search = {
         `).join('')}
       </div>
     `;
-    
+
     resultsDiv.innerHTML = html;
     console.log('✅ HTML rendered');
-    
+
     // Attach event listeners after rendering
     console.log('🔗 Attaching event listeners to voice product cards...');
-    
+
     // Close button
     const closeBtn = resultsDiv.querySelector('.voice-close-btn');
     if (closeBtn) {
@@ -261,11 +261,11 @@ const Search = {
       });
       console.log('✅ Close button listener attached');
     }
-    
+
     // Product cards
     const productCards = resultsDiv.querySelectorAll('.voice-product-card');
     console.log(`Found ${productCards.length} product cards`);
-    
+
     productCards.forEach(card => {
       card.addEventListener('click', () => {
         const productId = card.getAttribute('data-product-id');
@@ -275,18 +275,18 @@ const Search = {
       // Add cursor pointer
       card.style.cursor = 'pointer';
     });
-    
+
     console.log('✅ Event listeners attached');
   },
 
   // Select product from voice/image search and close results
   selectProductFromSearch: (productId, type = 'voice') => {
     console.log(`📦 selectProductFromSearch called (${type}):`, productId);
-    
+
     // Clear search results UI
     const resultsDiv = document.getElementById(type === 'image' ? 'imageResults' : 'voiceResults');
     const statusDiv = document.getElementById(type === 'image' ? 'imageStatus' : 'voiceStatus');
-    
+
     console.log(`Clearing ${type} results div...`);
     if (resultsDiv) {
       resultsDiv.innerHTML = '';
@@ -296,7 +296,7 @@ const Search = {
     if (statusDiv) {
       statusDiv.textContent = '';
     }
-    
+
     // Then open product modal
     console.log('Opening product modal...');
     UI.openProductModal(productId);
@@ -322,7 +322,7 @@ const Search = {
     // Clear previous results immediately
     resultsDiv.style.display = 'block';  // Ensure div is visible
     resultsDiv.innerHTML = '';  // Clear all previous content
-    
+
     const recognition = new SpeechRecognition();
     recognition.lang = 'vi-VN';
     recognition.interimResults = false;
@@ -339,7 +339,7 @@ const Search = {
       // Detect pet type and needs from voice
       const petType = Search.detectPetTypeFromVoice(transcript);
       const needs = Search.detectNeedsFromVoice(transcript);
-      
+
       console.log('🎤 Voice Detection:', { petType, needs, transcript });
 
       const resultsDiv = document.getElementById('voiceResults');
@@ -348,7 +348,7 @@ const Search = {
       if (petType) {
         const products = await API.getProducts(petType);
         console.log(`📦 Products for ${petType}:`, products.length);
-        
+
         // Filter by needs if detected
         let filteredProducts = products;
         if (needs.length > 0) {
@@ -362,7 +362,7 @@ const Search = {
             return hasMatchingTag;
           });
           console.log(`📍 After filtering: ${filteredProducts.length} products found`);
-          
+
           // Fallback: if no products found with needs filter, show all pet products
           if (filteredProducts.length === 0) {
             console.warn('⚠️ No products found with needs filter, showing all pet products instead');
@@ -382,7 +382,7 @@ const Search = {
       } else {
         // Fallback to text search if no pet type detected
         const result = await API.searchVoice(transcript);
-        
+
         if (result.results && result.results.length > 0) {
           Search.renderVoiceResults(`🔍 Kết quả tìm kiếm (${result.results.length} sản phẩm):`, result.results.slice(0, 6));
         } else {
@@ -433,15 +433,15 @@ const Search = {
     }
 
     const resultsDiv = document.getElementById('imageResults');
-    
+
     // Show loading with preview
     resultsDiv.style.display = 'block';
-    
+
     // Read file as data URL for preview
     const reader = new FileReader();
     reader.onload = async (event) => {
       const imageDataUrl = event.target.result;
-      
+
       resultsDiv.innerHTML = `
         <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px;">
           <div>
@@ -452,30 +452,30 @@ const Search = {
         </div>
         <p style="color: #666; font-style: italic; text-align: center; margin-top: 20px;">🔍 Đang tìm kiếm sản phẩm tương tự...</p>
       `;
-      
+
       try {
         // Create FormData with file only (uses filename for search)
         const formData = new FormData();
         formData.append('image', file);
-        
+
         console.log('📤 Uploading image:', file.name, file.type, file.size);
-        
+
         const response = await fetch('http://localhost:3000/api/search/image', {
           method: 'POST',
           body: formData
         });
-        
+
         console.log('📥 Response status:', response.status);
-        
+
         if (!response.ok) {
           console.error('Response not OK:', response.status, response.statusText);
           const errorData = await response.json().catch(() => ({}));
           throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
         }
-        
+
         const result = await response.json();
         console.log('📦 Response data:', result);
-        
+
         if (result.results && result.results.length > 0) {
           console.log('✅ Rendering results:', result.results.length);
           // Display uploaded image + search results
@@ -489,9 +489,9 @@ const Search = {
             </div>
             
             <div style="border-top: 2px solid #eee; padding-top: 15px; margin-top: 15px;">
-              <h3>🖼️ Sản phẩm tương tự (${result.results.length}):</h3>
+              <h3>🖼️ Sản phẩm tương tự:</h3>
               <div class="search-results-list" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; margin-top: 15px;">
-                ${result.results.slice(0, 6).map(p => `
+                ${result.results.slice(0, 3).map(p => `
                   <div class="product-card voice-product-card" data-product-id="${p.id}" style="cursor: pointer; border: 1px solid #ddd; padding: 10px; border-radius: 8px; transition: transform 0.2s;">
                     <div class="product-image">
                       <img src="/api/images/image/${p.id}?name=${encodeURIComponent(p.name)}" alt="${p.name}" style="width: 100%; height: 150px; object-fit: cover; border-radius: 4px;">
@@ -505,7 +505,7 @@ const Search = {
               </div>
             </div>
           `;
-          
+
           // Attach event listeners
           const productCards = resultsDiv.querySelectorAll('.voice-product-card');
           productCards.forEach(card => {
@@ -513,11 +513,11 @@ const Search = {
               const productId = card.getAttribute('data-product-id');
               Search.selectProductFromSearch(productId, 'image');
             });
-            card.addEventListener('mouseenter', function() {
+            card.addEventListener('mouseenter', function () {
               this.style.transform = 'translateY(-5px)';
               this.style.boxShadow = '0 4px 12px rgba(0,0,0,0.1)';
             });
-            card.addEventListener('mouseleave', function() {
+            card.addEventListener('mouseleave', function () {
               this.style.transform = 'translateY(0)';
               this.style.boxShadow = 'none';
             });
