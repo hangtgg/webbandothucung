@@ -88,10 +88,10 @@ npm start
 npm run dev
 ```
 
-Server sẽ chạy trên `http://localhost:3000`
+Server sẽ chạy trên `https://kdkts.tools.edu.vn`
 
 ### Bước 3: Mở ứng dụng
-Mở trình duyệt và truy cập: **http://localhost:3000**
+Mở trình duyệt và truy cập: **https://kdkts.tools.edu.vn**
 
 ## 💻 Cách Sử dụng
 

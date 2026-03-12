@@ -63,11 +63,11 @@ Hệ thống tự động theo dõi:
 npm start
 ```
 
-Server chạy tại: http://localhost:3000
+Server chạy tại: https://kdkts.tools.edu.vn
 
 ### 2. Mở Website
 ```
-http://localhost:3000
+https://kdkts.tools.edu.vn
 ```
 
 ### 3. Test Checkout
@@ -82,17 +82,17 @@ http://localhost:3000
 
 ### Xem Tất Cả Đơn Hàng
 ```bash
-curl http://localhost:3000/api/orders
+curl https://kdkts.tools.edu.vn/api/orders
 ```
 
 ### Xem Thống Kê
 ```bash
-curl http://localhost:3000/api/orders/stats
+curl https://kdkts.tools.edu.vn/api/orders/stats
 ```
 
 ### Xem Chi Tiết Một Đơn
 ```bash
-curl http://localhost:3000/api/orders/ORD16804892341234
+curl https://kdkts.tools.edu.vn/api/orders/ORD16804892341234
 ```
 
 ## 📁 Các File Liên Quan

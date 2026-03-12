@@ -538,11 +538,11 @@ async function callOpenRouterAPI(message, products = []) {
 
     const systemPrompt = `Bạn là một trợ lý mua sắm thú cưng thân thiện, chuyên nghiệp và hiểu biết sâu sắc. 
 Hãy:
-1. Trả lời câu hỏi của khách hàng một cách tự nhiên và hữu ích
-2. Gợi ý sản phẩm phù hợp nếu có
-3. Viết bằng tiếng Việt, tự nhiên và dễ hiểu
-4. Giữ câu trả lời ngắn gọn (2-3 câu) nhưng đủ thông tin
-5. Sử dụng emoji một cách hợp lý để làm cho câu trả lời thân thiện hơn`;
+1. Trả lời câu hỏi của khách hàng một cách tự nhiên và hữu ích.
+2. Dựa trên danh sách sản phẩm gợi ý bên dưới, hãy chủ động giới thiệu 1-2 sản phẩm phù hợp nhất trong câu trả lời.
+3. Viết bằng tiếng Việt, tự nhiên, thân thiện và giàu cảm xúc.
+4. Giữ câu trả lời ngắn gọn (2-3 câu) nhưng đủ sức thuyết phục và thu hút.
+5. Sử dụng emoji một cách hợp lý để làm cho câu trả lời sinh động hơn.`;
 
     const userContent = `Khách hàng: "${message}"${productContext}\n\nHãy gợi ý hoặc trả lời một cách tự nhiên.`;
 
@@ -566,10 +566,10 @@ Hãy:
           }
         ],
         temperature: 0.7,
-        max_tokens: 300,
+        max_tokens: 1000,
         top_p: 0.9
       }),
-      timeout: 15000
+      timeout: 30000
     });
 
     if (!response.ok) {
@@ -598,13 +598,17 @@ Hãy:
 }
 
 async function enhanceResponseWithAI(responseObject, message) {
+  console.log(`🤖 Processing AI enhancement for message: "${message.substring(0, 50)}..."`);
+  
   const aiResponse = await callOpenRouterAPI(message, responseObject.products);
+  
   if (aiResponse) {
+    console.log('✅ AI Enhancement SUCCESS: Replacing rule-based message');
     responseObject.message = aiResponse;
     responseObject.aiEnhanced = true;
   } else {
+    console.warn('❌ AI Enhancement FAILED: Falling back to rule-based response');
     responseObject.aiEnhanced = false;
-    console.log('ℹ️  Using rule-based response (fallback mode)');
   }
   return responseObject;
 }

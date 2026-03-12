@@ -189,7 +189,7 @@ const stats = {
 ### 1. Kiểm Tra Khảo Sát
 ```bash
 # Truy cập trang web
-http://localhost:3000
+https://kdkts.tools.edu.vn
 # → Modal khảo sát sẽ hiện lên
 # → Chọn loại thú cưng, ưu tiên gợi ý, và checkbox "muốn biết thêm"
 # → Nhấn "Gửi thông tin"
@@ -198,12 +198,12 @@ http://localhost:3000
 
 ### 2. Kiểm Tra Dữ Liệu Lưu Trữ
 ```bash
-curl http://localhost:3000/api/survey/stats
+curl https://kdkts.tools.edu.vn/api/survey/stats
 ```
 
 ### 3. Kiểm Tra Tất Cả Phản Hồi
 ```bash
-curl http://localhost:3000/api/survey/responses
+curl https://kdkts.tools.edu.vn/api/survey/responses
 ```
 
 ---

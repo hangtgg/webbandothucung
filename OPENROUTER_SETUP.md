@@ -35,7 +35,7 @@ npm start    # Khởi động server trên port 3000
 ```
 
 ### Bước 2: Mở Ứng Dụng
-- Truy cập: http://localhost:3000
+- Truy cập: https://kdkts.tools.edu.vn
 - Nhấp vào biểu tượng chatbot ở góc dưới phải
 - Bắt đầu trò chuyện!
 

@@ -1,23 +1,25 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PetShop - Cửa hàng thú cưng trực tuyến</title>
     <link rel="stylesheet" href="assets/css/style.css">
     <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-LTH4LD34Z4"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
+        function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
-        gtag('config', 'G-XXXXXXXXXX', {
+        gtag('config', 'G-LTH4LD34Z4', {
             'anonymize_ip': true,
             'allow_google_signals': false
         });
     </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
+
 <body>
     <div class="container-full">
         <!-- Header -->
@@ -88,7 +90,8 @@
         <!-- Banner Carousel (Giới thiệu + Khuyến mãi) -->
         <section class="banner-carousel">
             <div class="carousel-container">
-                <div class="carousel-slide active" style="background: url('https://images.unsplash.com/photo-1587300411107-a3677e2b5d59?w=1200&h=400&fit=crop') center/cover no-repeat;">
+                <div class="carousel-slide active"
+                    style="background: url('https://images.unsplash.com/photo-1587300411107-a3677e2b5d59?w=1200&h=400&fit=crop') center/cover no-repeat;">
                     <div class="carousel-overlay"></div>
                     <div class="carousel-content">
                         <div class="carousel-text">
@@ -104,14 +107,15 @@
                     </div>
                 </div>
 
-                <div class="carousel-slide" style="background: url('https://images.unsplash.com/photo-1557821552-17105176677c?w=1200&h=300&fit=crop') center/cover no-repeat;">
+                <div class="carousel-slide"
+                    style="background: url('https://images.unsplash.com/photo-1557821552-17105176677c?w=1200&h=300&fit=crop') center/cover no-repeat;">
                     <div class="carousel-overlay"></div>
                     <div class="carousel-content">
                         <div class="promo-text">
                             <h3>🎉 KHUYẾN MÃI HOT</h3>
                             <h2>-30% TẤT CẢ SẢN PHẨM</h2>
                             <p>🎁 + Quà Tặng | 📅 Hạn: 31/03</p>
-                            <button class="btn-promo" onclick="document.querySelector('[data-category=\"all\"]').click()">
+                            <button class="btn-promo" onclick="document.querySelector('[data-category=\'all\']').click()">
                                 <i class="fas fa-shopping-bag"></i> MUA NGAY
                             </button>
                         </div>
@@ -122,7 +126,7 @@
             <!-- Carousel Controls -->
             <button class="carousel-btn prev" id="prevSlide">❮</button>
             <button class="carousel-btn next" id="nextSlide">❯</button>
-            
+
             <!-- Carousel Indicators -->
             <div class="carousel-indicators">
                 <button class="indicator active" data-slide="0"></button>
@@ -194,7 +198,8 @@
                     </div>
                     <div class="summary-item">
                         <span>Tổng tiền:</span>
-                        <span id="cartTotalPrice" style="color: var(--primary-color); font-weight: bold; font-size: 18px;">0 VND</span>
+                        <span id="cartTotalPrice"
+                            style="color: var(--primary-color); font-weight: bold; font-size: 18px;">0 VND</span>
                     </div>
                 </div>
                 <button id="checkoutBtn" class="btn-primary" style="width: 100%; margin-top: 15px;">
@@ -205,7 +210,8 @@
             <!-- Recommendations section -->
             <div class="cart-recommendations">
                 <h3><i class="fas fa-sparkles"></i> Gợi ý sản phẩm kết hợp</h3>
-                <p style="font-size: 13px; color: #666; margin-bottom: 15px;">Những sản phẩm này thường được mua kèm với các sản phẩm trong giỏ của bạn</p>
+                <p style="font-size: 13px; color: #666; margin-bottom: 15px;">Những sản phẩm này thường được mua kèm với
+                    các sản phẩm trong giỏ của bạn</p>
                 <div id="cartRecommendations" class="recommendations-grid-cart">
                     <!-- Recommendations will be loaded here -->
                 </div>
@@ -240,6 +246,7 @@
 
     <!-- Chatbot Widget -->
     <div id="chatbotWidget" class="chatbot-widget">
+        <div id="chatbotResizer" class="chatbot-resizer"></div>
         <div class="chatbot-header">
             <h3>Trợ lý thú cưng</h3>
             <button id="chatbotClose" class="close-btn">×</button>
@@ -306,7 +313,8 @@
                         </div>
                         <div class="checkout-total">
                             <span>Tổng tiền:</span>
-                            <span id="checkoutTotal" style="color: var(--primary-color); font-weight: bold;">0 VND</span>
+                            <span id="checkoutTotal" style="color: var(--primary-color); font-weight: bold;">0
+                                VND</span>
                         </div>
                     </div>
 
@@ -316,22 +324,27 @@
 
                         <div class="form-group">
                             <label for="customerName">Họ và tên <span style="color: red;">*</span></label>
-                            <input type="text" id="customerName" name="customerName" placeholder="Nhập họ và tên" required>
+                            <input type="text" id="customerName" name="customerName" placeholder="Nhập họ và tên"
+                                required>
                         </div>
 
                         <div class="form-group">
                             <label for="customerPhone">Số điện thoại <span style="color: red;">*</span></label>
-                            <input type="tel" id="customerPhone" name="customerPhone" placeholder="Nhập số điện thoại" pattern="[0-9\s\-\+\(\)]{10,}" required>
+                            <input type="tel" id="customerPhone" name="customerPhone" placeholder="Nhập số điện thoại"
+                                pattern="[0-9\s\-\+\(\)]{10,}" required>
                         </div>
 
                         <div class="form-group">
                             <label for="customerAddress">Địa chỉ giao hàng <span style="color: red;">*</span></label>
-                            <textarea id="customerAddress" name="customerAddress" placeholder="Nhập địa chỉ giao hàng (phố, quận, thành phố)" rows="3" required></textarea>
+                            <textarea id="customerAddress" name="customerAddress"
+                                placeholder="Nhập địa chỉ giao hàng (phố, quận, thành phố)" rows="3"
+                                required></textarea>
                         </div>
 
                         <div class="form-group">
                             <label for="customerEmail">Email <span style="color: #999;">(Tùy chọn)</span></label>
-                            <input type="email" id="customerEmail" name="customerEmail" placeholder="Nhập email (để nhận thông tin đơn hàng)">
+                            <input type="email" id="customerEmail" name="customerEmail"
+                                placeholder="Nhập email (để nhận thông tin đơn hàng)">
                         </div>
 
                         <h3 style="margin-top: 25px;">Hình thức thanh toán</h3>
@@ -366,7 +379,8 @@
                             <p><strong>Số tài khoản:</strong> 1234567890</p>
                             <p><strong>Chủ tài khoản:</strong> PetShop Store</p>
                             <p><strong>Nội dung:</strong> Thanh toán đơn hàng</p>
-                            <p style="color: #666; font-size: 12px; margin-top: 10px;">Vui lòng nhập nội dung chuyển khoản để chúng tôi xác nhận đơn hàng</p>
+                            <p style="color: #666; font-size: 12px; margin-top: 10px;">Vui lòng nhập nội dung chuyển
+                                khoản để chúng tôi xác nhận đơn hàng</p>
                         </div>
 
                         <div class="checkout-actions">
@@ -411,7 +425,8 @@
 
                     <div class="form-group">
                         <label for="petWeight">Cân nặng (kg) <span class="optional">(Tùy chọn)</span></label>
-                        <input type="number" id="petWeight" name="petWeight" placeholder="Nhập cân nặng" step="0.1" min="0">
+                        <input type="number" id="petWeight" name="petWeight" placeholder="Nhập cân nặng" step="0.1"
+                            min="0">
                     </div>
 
                     <div class="form-group">
@@ -470,7 +485,7 @@
         <div class="container">
             <h2 class="section-title">📚 Bài Đọc Hay</h2>
             <p class="section-subtitle">Tìm hiểu các bài viết chăm sóc thú cưng từ chuyên gia</p>
-            
+
             <div class="blog-container">
                 <!-- Article 1 -->
                 <article class="blog-card">
@@ -480,12 +495,14 @@
                     </div>
                     <div class="blog-content">
                         <h3 class="blog-title">Cách cho mèo con uống sữa chi tiết từ A-Z</h3>
-                        <p class="blog-excerpt">Nuôi mèo con trong giai đoạn đầu là trải nghiệm đầy yêu thương. Tìm hiểu cách chọn loại sữa phù hợp và cho mèo uống đúng cách để bé phát triển khỏe mạnh...</p>
+                        <p class="blog-excerpt">Nuôi mèo con trong giai đoạn đầu là trải nghiệm đầy yêu thương. Tìm hiểu
+                            cách chọn loại sữa phù hợp và cho mèo uống đúng cách để bé phát triển khỏe mạnh...</p>
                         <div class="blog-meta">
                             <span class="blog-date">📅 15/03/2026</span>
                             <span class="blog-read">⏱️ 8 phút đọc</span>
                         </div>
-                        <a href="https://petkitvietnam.com/cach-cho-meo-con-uong-sua-chi-tiet-tu-a-z" class="blog-link">Đọc tiếp →</a>
+                        <a href="https://petkitvietnam.com/cach-cho-meo-con-uong-sua-chi-tiet-tu-a-z"
+                            class="blog-link">Đọc tiếp →</a>
                     </div>
                 </article>
 
@@ -497,12 +514,14 @@
                     </div>
                     <div class="blog-content">
                         <h3 class="blog-title">Cách nhận biết dấu hiệu mèo bị ghẻ chính xác nhất</h3>
-                        <p class="blog-excerpt">Ghẻ là một bệnh lý ngoài da dễ lây nhiễm từ nhiều nguồn khác nhau. Bài viết này giúp bạn nhận diện sớm các dấu hiệu bệnh ghẻ ở mèo...</p>
+                        <p class="blog-excerpt">Ghẻ là một bệnh lý ngoài da dễ lây nhiễm từ nhiều nguồn khác nhau. Bài
+                            viết này giúp bạn nhận diện sớm các dấu hiệu bệnh ghẻ ở mèo...</p>
                         <div class="blog-meta">
                             <span class="blog-date">📅 12/03/2026</span>
                             <span class="blog-read">⏱️ 10 phút đọc</span>
                         </div>
-                        <a href="https://petkitvietnam.com/cach-nhan-biet-dau-hieu-meo-bi-ghe" class="blog-link">Đọc tiếp →</a>
+                        <a href="https://petkitvietnam.com/cach-nhan-biet-dau-hieu-meo-bi-ghe" class="blog-link">Đọc
+                            tiếp →</a>
                     </div>
                 </article>
 
@@ -514,12 +533,14 @@
                     </div>
                     <div class="blog-content">
                         <h3 class="blog-title">Tông đơ cắt lông chó mèo loại nào tốt nhất hiện nay?</h3>
-                        <p class="blog-excerpt">Tông đơ là dụng cụ không thể thiếu để giữ lông thú cưng gọn gàng. Khám phá các loại tông đơ phổ biến và cách chọn loại tốt nhất...</p>
+                        <p class="blog-excerpt">Tông đơ là dụng cụ không thể thiếu để giữ lông thú cưng gọn gàng. Khám
+                            phá các loại tông đơ phổ biến và cách chọn loại tốt nhất...</p>
                         <div class="blog-meta">
                             <span class="blog-date">📅 10/03/2026</span>
                             <span class="blog-read">⏱️ 9 phút đọc</span>
                         </div>
-                        <a href="https://petkitvietnam.com/tong-do-cat-long-cho-meo-loai-nao-tot-nhat-hien-nay" class="blog-link">Đọc tiếp →</a>
+                        <a href="https://petkitvietnam.com/tong-do-cat-long-cho-meo-loai-nao-tot-nhat-hien-nay"
+                            class="blog-link">Đọc tiếp →</a>
                     </div>
                 </article>
 
@@ -531,12 +552,14 @@
                     </div>
                     <div class="blog-content">
                         <h3 class="blog-title">Điểm danh các loại cát mèo phổ biến nhất hiện nay</h3>
-                        <p class="blog-excerpt">Chọn cát vệ sinh phù hợp không chỉ giúp dễ dàng trong việc dọn vệ sinh mà còn đảm bảo sức khỏe cho mèo. Tìm hiểu từng loại cát...</p>
+                        <p class="blog-excerpt">Chọn cát vệ sinh phù hợp không chỉ giúp dễ dàng trong việc dọn vệ sinh
+                            mà còn đảm bảo sức khỏe cho mèo. Tìm hiểu từng loại cát...</p>
                         <div class="blog-meta">
                             <span class="blog-date">📅 08/03/2026</span>
                             <span class="blog-read">⏱️ 12 phút đọc</span>
                         </div>
-                        <a href="https://petkitvietnam.com/cac-loai-cat-meo-pho-bien-nhat-hien-nay" class="blog-link">Đọc tiếp →</a>
+                        <a href="https://petkitvietnam.com/cac-loai-cat-meo-pho-bien-nhat-hien-nay"
+                            class="blog-link">Đọc tiếp →</a>
                     </div>
                 </article>
 
@@ -548,7 +571,8 @@
                     </div>
                     <div class="blog-content">
                         <h3 class="blog-title">Mèo sơ sinh bị tiêu chảy: Cách nhận biết và xử lý đúng chuẩn</h3>
-                        <p class="blog-excerpt">Tiêu chảy ở mèo sơ sinh có thể là dấu hiệu cảnh báo sức khỏe đang gặp nguy hiểm. Tìm hiểu nguyên nhân và cách xử lý hiệu quả...</p>
+                        <p class="blog-excerpt">Tiêu chảy ở mèo sơ sinh có thể là dấu hiệu cảnh báo sức khỏe đang gặp
+                            nguy hiểm. Tìm hiểu nguyên nhân và cách xử lý hiệu quả...</p>
                         <div class="blog-meta">
                             <span class="blog-date">📅 05/03/2026</span>
                             <span class="blog-read">⏱️ 11 phút đọc</span>
@@ -565,12 +589,14 @@
                     </div>
                     <div class="blog-content">
                         <h3 class="blog-title">Nên cho mèo ăn cơm hay ăn hạt thì tốt hơn?</h3>
-                        <p class="blog-excerpt">Mỗi loại thức ăn đều có ưu và nhược điểm riêng. Biết cách lựa chọn chế độ ăn phù hợp để mèo phát triển khỏe mạnh...</p>
+                        <p class="blog-excerpt">Mỗi loại thức ăn đều có ưu và nhược điểm riêng. Biết cách lựa chọn chế
+                            độ ăn phù hợp để mèo phát triển khỏe mạnh...</p>
                         <div class="blog-meta">
                             <span class="blog-date">📅 01/03/2026</span>
                             <span class="blog-read">⏱️ 9 phút đọc</span>
                         </div>
-                        <a href="https://petkitvietnam.com/nen-cho-meo-an-com-hay-an-hat-thi-tot-hon" class="blog-link">Đọc tiếp →</a>
+                        <a href="https://petkitvietnam.com/nen-cho-meo-an-com-hay-an-hat-thi-tot-hon"
+                            class="blog-link">Đọc tiếp →</a>
                     </div>
                 </article>
             </div>
@@ -605,7 +631,8 @@
                         <i class="fas fa-paw"></i>
                         <h3>PetShop</h3>
                     </div>
-                    <p>Cửa hàng thú cưng trực tuyến hàng đầu. Cung cấp các sản phẩm chất lượng cao cho tất cả loài thú cưng của bạn.</p>
+                    <p>Cửa hàng thú cưng trực tuyến hàng đầu. Cung cấp các sản phẩm chất lượng cao cho tất cả loài thú
+                        cưng của bạn.</p>
                 </div>
 
                 <!-- Quick Links -->
@@ -712,4 +739,5 @@
     <script src="assets/js/checkout.js"></script>
     <script src="assets/js/main.js"></script>
 </body>
+
 </html>

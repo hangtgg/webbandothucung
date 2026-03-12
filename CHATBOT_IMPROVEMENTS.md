@@ -136,7 +136,7 @@ const aiResponse = await enhanceWithAI(message, matchedProducts);
 
 ## 🔍 Kiểm Tra Tính Năng
 
-1. **Mở http://localhost:3000**
+1. **Mở https://kdkts.tools.edu.vn**
 2. **Click chatbot icon góc phải**
 3. **Thử các câu hỏi**:
    - "Xin chào"

@@ -97,7 +97,7 @@ class SurveyManager {
 
   async fetchPetTypeRecommendations(petType) {
     try {
-      const response = await fetch('http://localhost:3000/api/recommendations/pet-type', {
+      const response = await fetch('/api/recommendations/pet-type', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -190,7 +190,7 @@ class SurveyManager {
 
   async sendSurveyData(data) {
     try {
-      const response = await fetch('http://localhost:3000/api/survey', {
+      const response = await fetch('/api/survey', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -308,7 +308,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   
   // Health check
   try {
-    const response = await fetch('http://localhost:3000/api/health');
+    const response = await fetch('/api/health');
     const data = await response.json();
     console.log('Server status:', data.status);
   } catch (error) {

@@ -74,7 +74,7 @@ Mỗi sản phẩm được map với URL:
 npm start
 ```
 
-Truy cập: http://localhost:3000
+Truy cập: https://kdkts.tools.edu.vn
 
 ## 📋 Checklist
 

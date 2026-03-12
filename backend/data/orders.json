@@ -1,1 +1,36 @@
-[]
+[
+  {
+    "orderId": "ORD17732892417669328",
+    "customerName": "\bDUYEN NGUYEN",
+    "customerPhone": "0386844338",
+    "customerAddress": "trung an",
+    "customerEmail": "duyen.nk94@gmail.com",
+    "paymentMethod": "cod",
+    "items": [
+      {
+        "id": 21,
+        "name": "Nhà chó di động",
+        "category": "dog",
+        "subcategory": "housing",
+        "price": 650000,
+        "image": "dog-house.svg",
+        "description": "Nhà chó di động, gấp gọn, dễ vận chuyển",
+        "relatedProducts": [
+          10,
+          9
+        ],
+        "tags": [
+          "chó",
+          "nhà ở",
+          "di động"
+        ],
+        "quantity": 1
+      }
+    ],
+    "totalAmount": 650000,
+    "orderDate": "2026-03-12T04:20:41.671Z",
+    "status": "pending",
+    "createdAt": "2026-03-12T04:20:41.766Z",
+    "updatedAt": "2026-03-12T04:20:41.766Z"
+  }
+]

@@ -282,10 +282,10 @@ PHẦN VII. HƯỚNG DẪN CÀI ĐẶT VÀ CHẠY DỰ ÁN
 
   Bước 3: Khởi động server (chế độ phát triển)
     > npm run dev
-    [Kết quả mong đợi]: Server is running on http://localhost:3000
+    [Kết quả mong đợi]: Server is running on https://kdkts.tools.edu.vn
 
   Bước 4: Mở ứng dụng trên trình duyệt
-    Truy cập địa chỉ: http://localhost:3000
+    Truy cập địa chỉ: https://kdkts.tools.edu.vn
 
   Lưu ý khi thử nghiệm tìm kiếm giọng nói:
     - Chỉ hoạt động trên HTTPS hoặc localhost
@@ -397,7 +397,7 @@ LỜI CẢM ƠN
   [3] BAO_CAO_LUAN_VAN.tex        – Báo cáo LaTeX (biên dịch bằng pdflatex/overleaf)
   [4] SLIDE_TRINH_BAY.html        – Slide thuyết trình (mở bằng trình duyệt)
   Thư mục source code    : WEB THU CUNG/
-  Link demo              : http://localhost:3000 (chạy npm run dev)
+  Link demo              : https://kdkts.tools.edu.vn (chạy npm run dev)
   Link GitHub (nếu có)   : https://github.com/...........................
 
 ================================================================================

@@ -117,7 +117,7 @@ See [RECOMMENDATION_ALGORITHM.md](RECOMMENDATION_ALGORITHM.md) for full algorith
 
 ### Check Survey Statistics (Backend)
 ```bash
-curl http://localhost:3000/api/survey/stats
+curl https://kdkts.tools.edu.vn/api/survey/stats
 ```
 
 Response:
@@ -153,7 +153,7 @@ Response:
 
 ### Get All Responses
 ```bash
-curl http://localhost:3000/api/survey/responses
+curl https://kdkts.tools.edu.vn/api/survey/responses
 ```
 
 ## Test the Feature
@@ -175,8 +175,8 @@ curl http://localhost:3000/api/survey/responses
 
 4. **Test Backend**
    - Submit a survey with pet information
-   - Check if data is saved: `curl http://localhost:3000/api/survey/responses`
-   - Check statistics: `curl http://localhost:3000/api/survey/stats`
+   - Check if data is saved: `curl https://kdkts.tools.edu.vn/api/survey/responses`
+   - Check statistics: `curl https://kdkts.tools.edu.vn/api/survey/stats`
 
 ## Configuration
 

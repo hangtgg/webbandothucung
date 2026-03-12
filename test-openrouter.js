@@ -41,7 +41,7 @@ async function testOpenRouterIntegration() {
           }
         ],
         temperature: 0.7,
-        max_tokens: 150
+        max_tokens: 1000
       })
     });
 
@@ -53,8 +53,14 @@ async function testOpenRouterIntegration() {
 
     const data = await response.json();
     console.log('✅ API Response received successfully!');
-    console.log('\n📝 Sample Response:');
-    console.log(data.choices[0].message.content);
+    
+    if (data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content) {
+      console.log('\n📝 Sample Response:');
+      console.log(data.choices[0].message.content);
+    } else {
+      console.log('⚠️ Empty or unexpected response content. Full data:');
+      console.log(JSON.stringify(data, null, 2));
+    }
 
     // Test 2: Verify the response structure
     console.log('\n🔬 Test 2: Verifying response structure...');
@@ -110,7 +116,7 @@ async function testOpenRouterIntegration() {
     console.log('\n🎉 All tests passed! OpenRouter integration is working correctly.');
     console.log('\n💡 Next steps:');
     console.log('1. Start the server: npm start');
-    console.log('2. Open http://localhost:3000 in your browser');
+    console.log('2. Open https://kdkts.tools.edu.vn in your browser');
     console.log('3. Try chatting with the chatbot - it will now use OpenRouter AI!');
 
   } catch (error) {

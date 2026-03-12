@@ -34,7 +34,7 @@ npm install   # (Nếu cần)
 npm start
 ```
 
-Server chạy tại: http://localhost:3000
+Server chạy tại: https://kdkts.tools.edu.vn
 
 ## 💳 Kích Hoạt API
 

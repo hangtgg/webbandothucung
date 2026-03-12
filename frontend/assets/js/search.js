@@ -7,7 +7,7 @@ const Search = {
 
     const petMap = [
       { type: 'cat', keywords: ['meo', 'cat', 'meok', 'mèo'] },
-      { type: 'dog', keywords: ['chó con','dog', 'cun', 'chó'] },
+      { type: 'dog', keywords: ['chó con', 'dog', 'cun', 'chó'] },
       { type: 'hamster', keywords: ['hamster', 'hamsterr'] },
       { type: 'rabbit', keywords: ['tho', 'rabbit', 'thỏ'] },
       { type: 'bird', keywords: ['chim', 'bird', 'chuot bay', 'chuyên', 'chim chích'] },
@@ -460,7 +460,7 @@ const Search = {
 
         console.log('📤 Uploading image:', file.name, file.type, file.size);
 
-        const response = await fetch('http://localhost:3000/api/search/image', {
+        const response = await fetch('/api/search/image', {
           method: 'POST',
           body: formData
         });

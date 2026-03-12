@@ -230,7 +230,7 @@ Trang web PetShop của bạn giờ đây có:
 npm start
 ```
 
-Mở trình duyệt: http://localhost:3000
+Mở trình duyệt: https://kdkts.tools.edu.vn
 
 ---
 

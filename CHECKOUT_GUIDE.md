@@ -346,7 +346,7 @@ Fired on order submission error
 
 **Create order:**
 ```bash
-curl -X POST http://localhost:3000/api/orders \
+curl -X POST https://kdkts.tools.edu.vn/api/orders \
   -H "Content-Type: application/json" \
   -d '{
     "customerName": "Test User",
@@ -360,17 +360,17 @@ curl -X POST http://localhost:3000/api/orders \
 
 **Get all orders:**
 ```bash
-curl http://localhost:3000/api/orders
+curl https://kdkts.tools.edu.vn/api/orders
 ```
 
 **Get statistics:**
 ```bash
-curl http://localhost:3000/api/orders/stats
+curl https://kdkts.tools.edu.vn/api/orders/stats
 ```
 
 **Get single order:**
 ```bash
-curl http://localhost:3000/api/orders/ORD16804892341234
+curl https://kdkts.tools.edu.vn/api/orders/ORD16804892341234
 ```
 
 ## Configuration
