@@ -7,7 +7,7 @@ const Search = {
 
     const petMap = [
       { type: 'cat', keywords: ['meo', 'cat', 'meok', 'mèo'] },
-      { type: 'dog', keywords: ['cho', 'dog', 'cun', 'chó'] },
+      { type: 'dog', keywords: ['chó con','dog', 'cun', 'chó'] },
       { type: 'hamster', keywords: ['hamster', 'hamsterr'] },
       { type: 'rabbit', keywords: ['tho', 'rabbit', 'thỏ'] },
       { type: 'bird', keywords: ['chim', 'bird', 'chuot bay', 'chuyên', 'chim chích'] },
